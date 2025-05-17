@@ -1,2 +1,5 @@
-
 reflex==0.7.9
+pandas
+numpy
+scikit-learn
+plotly
