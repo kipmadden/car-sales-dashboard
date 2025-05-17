@@ -1,4 +1,4 @@
 {
-    "app": "car_sales_dashboard.app:app",
+    "app": "car_sales_dashboard.car_sales_dashboard:app",
     "deploy_url": ""
 }

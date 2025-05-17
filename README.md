@@ -16,7 +16,7 @@ An interactive Reflex-based dashboard that allows for exploring the impact of ex
 ```
 car_sales_dashboard/
 ├── rxconfig.py                # Reflex app configuration
-├── app.py                     # Main app module initializing the Reflex App
+├── car_sales_dashboard.py                     # Main app module initializing the Reflex App
 ├── state.py                   # Contains AppState class with state variables and handlers
 ├── components/                # UI component modules
 │   ├── __init__.py            # Package exports
