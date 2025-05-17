@@ -1,3 +1,4 @@
+"""Main entry point for the Car Sales Dashboard Reflex application."""
 import reflex as rx
 
 # Import the index page from the pages module
