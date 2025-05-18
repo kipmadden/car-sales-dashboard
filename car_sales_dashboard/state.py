@@ -199,8 +199,8 @@ class DashboardState(rx.State):
     def set_active_tab(self, tab):
         """Set active tab"""
         self.active_tab = tab
-    
-    # Chart creation methods - these must be decorated with @rx.var with type annotations    @rx.var
+      # Chart creation methods - these must be decorated with @rx.var with type annotations
+    @rx.var
     def get_sales_trend_chart(self) -> dict:
         """Get sales trend chart"""
         # Check if _forecast_df is initialized before using it
@@ -208,7 +208,7 @@ class DashboardState(rx.State):
             return create_sales_trend_chart(self._forecast_df)
         else:
             return {}
-      @rx.var
+    @rx.var
     def get_vehicle_type_chart(self) -> dict:
         """Get vehicle type chart"""
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
@@ -223,7 +223,7 @@ class DashboardState(rx.State):
             return create_region_chart(self._filtered_df)
         else:
             return {}
-      @rx.var
+    @rx.var
     def get_exogenous_impact_chart(self) -> dict:
         """Get exogenous impact chart"""
         if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
@@ -246,7 +246,7 @@ class DashboardState(rx.State):
             return create_state_map_chart(self._filtered_df)
         else:
             return {}
-      @rx.var
+    @rx.var
     def get_sales_by_month_chart(self) -> dict:
         """Get sales by month heatmap"""
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
