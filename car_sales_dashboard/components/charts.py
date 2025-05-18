@@ -10,9 +10,11 @@ def create_sales_trend_chart(forecast_data):
     
     Args:
         forecast_data (pd.DataFrame): DataFrame with historical and forecast data
-      Returns:
+    
+    Returns:
         dict: Plotly figure as a dictionary
-    """    if forecast_data.empty:
+    """
+    if forecast_data.empty:
         # Return an empty dict for consistency
         return {}
     
