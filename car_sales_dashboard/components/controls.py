@@ -129,13 +129,12 @@ def exogenous_controls(state_class):
                 on_change=state_class.update_cpi,
                 width="100%",
             ),
-            rx.text(f"{state_class.cpi_modifier:.2f}", width="50px"),
+            rx.text(f"{state_class.cpi_modifier:.2f}", width="50px", color="black"),
             width="100%",
         ),
-        
-        # Search volume modifier
+          # Search volume modifier
         rx.hstack(
-            rx.text("Search Volume:", width="150px"),
+            rx.text("Search Volume:", width="150px", color="black"),
             rx.slider(
                 min=0.5,
                 max=2.0,
@@ -144,13 +143,12 @@ def exogenous_controls(state_class):
                 on_change=state_class.update_search_volume,
                 width="100%",
             ),
-            rx.text(f"{state_class.search_volume_modifier:.2f}", width="50px"),
+            rx.text(f"{state_class.search_volume_modifier:.2f}", width="50px", color="black"),
             width="100%",
         ),
-        
-        # Forecast months
+          # Forecast months
         rx.hstack(
-            rx.text("Forecast Months:", width="150px"),
+            rx.text("Forecast Months:", width="150px", color="black"),
             rx.slider(
                 min=1,
                 max=24,
@@ -159,18 +157,19 @@ def exogenous_controls(state_class):
                 on_change=state_class.update_forecast_months,
                 width="100%",
             ),
-            rx.text(state_class.forecast_months.to_string(), width="50px"),
+            rx.text(state_class.forecast_months.to_string(), width="50px", color="black"),
             width="100%",
         ),
-        
-        # Model selection
+          # Model selection
         rx.hstack(
-            rx.text("Forecast Model:", width="150px"),
-            rx.select(
+            rx.text("Forecast Model:", width="150px", color="black"),            rx.select(
                 ["Linear Regression", "Random Forest"],
                 default_value="Linear Regression",
                 on_change=state_class.update_model_type,
-                width="100%",
+                width="calc(100% - 10px)",
+                max_width="100%",
+                overflow="hidden",
+                text_overflow="ellipsis",
             ),
             width="100%",
         ),

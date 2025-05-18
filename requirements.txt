@@ -3,3 +3,4 @@ pandas
 numpy
 scikit-learn
 plotly
+dill>=0.3.8

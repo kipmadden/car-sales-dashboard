@@ -20,6 +20,12 @@ df = load_data()
 class DashboardState(rx.State):
     """State for the dashboard application"""
     
+    # Create a factory method for ScenarioEngine
+    @staticmethod
+    def _create_default_scenario_engine():
+        """Create a default scenario engine with linear model type."""
+        return ScenarioEngine(model_type="linear")
+    
     # Data states stored as JSON-serializable lists
     filtered_data: list[dict] = df.to_dict("records")
     forecast_data: list[dict] = []
@@ -38,7 +44,7 @@ class DashboardState(rx.State):
     
     # Model states
     model_type: str = "Linear Regression"
-    _scenario_engine: ScenarioEngine = PrivateAttr(default_factory=lambda: ScenarioEngine(model_type="linear"))
+    _scenario_engine: ScenarioEngine = PrivateAttr(default_factory=_create_default_scenario_engine)
     
     # Exogenous variable states
     unemployment_modifier: float = 1.0
@@ -93,32 +99,39 @@ class DashboardState(rx.State):
         # Update model and forecast after filtering
         self.train_model()
         self.generate_forecast()
-    
-    def train_model(self):
+      def train_model(self):
         """Train the forecasting model with filtered data"""
         # Initialize model based on selected type
         model_type = "linear" if self.model_type == "Linear Regression" else "forest"
         self._scenario_engine = ScenarioEngine(model_type=model_type)
         
-        # Train the model if we have data
-        if not self._filtered_df.empty:
-            self._scenario_engine.train(self._filtered_df)
-    
-    def generate_forecast(self):
+        # Train the model if we have data - safely check if attribute exists and if dataframe is empty
+        try:
+            if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
+                self._scenario_engine.train(self._filtered_df)
+        except AttributeError:
+            # Handle case where _filtered_df might not be accessible
+            pass    def generate_forecast(self):
         """Generate forecast based on selected modifiers"""
-        # Generate forecast if we have data
-        if not self._filtered_df.empty:
-            forecast_df = self._scenario_engine.forecast(
-                self._filtered_df,
-                unemployment_modifier=self.unemployment_modifier,
-                gas_price_modifier=self.gas_price_modifier,
-                cpi_modifier=self.cpi_modifier,
-                search_volume_modifier=self.search_volume_modifier,
-                months_ahead=self.forecast_months
-            )
-            self._forecast_df = forecast_df
-            self.forecast_data = forecast_df.to_dict("records")
-        else:
+        # Generate forecast if we have data - safely check if attribute exists and if dataframe is empty
+        try:
+            if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
+                forecast_df = self._scenario_engine.forecast(
+                    self._filtered_df,
+                    unemployment_modifier=self.unemployment_modifier,
+                    gas_price_modifier=self.gas_price_modifier,
+                    cpi_modifier=self.cpi_modifier,
+                    search_volume_modifier=self.search_volume_modifier,
+                    months_ahead=self.forecast_months
+                )
+                self._forecast_df = forecast_df
+                self.forecast_data = forecast_df.to_dict("records")
+            else:
+                self._forecast_df = pd.DataFrame()
+                self.forecast_data = []
+        except Exception as e:
+            # Handle any errors during forecast generation
+            print(f"Error generating forecast: {e}")
             self._forecast_df = pd.DataFrame()
             self.forecast_data = []
     
@@ -158,31 +171,44 @@ class DashboardState(rx.State):
             # Gracefully handle invalid values by clearing the filter
             self.selected_years = []
         self.filter_data()
-    
-    # Exogenous variable update handlers
+      # Exogenous variable update handlers
     def update_unemployment(self, value):
         """Update unemployment modifier"""
-        self.unemployment_modifier = value
+        # Convert value to float if it's a list (common issue with sliders in Reflex)
+        if isinstance(value, list) and len(value) > 0:
+            value = float(value[0])
+        self.unemployment_modifier = float(value)
         self.generate_forecast()
     
     def update_gas_price(self, value):
         """Update gas price modifier"""
-        self.gas_price_modifier = value
+        # Convert value to float if it's a list
+        if isinstance(value, list) and len(value) > 0:
+            value = float(value[0])
+        self.gas_price_modifier = float(value)
         self.generate_forecast()
     
     def update_cpi(self, value):
         """Update CPI modifier"""
-        self.cpi_modifier = value
+        # Convert value to float if it's a list
+        if isinstance(value, list) and len(value) > 0:
+            value = float(value[0])
+        self.cpi_modifier = float(value)
         self.generate_forecast()
     
     def update_search_volume(self, value):
         """Update search volume modifier"""
-        self.search_volume_modifier = value
+        # Convert value to float if it's a list
+        if isinstance(value, list) and len(value) > 0:
+            value = float(value[0])
+        self.search_volume_modifier = float(value)
         self.generate_forecast()
-    
-    def update_forecast_months(self, value):
+      def update_forecast_months(self, value):
         """Update forecast months"""
-        self.forecast_months = value
+        # Convert value to int if it's a list
+        if isinstance(value, list) and len(value) > 0:
+            value = int(value[0])
+        self.forecast_months = int(value)
         self.generate_forecast()
     
     def update_model_type(self, value):
