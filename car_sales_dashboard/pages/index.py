@@ -30,7 +30,8 @@ def index():
                     "Explore the impact of exogenous factors on vehicle sales",
                     margin_bottom="1em",
                 ),
-                exogenous_controls(DashboardState),                rx.tabs.root(
+                exogenous_controls(DashboardState),
+                rx.tabs.root(
                     rx.tabs.list(
                         rx.tabs.trigger("Sales Forecast", value="sales"),
                         rx.tabs.trigger("Vehicle Analysis", value="vehicles"),
@@ -38,10 +39,9 @@ def index():
                         rx.tabs.trigger("Economic Factors", value="economic"),
                     ),
                     rx.tabs.content(
-                        rx.vstack(
-                            chart_container(
+                        rx.vstack(                            chart_container(
                                 "Sales Trend and Forecast",
-                                DashboardState.get_sales_trend_chart(),
+                                DashboardState.get_sales_trend_chart,
                                 height="500px"
                             ),
                             rx.hstack(
@@ -64,21 +64,18 @@ def index():
                     rx.tabs.content(
                         rx.vstack(
                             rx.hstack(
-                                chart_container(
-                                    "Sales by Vehicle Type",
-                                    DashboardState.get_vehicle_type_chart(),
+                                chart_container(                                    "Sales by Vehicle Type",
+                                    DashboardState.get_vehicle_type_chart,
                                     height="400px"
                                 ),
-                                chart_container(
-                                    "Top Models by Sales",
-                                    DashboardState.get_top_models_chart(),
+                                chart_container(                                    "Top Models by Sales",
+                                    DashboardState.get_top_models_chart,
                                     height="400px"
                                 ),
                                 width="100%",
-                            ),
-                            chart_container(
+                            ),                            chart_container(
                                 "Sales by Month and Vehicle Type",
-                                DashboardState.get_sales_by_month_chart(),
+                                DashboardState.get_sales_by_month_chart,
                                 height="400px"
                             ),
                             width="100%",
@@ -87,14 +84,12 @@ def index():
                     ),
                     rx.tabs.content(
                         rx.vstack(
-                            chart_container(
-                                "Sales by Region",
-                                DashboardState.get_region_chart(),
+                            chart_container(                                "Sales by Region",
+                                DashboardState.get_region_chart,
                                 height="400px"
                             ),
-                            chart_container(
-                                "Sales by State",
-                                DashboardState.get_state_map_chart(),
+                            chart_container(                                "Sales by State",
+                                DashboardState.get_state_map_chart,
                                 height="500px"
                             ),
                             width="100%",
@@ -103,9 +98,8 @@ def index():
                     ),
                     rx.tabs.content(
                         rx.vstack(
-                            chart_container(
-                                "Exogenous Variable Trends",
-                                DashboardState.get_exogenous_impact_chart(),
+                            chart_container(                                "Exogenous Variable Trends",
+                                DashboardState.get_exogenous_impact_chart,
                                 height="500px"
                             ),
                             rx.box(

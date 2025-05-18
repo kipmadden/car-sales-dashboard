@@ -208,8 +208,8 @@ def chart_container(title, chart_data, height="400px"):
     return rx.box(
         rx.heading(title),
         rx.cond(
-            chart_data != None,
-            rx.plotly.plot(chart_data),
+            chart_data,
+            rx.plotly.plot.create(data=chart_data),
             rx.center("No data available", height="200px")
         ),
         width="100%",
