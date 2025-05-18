@@ -223,10 +223,14 @@ class DashboardState(rx.State):
         self.train_model()
         self.generate_forecast()
     
-    # UI update handlers
-    def toggle_table(self, tab: str):
-        """Set the active tab in the dashboard UI."""
+    def update_active_tab(self, tab: str):
+        """Update the active tab."""
         self.active_tab = tab
+
+    # UI update handlers
+    def toggle_table(self, value: bool):
+        """Toggle the table visibility in the dashboard UI."""
+        self.show_table = value
 
     # Chart creation methods - these must be decorated with @rx.var with type annotations
     @rx.var
@@ -276,15 +280,8 @@ class DashboardState(rx.State):
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
             return create_state_map_chart(self._filtered_df)
         else:
-            return {}
-
-    @rx.var
+            return {}    @rx.var
     def get_sales_by_month_chart(self) -> dict:
-        """Get sales by month heatmap"""
-        if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
-            return create_heatmap_chart(self._filtered_df, x_col='month', y_col='vehicle_type')
-        else:
-            return {}
         """Get sales by month heatmap"""
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
             return create_heatmap_chart(self._filtered_df, x_col='month', y_col='vehicle_type')
