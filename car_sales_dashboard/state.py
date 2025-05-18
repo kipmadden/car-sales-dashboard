@@ -20,9 +20,13 @@ df = load_data()
 class DashboardState(rx.State):
     """State for the dashboard application"""
     
-    # Data states
-    filtered_data: pd.DataFrame = df
-    forecast_data: pd.DataFrame = pd.DataFrame()
+    # Data states stored as JSON-serializable lists
+    filtered_data: list[dict] = df.to_dict("records")
+    forecast_data: list[dict] = []
+
+    # Private DataFrame storage
+    _filtered_df: pd.DataFrame = PrivateAttr(default=df)
+    _forecast_df: pd.DataFrame = PrivateAttr(default_factory=pd.DataFrame)
     
     # Filter states
     selected_regions: list = []
@@ -83,7 +87,8 @@ class DashboardState(rx.State):
             filtered = filtered[filtered['model_year'].isin(self.selected_years)]
         
         # Update filtered data
-        self.filtered_data = filtered
+        self._filtered_df = filtered
+        self.filtered_data = filtered.to_dict("records")
         
         # Update model and forecast after filtering
         self.train_model()
@@ -96,21 +101,26 @@ class DashboardState(rx.State):
         self._scenario_engine = ScenarioEngine(model_type=model_type)
         
         # Train the model if we have data
-        if not self.filtered_data.empty:
-            self._scenario_engine.train(self.filtered_data)
+        if not self._filtered_df.empty:
+            self._scenario_engine.train(self._filtered_df)
     
     def generate_forecast(self):
         """Generate forecast based on selected modifiers"""
         # Generate forecast if we have data
-        if not self.filtered_data.empty:
-            self.forecast_data = self._scenario_engine.forecast(
-                self.filtered_data,
+        if not self._filtered_df.empty:
+            forecast_df = self._scenario_engine.forecast(
+                self._filtered_df,
                 unemployment_modifier=self.unemployment_modifier,
                 gas_price_modifier=self.gas_price_modifier,
                 cpi_modifier=self.cpi_modifier,
                 search_volume_modifier=self.search_volume_modifier,
                 months_ahead=self.forecast_months
             )
+            self._forecast_df = forecast_df
+            self.forecast_data = forecast_df.to_dict("records")
+        else:
+            self._forecast_df = pd.DataFrame()
+            self.forecast_data = []
     
     # Filter update handlers
     def update_regions(self, regions):
@@ -187,28 +197,28 @@ class DashboardState(rx.State):
     # Chart creation methods
     def get_sales_trend_chart(self):
         """Get sales trend chart"""
-        return create_sales_trend_chart(self.forecast_data)
+        return create_sales_trend_chart(self._forecast_df)
     
     def get_vehicle_type_chart(self):
         """Get vehicle type chart"""
-        return create_vehicle_type_chart(self.filtered_data)
+        return create_vehicle_type_chart(self._filtered_df)
     
     def get_region_chart(self):
         """Get region chart"""
-        return create_region_chart(self.filtered_data)
+        return create_region_chart(self._filtered_df)
     
     def get_exogenous_impact_chart(self):
         """Get exogenous impact chart"""
-        return create_exogenous_impact_chart(self.forecast_data)
+        return create_exogenous_impact_chart(self._forecast_df)
     
     def get_top_models_chart(self):
         """Get top models chart"""
-        return create_top_models_chart(self.filtered_data)
+        return create_top_models_chart(self._filtered_df)
     
     def get_state_map_chart(self):
         """Get state map chart"""
-        return create_state_map_chart(self.filtered_data)
+        return create_state_map_chart(self._filtered_df)
     
     def get_sales_by_month_chart(self):
         """Get sales by month heatmap"""
-        return create_heatmap_chart(self.filtered_data, x_col='month', y_col='vehicle_type')
+        return create_heatmap_chart(self._filtered_df, x_col='month', y_col='vehicle_type')
