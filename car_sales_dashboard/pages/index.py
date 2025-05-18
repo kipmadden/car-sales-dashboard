@@ -31,7 +31,7 @@ def index():
             
             # Main content
             rx.vstack(
-                rx.heading("Automotive Sales Forecast Dashboard", size="lg"),
+                rx.heading("Automotive Sales Forecast Dashboard", size="6"),
                 rx.text(
                     "Explore the impact of exogenous factors on vehicle sales",
                     margin_bottom="1em",

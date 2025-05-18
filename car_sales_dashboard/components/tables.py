@@ -133,7 +133,7 @@ def create_forecast_table(forecast_data):
     )
     
     return rx.vstack(
-        rx.heading("Forecast Details", size="md"),
+        rx.heading("Forecast Details", size="4"),
         table,
         width="100%",
         padding="1em",
