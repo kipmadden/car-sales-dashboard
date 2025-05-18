@@ -2,6 +2,7 @@ import reflex as rx
 import pandas as pd
 
 from car_sales_dashboard.models import load_data, ScenarioEngine
+from pydantic import PrivateAttr
 from car_sales_dashboard.components import (
     create_sales_trend_chart,
     create_vehicle_type_chart,
@@ -33,7 +34,7 @@ class DashboardState(rx.State):
     
     # Model states
     model_type: str = "Linear Regression"
-    scenario_engine: ScenarioEngine = ScenarioEngine(model_type="linear")
+    _scenario_engine: ScenarioEngine = PrivateAttr(default_factory=lambda: ScenarioEngine(model_type="linear"))
     
     # Exogenous variable states
     unemployment_modifier: float = 1.0
@@ -92,17 +93,17 @@ class DashboardState(rx.State):
         """Train the forecasting model with filtered data"""
         # Initialize model based on selected type
         model_type = "linear" if self.model_type == "Linear Regression" else "forest"
-        self.scenario_engine = ScenarioEngine(model_type=model_type)
+        self._scenario_engine = ScenarioEngine(model_type=model_type)
         
         # Train the model if we have data
         if not self.filtered_data.empty:
-            self.scenario_engine.train(self.filtered_data)
+            self._scenario_engine.train(self.filtered_data)
     
     def generate_forecast(self):
         """Generate forecast based on selected modifiers"""
         # Generate forecast if we have data
         if not self.filtered_data.empty:
-            self.forecast_data = self.scenario_engine.forecast(
+            self.forecast_data = self._scenario_engine.forecast(
                 self.filtered_data,
                 unemployment_modifier=self.unemployment_modifier,
                 gas_price_modifier=self.gas_price_modifier,
