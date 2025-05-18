@@ -204,10 +204,9 @@ def chart_container(title, chart_data, height="400px"):
     
     Returns:
         rx.Component: Chart container component
-    """
-    return rx.box(
+    """    return rx.box(
         rx.heading(title),
-        rx.plotly(data=chart_data),
+        rx.plotly(chart_data),  # Just pass the dict directly, not as data=chart_data
         width="100%",
         padding="1em",
         background="white",

@@ -198,39 +198,38 @@ class DashboardState(rx.State):
     
     def set_active_tab(self, tab):
         """Set active tab"""
-        self.active_tab = tab
-      # Chart creation methods - these must be decorated with @rx.var so they produce Plotly figures
+        self.active_tab = tab    # Chart creation methods - these must be decorated with @rx.var with type annotations
     @rx.var
-    def get_sales_trend_chart(self):
+    def get_sales_trend_chart(self) -> dict:
         """Get sales trend chart"""
         return create_sales_trend_chart(self._forecast_df)
     
     @rx.var
-    def get_vehicle_type_chart(self):
+    def get_vehicle_type_chart(self) -> dict:
         """Get vehicle type chart"""
         return create_vehicle_type_chart(self._filtered_df)
     
     @rx.var
-    def get_region_chart(self):
+    def get_region_chart(self) -> dict:
         """Get region chart"""
         return create_region_chart(self._filtered_df)
     
     @rx.var
-    def get_exogenous_impact_chart(self):
+    def get_exogenous_impact_chart(self) -> dict:
         """Get exogenous impact chart"""
         return create_exogenous_impact_chart(self._forecast_df)
     
     @rx.var
-    def get_top_models_chart(self):
+    def get_top_models_chart(self) -> dict:
         """Get top models chart"""
         return create_top_models_chart(self._filtered_df)
     
     @rx.var
-    def get_state_map_chart(self):
+    def get_state_map_chart(self) -> dict:
         """Get state map chart"""
         return create_state_map_chart(self._filtered_df)
     
     @rx.var
-    def get_sales_by_month_chart(self):
+    def get_sales_by_month_chart(self) -> dict:
         """Get sales by month heatmap"""
         return create_heatmap_chart(self._filtered_df, x_col='month', y_col='vehicle_type')

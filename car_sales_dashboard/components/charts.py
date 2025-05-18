@@ -10,13 +10,11 @@ def create_sales_trend_chart(forecast_data):
     
     Args:
         forecast_data (pd.DataFrame): DataFrame with historical and forecast data
-    
-    Returns:
-        plotly.graph_objs._figure.Figure: Plotly figure object
-    """
-    if forecast_data.empty:
-        # Return an empty figure instead of empty dict
-        return go.Figure()
+      Returns:
+        dict: Plotly figure as a dictionary
+    """    if forecast_data.empty:
+        # Return an empty dict for consistency
+        return {}
     
     # Create the chart
     fig = go.Figure()
@@ -49,9 +47,8 @@ def create_sales_trend_chart(forecast_data):
         legend=dict(x=0, y=1, traceorder='normal'),
         height=500,
     )
-    
-    # Return the Figure object directly, not as a dict
-    return fig
+      # Return the figure as a dict for consistency with other chart functions
+    return fig.to_dict()
 
 
 def create_vehicle_type_chart(filtered_data):
