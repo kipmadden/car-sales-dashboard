@@ -43,15 +43,15 @@ def index():
                 exogenous_controls(DashboardState),
                 
                 # Tabs for different views
-                rx.tabs(
-                    rx.tab_list(
-                        rx.tab("Sales Forecast", id="sales"),
-                        rx.tab("Vehicle Analysis", id="vehicles"),
-                        rx.tab("Geographic", id="geographic"),
-                        rx.tab("Economic Factors", id="economic"),
+                tabs(
+                    tab_list(
+                        tab("Sales Forecast", id="sales"),
+                        tab("Vehicle Analysis", id="vehicles"),
+                        tab("Geographic", id="geographic"),
+                        tab("Economic Factors", id="economic"),
                     ),
-                    rx.tab_panels(
-                        rx.tab_panel(
+                    tab_panels(
+                        tab_panel(
                             rx.vstack(
                                 chart_container(
                                     "Sales Trend and Forecast",
@@ -75,7 +75,7 @@ def index():
                             ),
                             id="sales-panel",
                         ),
-                        rx.tab_panel(
+                        tab_panel(
                             rx.vstack(
                                 rx.hstack(
                                     chart_container(
@@ -99,7 +99,7 @@ def index():
                             ),
                             id="vehicles-panel",
                         ),
-                        rx.tab_panel(
+                        tab_panel(
                             rx.vstack(
                                 chart_container(
                                     "Sales by Region",
@@ -115,7 +115,7 @@ def index():
                             ),
                             id="geographic-panel",
                         ),
-                        rx.tab_panel(
+                        tab_panel(
                             rx.vstack(
                                 chart_container(
                                     "Exogenous Variable Trends",
