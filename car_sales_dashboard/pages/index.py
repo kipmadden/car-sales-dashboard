@@ -13,7 +13,7 @@ def index():
     unique_vehicle_types = sorted(df['vehicle_type'].unique())
     unique_makes = sorted(df['make'].unique())
     unique_models = sorted(df['model'].unique())
-    unique_years = sorted(df['model_year'].unique())
+    unique_years = sorted(int(year) for year in df['model_year'].unique())
     
     # Create page layout
     return rx.container(
