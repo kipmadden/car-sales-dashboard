@@ -34,10 +34,10 @@ car_sales_dashboard/
 
 ## Installation
 
-1. Install the required packages:
+1. Install the required packages using the provided requirements file:
 
 ```bash
-pip install reflex pandas numpy scikit-learn plotly
+pip install -r requirements.txt
 ```
 
 2. Clone this repository:
