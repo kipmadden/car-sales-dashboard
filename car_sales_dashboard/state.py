@@ -99,7 +99,8 @@ class DashboardState(rx.State):
         # Update model and forecast after filtering
         self.train_model()
         self.generate_forecast()
-      def train_model(self):
+
+    def train_model(self):
         """Train the forecasting model with filtered data"""
         # Initialize model based on selected type
         model_type = "linear" if self.model_type == "Linear Regression" else "forest"
@@ -111,7 +112,9 @@ class DashboardState(rx.State):
                 self._scenario_engine.train(self._filtered_df)
         except AttributeError:
             # Handle case where _filtered_df might not be accessible
-            pass    def generate_forecast(self):
+            pass
+
+    def generate_forecast(self):
         """Generate forecast based on selected modifiers"""
         # Generate forecast if we have data - safely check if attribute exists and if dataframe is empty
         try:
@@ -167,11 +170,13 @@ class DashboardState(rx.State):
         # filtering against the numeric ``model_year`` column.
         try:
             self.selected_years = [int(y) for y in years]
-        except (TypeError, ValueError):
-            # Gracefully handle invalid values by clearing the filter
+        except Exception as e:
+            # Handle conversion error, e.g., log or set to empty
+            print(f"Error converting years: {e}")
             self.selected_years = []
         self.filter_data()
-      # Exogenous variable update handlers
+
+    # Exogenous variable update handlers
     def update_unemployment(self, value):
         """Update unemployment modifier"""
         # Convert value to float if it's a list (common issue with sliders in Reflex)
@@ -203,7 +208,8 @@ class DashboardState(rx.State):
             value = float(value[0])
         self.search_volume_modifier = float(value)
         self.generate_forecast()
-      def update_forecast_months(self, value):
+
+    def update_forecast_months(self, value):
         """Update forecast months"""
         # Convert value to int if it's a list
         if isinstance(value, list) and len(value) > 0:
@@ -218,14 +224,11 @@ class DashboardState(rx.State):
         self.generate_forecast()
     
     # UI update handlers
-    def toggle_table(self):
-        """Toggle table visibility"""
-        self.show_table = not self.show_table
-    
-    def set_active_tab(self, tab):
-        """Set active tab"""
+    def toggle_table(self, tab: str):
+        """Set the active tab in the dashboard UI."""
         self.active_tab = tab
-      # Chart creation methods - these must be decorated with @rx.var with type annotations
+
+    # Chart creation methods - these must be decorated with @rx.var with type annotations
     @rx.var
     def get_sales_trend_chart(self) -> dict:
         """Get sales trend chart"""
@@ -234,6 +237,7 @@ class DashboardState(rx.State):
             return create_sales_trend_chart(self._forecast_df)
         else:
             return {}
+
     @rx.var
     def get_vehicle_type_chart(self) -> dict:
         """Get vehicle type chart"""
@@ -249,6 +253,7 @@ class DashboardState(rx.State):
             return create_region_chart(self._filtered_df)
         else:
             return {}
+
     @rx.var
     def get_exogenous_impact_chart(self) -> dict:
         """Get exogenous impact chart"""
@@ -272,8 +277,14 @@ class DashboardState(rx.State):
             return create_state_map_chart(self._filtered_df)
         else:
             return {}
+
     @rx.var
     def get_sales_by_month_chart(self) -> dict:
+        """Get sales by month heatmap"""
+        if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
+            return create_heatmap_chart(self._filtered_df, x_col='month', y_col='vehicle_type')
+        else:
+            return {}
         """Get sales by month heatmap"""
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
             return create_heatmap_chart(self._filtered_df, x_col='month', y_col='vehicle_type')

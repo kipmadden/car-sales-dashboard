@@ -17,7 +17,8 @@ def sidebar_filters(unique_regions, unique_states, unique_vehicle_types,
     
     Returns:
         rx.Component: Sidebar component with filters
-    """    return rx.vstack(
+    """
+    return rx.vstack(
         rx.heading("Filters", size="4", color="black"),
         
         # Region filter
@@ -87,7 +88,8 @@ def exogenous_controls(state_class):
     
     Returns:
         rx.Component: Controls component
-    """    return rx.vstack(
+    """
+    return rx.vstack(
         rx.heading("Exogenous Variable Simulation", size="4", color="black"),
         rx.text("Adjust the sliders to see the impact on forecasted sales", color="black"),
           # Unemployment rate modifier
