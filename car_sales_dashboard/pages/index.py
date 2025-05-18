@@ -1,5 +1,5 @@
 import reflex as rx
-from reflex.components.chakra.tabs import tab, tab_list, tab_panel, tab_panels, tabs
+from reflex.components import tabs, tab_list, tab, tab_panel 
 import pandas as pd
 from car_sales_dashboard.state import DashboardState , df
 from car_sales_dashboard.components.controls import sidebar_filters, exogenous_controls, chart_container
