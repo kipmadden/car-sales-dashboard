@@ -66,7 +66,7 @@ def _create_forecast_row(item, idx):
         rx.Component: Table row
     """    # Use rx.cond instead of regular if/else for handling Vars
     return rx.cond(
-        item["is_forecast"],
+        item.get("is_forecast", False),
         rx.table.row(
             rx.table.cell(item.get("date", ""), color="blue"),
             rx.table.cell(f"{item.get('sales', 0):,.0f}"),
