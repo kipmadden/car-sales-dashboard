@@ -1,7 +1,7 @@
 import reflex as rx
 from reflex.components import tabs, tab_list, tab, tab_panel 
 import pandas as pd
-from car_sales_dashboard.state import DashboardState , df
+from car_sales_dashboard.state import DashboardState, df
 from car_sales_dashboard.components.controls import sidebar_filters, exogenous_controls, chart_container
 from car_sales_dashboard.components.tables import create_summary_table, create_forecast_table
 
@@ -22,11 +22,11 @@ def index():
         rx.hstack(
             # Left sidebar with filters
             sidebar_filters(
-                unique_regions, 
-                unique_states, 
+                unique_regions,
+                unique_states,
                 unique_vehicle_types,
-                unique_makes, 
-                unique_models, 
+                unique_makes,
+                unique_models,
                 unique_years,
                 DashboardState
             ),
@@ -41,17 +41,15 @@ def index():
                 
                 # Exogenous variable controls
                 exogenous_controls(DashboardState),
-                
-                # Tabs for different views
-                tabs(
-                    tab_list(
-                        tab("Sales Forecast", id="sales"),
-                        tab("Vehicle Analysis", id="vehicles"),
-                        tab("Geographic", id="geographic"),
-                        tab("Economic Factors", id="economic"),
+                tabs.tabs(
+                    tabs.tab_list(
+                        tabs.tab("Sales Forecast", id="sales"),
+                        tabs.tab("Vehicle Analysis", id="vehicles"),
+                        tabs.tab("Geographic", id="geographic"),
+                        tabs.tab("Economic Factors", id="economic"),
                     ),
-                    tab_panels(
-                        tab_panel(
+                    tabs.tab_panels(
+                        tabs.tab_panel(
                             rx.vstack(
                                 chart_container(
                                     "Sales Trend and Forecast",
@@ -75,7 +73,7 @@ def index():
                             ),
                             id="sales-panel",
                         ),
-                        tab_panel(
+                        tabs.tab_panel(
                             rx.vstack(
                                 rx.hstack(
                                     chart_container(
@@ -99,7 +97,7 @@ def index():
                             ),
                             id="vehicles-panel",
                         ),
-                        tab_panel(
+                        tabs.tab_panel(
                             rx.vstack(
                                 chart_container(
                                     "Sales by Region",
@@ -115,7 +113,7 @@ def index():
                             ),
                             id="geographic-panel",
                         ),
-                        tab_panel(
+                        tabs.tab_panel(
                             rx.vstack(
                                 chart_container(
                                     "Exogenous Variable Trends",
@@ -151,7 +149,6 @@ def index():
                     font_size="sm",
                     color="gray",
                 ),
-                
                 width="100%",
                 spacing="4",
             ),
