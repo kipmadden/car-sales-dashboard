@@ -41,10 +41,10 @@ def _create_summary_table_from_data(data, groupby_col):
             )
         ),
         rx.table.body(
-            rx.foreach(
-                # We use the first 10 items as a simplification
+            rx.foreach(                # We use the first 10 items as a simplification
                 # In a real app, proper processing would be done in the backend
-                rx.slice(data, 0, 10),                lambda item, idx: rx.table.row(
+                rx.slice(data, 0, 10),
+                lambda item, idx: rx.table.row(
                     rx.table.cell(item.get(groupby_col, "")),
                     rx.table.cell(rx.format_number(item.get("sales", 0), precision=0, separator=True)),
                     rx.table.cell("1")  # Simplified count value
@@ -96,21 +96,22 @@ def create_forecast_table(forecast_data):
         forecast_data == [],
         rx.text("No forecast data available"),
         rx.table.root(
-        rx.table.header(
-            rx.table.row(
-                rx.table.column_header_cell("Date"),
-                rx.table.column_header_cell("Sales"),
-                rx.table.column_header_cell("Unemployment"),
-                rx.table.column_header_cell("Gas Price"),
-                rx.table.column_header_cell("CPI"),
-                rx.table.column_header_cell("Search Volume"),
-            )
-        ),
-        rx.table.body(
-            rx.foreach(
-                forecast_data,
-                lambda item, idx: _create_forecast_row(item, idx)
-            )
-        ),
-        width="100%",
+            rx.table.header(
+                rx.table.row(
+                    rx.table.column_header_cell("Date"),
+                    rx.table.column_header_cell("Sales"),
+                    rx.table.column_header_cell("Unemployment"),
+                    rx.table.column_header_cell("Gas Price"),
+                    rx.table.column_header_cell("CPI"),
+                    rx.table.column_header_cell("Search Volume"),
+                )
+            ),
+            rx.table.body(
+                rx.foreach(
+                    forecast_data,
+                    lambda item, idx: _create_forecast_row(item, idx)
+                )
+            ),
+            width="100%",
+        )
     )
