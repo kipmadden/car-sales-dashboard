@@ -73,7 +73,7 @@ def index():
                                 # Main sales trend and forecast chart
                                 chart_container(
                                     "Sales Trend and Forecast",
-                                    rx.var_formula("get_sales_trend_chart()"),
+                                    get_sales_trend_chart(),
                                     height="500px"
                                 ),
                                 
@@ -186,6 +186,13 @@ def index():
                     width="100%",
                     variant="enclosed",
                     margin_top="1em",
+                ),
+                
+                rx.tabs(
+                    rx.tab("Tab 1"),
+                    rx.tab_panel("Content for Tab 1"),
+                    rx.tab("Tab 2"),
+                    rx.tab_panel("Content for Tab 2"),
                 ),
                 
                 # Footer with attribution

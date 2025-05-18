@@ -109,7 +109,7 @@ def exogenous_controls(state_class):
                 on_change=state_class.update_unemployment,
                 width="100%",
             ),
-            rx.text(rx.var_formula("unemployment_modifier.toFixed(2)"), width="50px"),
+            rx.text(f"{state_class.unemployment_modifier:.2f}", width="50px"),
             width="100%",
         ),
         
@@ -124,7 +124,7 @@ def exogenous_controls(state_class):
                 on_change=state_class.update_gas_price,
                 width="100%",
             ),
-            rx.text(rx.var_formula("gas_price_modifier.toFixed(2)"), width="50px"),
+            rx.text(f"{state_class.gas_price_modifier:.2f}", width="50px"),
             width="100%",
         ),
         
@@ -139,7 +139,7 @@ def exogenous_controls(state_class):
                 on_change=state_class.update_cpi,
                 width="100%",
             ),
-            rx.text(rx.var_formula("cpi_modifier.toFixed(2)"), width="50px"),
+            rx.text(f"{state_class.cpi_modifier:.2f}", width="50px"),
             width="100%",
         ),
         
@@ -154,7 +154,7 @@ def exogenous_controls(state_class):
                 on_change=state_class.update_search_volume,
                 width="100%",
             ),
-            rx.text(rx.var_formula("search_volume_modifier.toFixed(2)"), width="50px"),
+            rx.text(f"{state_class.search_volume_modifier:.2f}", width="50px"),
             width="100%",
         ),
         
@@ -169,7 +169,7 @@ def exogenous_controls(state_class):
                 on_change=state_class.update_forecast_months,
                 width="100%",
             ),
-            rx.text(rx.var_formula("forecast_months"), width="50px"),
+            rx.text(str(state_class.forecast_months), width="50px"),
             width="100%",
         ),
         
