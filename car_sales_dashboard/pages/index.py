@@ -1,4 +1,5 @@
 import reflex as rx
+import pandas as pd
 from car_sales_dashboard.state import DashboardState , df
 from car_sales_dashboard.components.controls import sidebar_filters, exogenous_controls, chart_container
 from car_sales_dashboard.components.tables import create_summary_table, create_forecast_table
@@ -88,7 +89,7 @@ def index():
                                 # Conditional forecast table
                                 rx.cond(
                                     DashboardState.show_table,
-                                    create_forecast_table(DashboardState.forecast_data),
+                                    create_forecast_table(pd.DataFrame(DashboardState.forecast_data)),
                                     rx.text("")
                                 ),
                                 
@@ -165,7 +166,7 @@ def index():
                                 # Summary table
                                 rx.box(
                                     create_summary_table(
-                                        DashboardState.filtered_data, 
+                                        pd.DataFrame(DashboardState.filtered_data),
                                         groupby_col='vehicle_type'
                                     ),
                                     width="100%",
