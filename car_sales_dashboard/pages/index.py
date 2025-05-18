@@ -43,7 +43,7 @@ def index():
                 
                 # Tabs for different views
                 rx.tabs(
-                    rx.tab_list(
+                    tabs=[
                         rx.tab(
                             "Sales Forecast", 
                             id="sales",
@@ -64,9 +64,9 @@ def index():
                             id="economic",
                             on_click=lambda: DashboardState.set_active_tab("economic")
                         ),
-                    ),
+                    ],
                     
-                    rx.tab_panels(
+                    panels=[
                         # Sales Forecast Tab
                         rx.tab_panel(
                             rx.vstack(
@@ -106,14 +106,14 @@ def index():
                                     # Vehicle type chart
                                     chart_container(
                                         "Sales by Vehicle Type",
-                                        rx.var_formula("get_vehicle_type_chart()"),
+                                        get_vehicle_type_chart(),
                                         height="400px"
                                     ),
                                     
                                     # Top models chart
                                     chart_container(
                                         "Top Models by Sales",
-                                        rx.var_formula("get_top_models_chart()"),
+                                        get_top_models_chart(),
                                         height="400px"
                                     ),
                                     
@@ -123,7 +123,7 @@ def index():
                                 # Sales heatmap
                                 chart_container(
                                     "Sales by Month and Vehicle Type",
-                                    rx.var_formula("get_sales_by_month_chart()"),
+                                    get_sales_by_month_chart(),
                                     height="400px"
                                 ),
                                 
@@ -138,14 +138,14 @@ def index():
                                 # Region chart
                                 chart_container(
                                     "Sales by Region",
-                                    rx.var_formula("get_region_chart()"),
+                                    get_region_chart(),
                                     height="400px"
                                 ),
                                 
                                 # State map
                                 chart_container(
                                     "Sales by State",
-                                    rx.var_formula("get_state_map_chart()"),
+                                    get_state_map_chart(),
                                     height="500px"
                                 ),
                                 
@@ -160,7 +160,7 @@ def index():
                                 # Exogenous variable impact
                                 chart_container(
                                     "Exogenous Variable Trends",
-                                    rx.var_formula("get_exogenous_impact_chart()"),
+                                    get_exogenous_impact_chart(),
                                     height="500px"
                                 ),
                                 
@@ -182,17 +182,10 @@ def index():
                             ),
                             id="economic-panel",
                         ),
-                    ),
+                    ],
                     width="100%",
                     variant="enclosed",
                     margin_top="1em",
-                ),
-                
-                rx.tabs(
-                    rx.tab("Tab 1"),
-                    rx.tab_panel("Content for Tab 1"),
-                    rx.tab("Tab 2"),
-                    rx.tab_panel("Content for Tab 2"),
                 ),
                 
                 # Footer with attribution
