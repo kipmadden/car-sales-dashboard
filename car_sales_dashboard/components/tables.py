@@ -1,5 +1,4 @@
 import reflex as rx
-import pandas as pd
 
 
 def create_summary_table(data, groupby_col='region'):
@@ -46,7 +45,7 @@ def _create_summary_table_from_data(data, groupby_col):
                 rx.slice(data, 0, 10),
                 lambda item, idx: rx.table.row(
                     rx.table.cell(item.get(groupby_col, "")),
-                    rx.table.cell(rx.format_number(item.get("sales", 0), precision=0, separator=True)),
+                    rx.table.cell(f"{item.get('sales', 0):,.0f}"),
                     rx.table.cell("1")  # Simplified count value
                 )
             )
@@ -65,17 +64,16 @@ def _create_forecast_row(item, idx):
     
     Returns:
         rx.Component: Table row
-    """
-    # Use rx.cond instead of regular if/else for handling Vars
+    """    # Use rx.cond instead of regular if/else for handling Vars
     return rx.cond(
         item["is_forecast"],
         rx.table.row(
             rx.table.cell(item.get("date", ""), color="blue"),
-            rx.table.cell(rx.format_number(item.get("sales", 0), precision=0, separator=True)),
-            rx.table.cell(rx.format_number(item.get("unemployment", 0), precision=2)),
-            rx.table.cell(rx.format_number(item.get("gas_price", 0), precision=2, prefix="$")),
-            rx.table.cell(rx.format_number(item.get("cpi_all", 0), precision=1)),
-            rx.table.cell(rx.format_number(item.get("search_volume", 0), precision=0)),
+            rx.table.cell(f"{item.get('sales', 0):,.0f}"),
+            rx.table.cell(f"{item.get('unemployment', 0):.2f}"),
+            rx.table.cell(f"${item.get('gas_price', 0):.2f}"),
+            rx.table.cell(f"{item.get('cpi_all', 0):.1f}"),
+            rx.table.cell(f"{item.get('search_volume', 0):.0f}"),
         ),
         rx.fragment() # Empty fragment for non-forecast rows
     )
