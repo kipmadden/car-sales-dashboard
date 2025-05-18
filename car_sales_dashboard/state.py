@@ -150,7 +150,13 @@ class DashboardState(rx.State):
     
     def update_years(self, years):
         """Update selected years"""
-        self.selected_years = years
+        # Years are provided as strings from the UI; convert to integers for
+        # filtering against the numeric ``model_year`` column.
+        try:
+            self.selected_years = [int(y) for y in years]
+        except (TypeError, ValueError):
+            # Gracefully handle invalid values by clearing the filter
+            self.selected_years = []
         self.filter_data()
     
     # Exogenous variable update handlers
