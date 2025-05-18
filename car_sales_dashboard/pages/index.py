@@ -44,30 +44,12 @@ def index():
                 # Tabs for different views
                 rx.tabs(
                     tabs=[
-                        rx.tab(
-                            "Sales Forecast", 
-                            id="sales",
-                            on_click=lambda: DashboardState.set_active_tab("sales")
-                        ),
-                        rx.tab(
-                            "Vehicle Analysis", 
-                            id="vehicles",
-                            on_click=lambda: DashboardState.set_active_tab("vehicles")
-                        ),
-                        rx.tab(
-                            "Geographic", 
-                            id="geographic",
-                            on_click=lambda: DashboardState.set_active_tab("geographic")
-                        ),
-                        rx.tab(
-                            "Economic Factors", 
-                            id="economic",
-                            on_click=lambda: DashboardState.set_active_tab("economic")
-                        ),
+                        rx.tab("Sales Forecast", id="sales", on_click=lambda: DashboardState.set_active_tab("sales")),
+                        rx.tab("Vehicle Analysis", id="vehicles", on_click=lambda: DashboardState.set_active_tab("vehicles")),
+                        rx.tab("Geographic", id="geographic", on_click=lambda: DashboardState.set_active_tab("geographic")),
+                        rx.tab("Economic Factors", id="economic", on_click=lambda: DashboardState.set_active_tab("economic")),
                     ],
-                    
                     panels=[
-                        # Sales Forecast Tab
                         rx.tab_panel(
                             rx.vstack(
                                 # Main sales trend and forecast chart
@@ -99,7 +81,6 @@ def index():
                             id="sales-panel",
                         ),
                         
-                        # Vehicle Analysis Tab
                         rx.tab_panel(
                             rx.vstack(
                                 rx.hstack(
@@ -132,7 +113,6 @@ def index():
                             id="vehicles-panel",
                         ),
                         
-                        # Geographic Tab
                         rx.tab_panel(
                             rx.vstack(
                                 # Region chart
@@ -154,7 +134,6 @@ def index():
                             id="geographic-panel",
                         ),
                         
-                        # Economic Factors Tab
                         rx.tab_panel(
                             rx.vstack(
                                 # Exogenous variable impact
