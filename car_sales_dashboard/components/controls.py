@@ -199,7 +199,7 @@ def chart_container(title, chart_data, height="400px"):
     
     Args:
         title (str): Chart title
-        chart_data: Chart data formula
+        chart_data: Chart data formula - should be a Var containing a plot dictionary
         height (str): Chart height
     
     Returns:
@@ -207,7 +207,11 @@ def chart_container(title, chart_data, height="400px"):
     """
     return rx.box(
         rx.heading(title),
-        rx.plotly(chart_data),  # Just pass the dict directly, not as data=chart_data
+        rx.cond(
+            chart_data != None,
+            rx.plotly.plot(chart_data),
+            rx.center("No data available", height="200px")
+        ),
         width="100%",
         padding="1em",
         background="white",

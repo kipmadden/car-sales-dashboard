@@ -30,14 +30,14 @@ def index():
                     "Explore the impact of exogenous factors on vehicle sales",
                     margin_bottom="1em",
                 ),
-                exogenous_controls(DashboardState),
-                rx.tabs.root(
+                exogenous_controls(DashboardState),                rx.tabs.root(
                     rx.tabs.list(
                         rx.tabs.trigger("Sales Forecast", value="sales"),
                         rx.tabs.trigger("Vehicle Analysis", value="vehicles"),
                         rx.tabs.trigger("Geographic", value="geographic"),
                         rx.tabs.trigger("Economic Factors", value="economic"),
-                    ),                rx.tabs.content(
+                    ),
+                    rx.tabs.content(
                         rx.vstack(
                             chart_container(
                                 "Sales Trend and Forecast",
