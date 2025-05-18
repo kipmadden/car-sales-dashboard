@@ -37,8 +37,7 @@ def index():
                         rx.tabs.trigger("Vehicle Analysis", value="vehicles"),
                         rx.tabs.trigger("Geographic", value="geographic"),
                         rx.tabs.trigger("Economic Factors", value="economic"),
-                    ),
-                    rx.tabs.content(
+                    ),                rx.tabs.content(
                         rx.vstack(
                             chart_container(
                                 "Sales Trend and Forecast",

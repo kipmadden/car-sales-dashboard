@@ -199,32 +199,38 @@ class DashboardState(rx.State):
     def set_active_tab(self, tab):
         """Set active tab"""
         self.active_tab = tab
-    
-    # Chart creation methods
+      # Chart creation methods - these must be decorated with @rx.var so they produce Plotly figures
+    @rx.var
     def get_sales_trend_chart(self):
         """Get sales trend chart"""
         return create_sales_trend_chart(self._forecast_df)
     
+    @rx.var
     def get_vehicle_type_chart(self):
         """Get vehicle type chart"""
         return create_vehicle_type_chart(self._filtered_df)
     
+    @rx.var
     def get_region_chart(self):
         """Get region chart"""
         return create_region_chart(self._filtered_df)
     
+    @rx.var
     def get_exogenous_impact_chart(self):
         """Get exogenous impact chart"""
         return create_exogenous_impact_chart(self._forecast_df)
     
+    @rx.var
     def get_top_models_chart(self):
         """Get top models chart"""
         return create_top_models_chart(self._filtered_df)
     
+    @rx.var
     def get_state_map_chart(self):
         """Get state map chart"""
         return create_state_map_chart(self._filtered_df)
     
+    @rx.var
     def get_sales_by_month_chart(self):
         """Get sales by month heatmap"""
         return create_heatmap_chart(self._filtered_df, x_col='month', y_col='vehicle_type')
