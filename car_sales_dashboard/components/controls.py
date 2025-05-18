@@ -207,10 +207,12 @@ def chart_container(title, chart_data, height="400px"):
     """
     return rx.box(
         rx.heading(title),
-        # Use plot directly with the chart_data var
-        rx.plotly.plot(
-            chart_data,
-            fallback=rx.center("No data available", height="200px")
+        rx.cond(
+            chart_data != {},
+            rx.plotly(
+                data=chart_data,
+            ),
+            rx.center("No data available", height="200px")
         ),
         width="100%",
         padding="1em",
