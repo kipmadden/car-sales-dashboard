@@ -195,7 +195,7 @@ def exogenous_controls(state_class):
 
 def chart_container(title, chart_data, height="400px"):
     """
-    Create a container for a chart
+    Create a container for a chart with a title heading
     
     Args:
         title (str): Chart title
@@ -206,6 +206,7 @@ def chart_container(title, chart_data, height="400px"):
         rx.Component: Chart container component
     """
     return rx.box(
+        rx.heading(title),
         rx.plotly(data=chart_data),
         width="100%",
         padding="1em",
