@@ -204,7 +204,8 @@ def chart_container(title, chart_data, height="400px"):
     
     Returns:
         rx.Component: Chart container component
-    """    return rx.box(
+    """
+    return rx.box(
         rx.heading(title),
         rx.plotly(
             figure=chart_data,
