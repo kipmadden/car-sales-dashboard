@@ -39,10 +39,9 @@ def _create_summary_table_from_data(data, groupby_col):
                 rx.table.column_header_cell("Count")
             )
         ),
-        rx.table.body(
-            rx.foreach(                # We use the first 10 items as a simplification
+        rx.table.body(            rx.foreach(                # We use the first 10 items as a simplification
                 # In a real app, proper processing would be done in the backend
-                rx.slice(data, 0, 10),
+                data[:10],  # Using Python's native slicing instead of rx.slice
                 lambda item, idx: rx.table.row(
                     rx.table.cell(item.get(groupby_col, "")),
                     rx.table.cell(f"{item.get('sales', 0):,.0f}"),
