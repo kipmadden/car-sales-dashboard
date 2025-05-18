@@ -37,9 +37,9 @@ def index():
                         rx.tabs.trigger("Vehicle Analysis", value="vehicles"),
                         rx.tabs.trigger("Geographic", value="geographic"),
                         rx.tabs.trigger("Economic Factors", value="economic"),
-                    ),
-                    rx.tabs.content(
-                        rx.vstack(                            chart_container(
+                    ),                rx.tabs.content(
+                        rx.vstack(
+                            chart_container(
                                 "Sales Trend and Forecast",
                                 DashboardState.get_sales_trend_chart,
                                 height="500px"
@@ -51,10 +51,9 @@ def index():
                                 ),
                                 rx.text("Show Forecast Table"),
                                 margin_top="1em",
-                            ),
-                            rx.cond(
+                            ),                            rx.cond(
                                 DashboardState.show_table,
-                                create_forecast_table(pd.DataFrame(DashboardState.forecast_data)),
+                                create_forecast_table(DashboardState.forecast_data),
                                 rx.text("")
                             ),
                             width="100%",
@@ -98,13 +97,14 @@ def index():
                     ),
                     rx.tabs.content(
                         rx.vstack(
-                            chart_container(                                "Exogenous Variable Trends",
+                            chart_container(
+                                "Exogenous Variable Trends",
                                 DashboardState.get_exogenous_impact_chart,
                                 height="500px"
                             ),
                             rx.box(
                                 create_summary_table(
-                                    pd.DataFrame(DashboardState.filtered_data),
+                                    DashboardState.filtered_data,
                                     groupby_col='vehicle_type'
                                 ),
                                 width="100%",

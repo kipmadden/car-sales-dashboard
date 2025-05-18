@@ -204,15 +204,11 @@ def chart_container(title, chart_data, height="400px"):
     
     Returns:
         rx.Component: Chart container component
-    """
-    return rx.box(
+    """    return rx.box(
         rx.heading(title),
-        rx.cond(
-            chart_data != {},
-            rx.plotly(
-                data=chart_data,
-            ),
-            rx.center("No data available", height="200px")
+        rx.plotly(
+            figure=chart_data,
+            fallback=rx.center("No data available", height="200px")
         ),
         width="100%",
         padding="1em",
