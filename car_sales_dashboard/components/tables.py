@@ -44,10 +44,9 @@ def _create_summary_table_from_data(data, groupby_col):
             rx.foreach(
                 # We use the first 10 items as a simplification
                 # In a real app, proper processing would be done in the backend
-                rx.slice(data, 0, 10),
-                lambda item, idx: rx.table.row(
+                rx.slice(data, 0, 10),                lambda item, idx: rx.table.row(
                     rx.table.cell(item.get(groupby_col, "")),
-                    rx.table.cell(f"{item.get('sales', 0):,.0f}"),
+                    rx.table.cell(rx.format_number(item.get("sales", 0), precision=0, separator=True)),
                     rx.table.cell("1")  # Simplified count value
                 )
             )
@@ -66,17 +65,19 @@ def _create_forecast_row(item, idx):
     
     Returns:
         rx.Component: Table row
-    """    # Only show forecast rows
-    if not item.get('is_forecast', False):
-        return None
-      # Create row with formatted values
-    return rx.table.row(
-        rx.table.cell(item.get('date', ''), color="blue"),
-        rx.table.cell(f"{item.get('sales', 0):,.0f}"),
-        rx.table.cell(f"{item.get('unemployment', 0):.2f}"),
-        rx.table.cell(f"${item.get('gas_price', 0):.2f}"),
-        rx.table.cell(f"{item.get('cpi_all', 0):.1f}"),
-        rx.table.cell(f"{item.get('search_volume', 0):.0f}"),
+    """
+    # Use rx.cond instead of regular if/else for handling Vars
+    return rx.cond(
+        item["is_forecast"],
+        rx.table.row(
+            rx.table.cell(item.get("date", ""), color="blue"),
+            rx.table.cell(rx.format_number(item.get("sales", 0), precision=0, separator=True)),
+            rx.table.cell(rx.format_number(item.get("unemployment", 0), precision=2)),
+            rx.table.cell(rx.format_number(item.get("gas_price", 0), precision=2, prefix="$")),
+            rx.table.cell(rx.format_number(item.get("cpi_all", 0), precision=1)),
+            rx.table.cell(rx.format_number(item.get("search_volume", 0), precision=0)),
+        ),
+        rx.fragment() # Empty fragment for non-forecast rows
     )
 
 
@@ -90,10 +91,11 @@ def create_forecast_table(forecast_data):
     Returns:
         rx.Component: Table component
     """
-    # Handle the case when there's no data - use rx.cond for Vars    return rx.cond(
-    forecast_data == [],
-    rx.text("No forecast data available"),
-    rx.table.root(
+    # Handle the case when there's no data - use rx.cond for Vars
+    return rx.cond(
+        forecast_data == [],
+        rx.text("No forecast data available"),
+        rx.table.root(
         rx.table.header(
             rx.table.row(
                 rx.table.column_header_cell("Date"),
