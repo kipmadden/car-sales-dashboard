@@ -199,17 +199,22 @@ def chart_container(title, chart_data, height="400px"):
     
     Args:
         title (str): Chart title
-        chart_data: Chart data formula - should be a Var containing a plot dictionary
+        chart_data: Var containing a plot dictionary
         height (str): Chart height
     
     Returns:
         rx.Component: Chart container component
     """
+    # We use rx.cond to handle the case when chart_data might be empty
     return rx.box(
         rx.heading(title),
-        rx.plotly(
-            figure=chart_data,
-            fallback=rx.center("No data available", height="200px")
+        # The key change: use rx.cond to handle empty data case
+        rx.cond(
+            chart_data == {},
+            rx.center("No data available", height="200px"),
+            rx.plotly(
+                figure=chart_data
+            )
         ),
         width="100%",
         padding="1em",
