@@ -54,7 +54,7 @@ def index():
                             rx.vstack(
                                 chart_container(
                                     "Sales Trend and Forecast",
-                                    get_sales_trend_chart(),
+                                    DashboardState.get_sales_trend_chart(),
                                     height="500px"
                                 ),
                                 rx.hstack(
@@ -79,19 +79,19 @@ def index():
                                 rx.hstack(
                                     chart_container(
                                         "Sales by Vehicle Type",
-                                        get_vehicle_type_chart(),
+                                        DashboardState.get_vehicle_type_chart(),
                                         height="400px"
                                     ),
                                     chart_container(
                                         "Top Models by Sales",
-                                        get_top_models_chart(),
+                                        DashboardState.get_top_models_chart(),
                                         height="400px"
                                     ),
                                     width="100%",
                                 ),
                                 chart_container(
                                     "Sales by Month and Vehicle Type",
-                                    get_sales_by_month_chart(),
+                                    DashboardState.get_sales_by_month_chart(),
                                     height="400px"
                                 ),
                                 width="100%",
@@ -102,12 +102,12 @@ def index():
                             rx.vstack(
                                 chart_container(
                                     "Sales by Region",
-                                    get_region_chart(),
+                                    DashboardState.get_region_chart(),
                                     height="400px"
                                 ),
                                 chart_container(
                                     "Sales by State",
-                                    get_state_map_chart(),
+                                    DashboardState.get_state_map_chart(),
                                     height="500px"
                                 ),
                                 width="100%",
@@ -118,7 +118,7 @@ def index():
                             rx.vstack(
                                 chart_container(
                                     "Exogenous Variable Trends",
-                                    get_exogenous_impact_chart(),
+                                    DashboardState.get_exogenous_impact_chart(),
                                     height="500px"
                                 ),
                                 rx.box(
