@@ -38,14 +38,19 @@ def _create_summary_table_from_data(data, groupby_col):
                 rx.table.column_header_cell("Total Sales"),
                 rx.table.column_header_cell("Count")
             )
-        ),
-        rx.table.body(            rx.foreach(                # We use the first 10 items as a simplification
+        ),        rx.table.body(
+            # Use rx.cond to check if data exists and then use rx.foreach
+            rx.foreach(
+                # We use the first 10 items as a simplification
                 # In a real app, proper processing would be done in the backend
-                data[:10],  # Using Python's native slicing instead of rx.slice
-                lambda item, idx: rx.table.row(
-                    rx.table.cell(item.get(groupby_col, "")),
+                data,  # Use complete data and limit in the lambda function
+                lambda item, idx: rx.cond(
+                    idx < 10,  # Only render the first 10 items
+                    rx.table.row(                    rx.table.cell(item.get(groupby_col, "")),
                     rx.table.cell(f"{item.get('sales', 0):,.0f}"),
                     rx.table.cell("1")  # Simplified count value
+                ),
+                    rx.fragment()  # Don't render items beyond index 10
                 )
             )
         ),
