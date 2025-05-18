@@ -169,7 +169,7 @@ def exogenous_controls(state_class):
                 on_change=state_class.update_forecast_months,
                 width="100%",
             ),
-            rx.text(str(state_class.forecast_months), width="50px"),
+            rx.text(state_class.forecast_months.to_string(), width="50px"),
             width="100%",
         ),
         
@@ -207,10 +207,10 @@ def chart_container(title, chart_data, height="400px"):
     """
     return rx.box(
         rx.heading(title),
-        rx.cond(
-            chart_data != {},
-            rx.plotly.plot.create(data=chart_data),
-            rx.center("No data available", height="200px")
+        # Use plot directly with the chart_data var
+        rx.plotly.plot(
+            chart_data,
+            fallback=rx.center("No data available", height="200px")
         ),
         width="100%",
         padding="1em",

@@ -198,7 +198,9 @@ class DashboardState(rx.State):
     
     def set_active_tab(self, tab):
         """Set active tab"""
-        self.active_tab = tab    # Chart creation methods - these must be decorated with @rx.var with type annotations
+        self.active_tab = tab
+    
+    # Chart creation methods - these must be decorated with @rx.var with type annotations
     @rx.var
     def get_sales_trend_chart(self) -> dict:
         """Get sales trend chart"""
