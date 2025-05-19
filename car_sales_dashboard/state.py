@@ -10,7 +10,8 @@ from car_sales_dashboard.components import (
     create_exogenous_impact_chart,
     create_top_models_chart,
     create_state_map_chart,
-    create_heatmap_chart
+    create_heatmap_chart,
+    create_exogenous_chart
 )
 
 # Load data
