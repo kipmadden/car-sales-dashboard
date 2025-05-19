@@ -98,7 +98,7 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
         # Add forecast line - starting from last historical point
         forecast_x = forecast_months
         forecast_y = [y_values[-1]] + forecast_y_values  # Connect with last historical point
-          fig.add_trace(
+        fig.add_trace(
             go.Scatter(
                 x=forecast_x,
                 y=forecast_y,
