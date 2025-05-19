@@ -53,12 +53,7 @@ def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"
     return rx.box(
         rx.heading(title, color="black", size="4"),
         rx.center(
-            rx.plotly(
-                fig,  # Pass the figure directly, not as a dictionary
-                config={"responsive": True},
-                height=height,
-                width="100%",
-            ),
+            rx.plotly(fig),  # Pass the figure as the first positional argument
             height=height,
             width="100%",
         ),
