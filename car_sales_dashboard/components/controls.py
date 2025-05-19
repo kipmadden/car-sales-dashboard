@@ -113,8 +113,7 @@ def exogenous_controls(state_class):
             ),
             rx.text(f"{state_class.unemployment_modifier:.2f}", width="50px", color="black"),
             width="100%",
-        ),
-          # Gas price modifier
+        ),        # Gas price modifier - with improved slider reactivity
         rx.hstack(
             rx.text("Gas Price:", width="150px", color="black"),
             rx.slider(
@@ -124,6 +123,8 @@ def exogenous_controls(state_class):
                 default_value=1.0,
                 on_change=state_class.update_gas_price,
                 width="100%",
+                color_scheme="red",  # Use a color scheme to make it more noticeable
+                focus_thumb_on_change=True,  # Ensure slider thumb stays in focus during changes
             ),
             rx.text(f"{state_class.gas_price_modifier:.2f}", width="50px", color="black"),
             width="100%",

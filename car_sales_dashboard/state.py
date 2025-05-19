@@ -111,13 +111,16 @@ class DashboardState(rx.State):
                 self._scenario_engine.train(self._filtered_df)
         except AttributeError:
             # Handle case where _filtered_df might not be accessible
-            pass
-
-    def generate_forecast(self):
+            pass    def generate_forecast(self):
         """Generate forecast based on selected modifiers"""
         # Generate forecast if we have data - safely check if attribute exists and if dataframe is empty
         try:
             if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
+                # Log the current modifiers being used
+                print(f"Generating forecast with modifiers: unemployment={self.unemployment_modifier}, " 
+                      f"gas_price={self.gas_price_modifier}, cpi={self.cpi_modifier}, "
+                      f"search_volume={self.search_volume_modifier}, months={self.forecast_months}")
+                
                 forecast_df = self._scenario_engine.forecast(
                     self._filtered_df,
                     unemployment_modifier=self.unemployment_modifier,
@@ -126,14 +129,22 @@ class DashboardState(rx.State):
                     search_volume_modifier=self.search_volume_modifier,
                     months_ahead=self.forecast_months
                 )
+                
+                # Update both the private DataFrame and the public serializable list
                 self._forecast_df = forecast_df
                 self.forecast_data = forecast_df.to_dict("records")
+                
+                # Log success information for debugging
+                print(f"Forecast generated successfully with {len(self.forecast_data)} records")
             else:
+                print("Cannot generate forecast: No filtered data available")
                 self._forecast_df = pd.DataFrame()
                 self.forecast_data = []
         except Exception as e:
             # Handle any errors during forecast generation
             print(f"Error generating forecast: {e}")
+            import traceback
+            traceback.print_exc()
             self._forecast_df = pd.DataFrame()
             self.forecast_data = []
     
@@ -202,13 +213,15 @@ class DashboardState(rx.State):
             value = float(value[0])
         self.unemployment_modifier = float(value)
         self.generate_forecast()
-    
-    def update_gas_price(self, value):
+      def update_gas_price(self, value):
         """Update gas price modifier"""
         # Convert value to float if it's a list
         if isinstance(value, list) and len(value) > 0:
             value = float(value[0])
-        self.gas_price_modifier = float(value)
+        value = float(value)
+        print(f"Updating gas price modifier to {value}")
+        self.gas_price_modifier = value
+        # Force forecast regeneration
         self.generate_forecast()
     
     def update_cpi(self, value):
@@ -247,10 +260,11 @@ class DashboardState(rx.State):
         # Force re-evaluation of charts for the new tab
         self.filter_data()
 
-    # UI update handlers
-    def toggle_table(self, value: bool):
+    # UI update handlers    def toggle_table(self, value: bool):
         """Toggle the table visibility in the dashboard UI."""
+        print(f"Toggling table visibility to: {value}")
         self.show_table = value
+        # No need to regenerate forecast or filter data, just update the UI state
 
     # Chart creation methods - these must be decorated with @rx.var with type annotations    @rx.var
     def get_sales_trend_chart(self) -> dict:

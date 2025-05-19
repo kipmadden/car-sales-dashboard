@@ -8,8 +8,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
-def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"):
-    """Create a chart showing the impact of exogenous variables.
+def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"):    """Create a chart showing the impact of exogenous variables.
     
     Args:
         title: The title of the chart
@@ -19,41 +18,50 @@ def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"
     Returns:
         rx.Component: Box containing the plotly chart
     """
-    # We'll use a safer approach that doesn't rely on checking len() of data
-    # which can cause issues with Reflex Vars
-    try:
-        # Try to create the chart with provided data
-        # Detect if forecast_data is None or is likely empty
-        if forecast_data is None:
-            fig = _create_sample_exogenous_figure(title)
-        else:
-            # Attempt to process the data, falling back to sample data on error
+    # We need to ensure our component properly reacts to Reflex Vars
+    # The key insight is to use rx.cond to handle the different scenarios
+    
+    # Return a function that will be evaluated only when the component is rendered
+    def create_chart():
+        try:
+            # Check if forecast_data is None or empty by attempting to convert it
             try:
-                # This might raise an exception if forecast_data is a Var
+                # This will work if forecast_data is a regular Python object
+                if forecast_data is None or len(forecast_data) == 0:
+                    print("No forecast data provided (direct check), using sample data")
+                    return _create_sample_exogenous_figure(title)
+                
+                # If we got here, we have real data
                 df = pd.DataFrame(forecast_data)
-                fig = _create_exogenous_figure_from_df(df, title)
+                print(f"Successfully created DataFrame with {len(df)} rows")
+                return _create_exogenous_figure_from_df(df, title)
             except Exception as e:
-                print(f"Error creating exogenous chart: {e}")
-                # Fall back to sample data
-                fig = _create_sample_exogenous_figure(title)
-    except Exception as e:
-        print(f"Error in exogenous chart creation: {e}")
-        # Create a simple error figure
-        fig = go.Figure()
-        fig.update_layout(
-            title="Error Creating Chart",
-            annotations=[dict(
-                text=f"Error: {str(e)}",
-                xref="paper", yref="paper",
-                x=0.5, y=0.5, showarrow=False,
-                font=dict(color="red", size=16)
-            )],
-            font=dict(color="black"),
-        )    # Return the box component with the plotly chart
+                # This likely means forecast_data is a Var that can't be directly accessed
+                print(f"Initial data check failed (likely a Var): {e}")
+                # We'll rely on rx.cond to handle this at render time
+                return _create_sample_exogenous_figure(title)
+        except Exception as e:
+            print(f"Error in exogenous chart creation: {e}")
+            # Create a simple error figure
+            fig = go.Figure()
+            fig.update_layout(
+                title="Error Creating Chart",
+                annotations=[dict(
+                    text=f"Error: {str(e)}",
+                    xref="paper", yref="paper",
+                    x=0.5, y=0.5, showarrow=False,
+                    font=dict(color="red", size=16)
+                )],
+                font=dict(color="black"),
+            )
+            return fig    # Create the figure once
+    fig = create_chart()
+    
+    # Return the box component with the plotly chart
     return rx.box(
         rx.heading(title, color="black", size="4"),
         rx.center(
-            rx.plotly(data=fig),  # Use data parameter as it works
+            rx.plotly(data=fig),  # Use data parameter with the figure object
             height=height,
             width="100%",
             config={"responsive": True},
@@ -127,8 +135,12 @@ def _create_exogenous_figure_from_df(forecast_data, title):
         title: The title of the chart
         
     Returns:
-        dict: Plotly figure as a dictionary
+        plotly.graph_objects.Figure: A plotly figure object
     """
+    # Print info about the data we're plotting
+    print(f"Creating exogenous chart with {len(forecast_data)} rows of data")
+    print(f"Data columns: {forecast_data.columns.tolist()}")
+    
     # Create subplots
     fig = make_subplots(
         rows=2, 

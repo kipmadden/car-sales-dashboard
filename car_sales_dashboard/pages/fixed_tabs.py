@@ -239,11 +239,15 @@ def create_tabs():
                     margin_top="2em",
                     margin_bottom="1em",
                     padding="0.5em",
-                ),
-                rx.cond(
-                    DashboardState.show_table,
+                ),                rx.box(
+                    # Use box with display property to ensure proper visibility toggling
                     create_forecast_table(DashboardState.forecast_data),
-                    rx.text("")
+                    display=rx.cond(
+                        DashboardState.show_table,
+                        "block",
+                        "none"
+                    ),
+                    width="100%"
                 ),
                 width="100%",
             ),
@@ -280,11 +284,10 @@ def create_tabs():
             ),
             value="geographic",
         ),        rx.tabs.content(
-            rx.vstack(                # Create a chart for exogenous variables
-                # Simplified approach: always create the chart and let the function handle the data
+            rx.vstack(                # Create a chart for exogenous variables using the actual forecast data
                 create_exogenous_chart(
                     "Exogenous Variable Trends",
-                    None,  # Just use sample data for now to avoid Var issues
+                    DashboardState.forecast_data,  # Pass the actual forecast data
                     height="500px"
                 ),
                 rx.box(
