@@ -38,7 +38,7 @@ class DashboardState(rx.State):
     
     # Model states
     model_type: str = "Linear Regression"
-    _scenario_engine: ScenarioEngine = PrivateAttr(default_factory=lambda: ScenarioEngine(model_type="linear"))
+    _scenario_engine: ScenarioEngine = PrivateAttr()
     
     # Exogenous variable states
     unemployment_modifier: float = 1.0
@@ -52,6 +52,11 @@ class DashboardState(rx.State):
     active_tab: str = "sales"
     
     # Initialize when page loads
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Initialize the scenario engine
+        self._scenario_engine = ScenarioEngine(model_type="linear")
+    
     def on_load(self):
         """Called when the page loads"""
         self.filter_data()
