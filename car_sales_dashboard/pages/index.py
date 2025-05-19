@@ -31,10 +31,10 @@ def index():
                     margin_bottom="1em",
                 ),
                 exogenous_controls(DashboardState),                rx.tabs.root(                    rx.tabs.list(
-                        rx.tabs.trigger("Sales Forecast", value="sales", color="black", on_click=lambda: DashboardState.update_active_tab("sales")),
-                        rx.tabs.trigger("Vehicle Analysis", value="vehicles", color="black", on_click=lambda: DashboardState.update_active_tab("vehicles")),
-                        rx.tabs.trigger("Geographic", value="geographic", color="black", on_click=lambda: DashboardState.update_active_tab("geographic")),
-                        rx.tabs.trigger("Economic Factors", value="economic", color="black", on_click=lambda: DashboardState.update_active_tab("economic")),
+                        rx.tabs.trigger("Sales Forecast", value="sales", color="black"),
+                        rx.tabs.trigger("Vehicle Analysis", value="vehicles", color="black"),
+                        rx.tabs.trigger("Geographic", value="geographic", color="black"),
+                        rx.tabs.trigger("Economic Factors", value="economic", color="black"),
                     ),
                     rx.tabs.content(
                         rx.vstack(                            chart_container(
@@ -122,10 +122,7 @@ def index():
                             ),
                             width="100%",
                         ),
-                        value="economic",                    ),
-                    # All keyword arguments must come after all positional arguments
-                    # Removed on_value_change as it's not supported by TabsRoot
-                    value=DashboardState.active_tab,
+                        value="economic",                    ),                    # Use default_value only to avoid issues with event handlers
                     default_value="sales",
                     orientation="horizontal",
                     width="100%",
