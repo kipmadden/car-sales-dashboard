@@ -15,7 +15,7 @@ def create_summary_table(data, groupby_col='region'):
     # Handle the case when there's no data - use rx.cond for Vars
     return rx.cond(
         data == [],
-        rx.text("No data available"),
+        rx.text("No data available", color="black"),
         _create_summary_table_from_data(data, groupby_col)
     )
 
@@ -34,11 +34,12 @@ def _create_summary_table_from_data(data, groupby_col):
     return rx.table.root(
         rx.table.header(
             rx.table.row(
-                rx.table.column_header_cell(groupby_col.capitalize()),
-                rx.table.column_header_cell("Total Sales"),
-                rx.table.column_header_cell("Count")
+                rx.table.column_header_cell(groupby_col.capitalize(), color="black", font_weight="bold"),
+                rx.table.column_header_cell("Total Sales", color="black", font_weight="bold"),
+                rx.table.column_header_cell("Count", color="black", font_weight="bold")
             )
-        ),        rx.table.body(
+        ),
+        rx.table.body(
             # Use rx.cond to check if data exists and then use rx.foreach
             rx.foreach(
                 # We use the first 10 items as a simplification
@@ -46,10 +47,11 @@ def _create_summary_table_from_data(data, groupby_col):
                 data,  # Use complete data and limit in the lambda function
                 lambda item, idx: rx.cond(
                     idx < 10,  # Only render the first 10 items
-                    rx.table.row(                    rx.table.cell(item.get(groupby_col, "")),
-                    rx.table.cell(f"{item.get('sales', 0):,.0f}"),
-                    rx.table.cell("1")  # Simplified count value
-                ),
+                    rx.table.row(
+                        rx.table.cell(item.get(groupby_col, ""), color="black"),
+                        rx.table.cell(f"{item.get('sales', 0):,.0f}", color="black"),
+                        rx.table.cell("1", color="black")  # Simplified count value
+                    ),
                     rx.fragment()  # Don't render items beyond index 10
                 )
             )
@@ -68,16 +70,17 @@ def _create_forecast_row(item, idx):
     
     Returns:
         rx.Component: Table row
-    """    # Use rx.cond instead of regular if/else for handling Vars
+    """
+    # Use rx.cond instead of regular if/else for handling Vars
     return rx.cond(
         item.get("is_forecast", False),
         rx.table.row(
-            rx.table.cell(item.get("date", ""), color="blue"),
-            rx.table.cell(f"{item.get('sales', 0):,.0f}"),
-            rx.table.cell(f"{item.get('unemployment', 0):.2f}"),
-            rx.table.cell(f"${item.get('gas_price', 0):.2f}"),
-            rx.table.cell(f"{item.get('cpi_all', 0):.1f}"),
-            rx.table.cell(f"{item.get('search_volume', 0):.0f}"),
+            rx.table.cell(item.get("date", ""), color="black", font_weight="bold" if idx == 0 else "normal"),
+            rx.table.cell(f"{item.get('sales', 0):,.0f}", color="black"),
+            rx.table.cell(f"{item.get('unemployment', 0):.2f}", color="black"),
+            rx.table.cell(f"${item.get('gas_price', 0):.2f}", color="black"),
+            rx.table.cell(f"{item.get('cpi_all', 0):.1f}", color="black"),
+            rx.table.cell(f"{item.get('search_volume', 0):.0f}", color="black"),
         ),
         rx.fragment() # Empty fragment for non-forecast rows
     )
@@ -96,24 +99,32 @@ def create_forecast_table(forecast_data):
     # Handle the case when there's no data - use rx.cond for Vars
     return rx.cond(
         forecast_data == [],
-        rx.text("No forecast data available"),
-        rx.table.root(
-            rx.table.header(
-                rx.table.row(
-                    rx.table.column_header_cell("Date"),
-                    rx.table.column_header_cell("Sales"),
-                    rx.table.column_header_cell("Unemployment"),
-                    rx.table.column_header_cell("Gas Price"),
-                    rx.table.column_header_cell("CPI"),
-                    rx.table.column_header_cell("Search Volume"),
-                )
-            ),
-            rx.table.body(
-                rx.foreach(
-                    forecast_data,
-                    lambda item, idx: _create_forecast_row(item, idx)
-                )
+        rx.text("No forecast data available", color="black"),
+        rx.box(
+            rx.table.root(
+                rx.table.header(
+                    rx.table.row(
+                        rx.table.column_header_cell("Date", color="black", font_weight="bold"),
+                        rx.table.column_header_cell("Sales", color="black", font_weight="bold"),
+                        rx.table.column_header_cell("Unemployment", color="black", font_weight="bold"),
+                        rx.table.column_header_cell("Gas Price", color="black", font_weight="bold"),
+                        rx.table.column_header_cell("CPI", color="black", font_weight="bold"),
+                        rx.table.column_header_cell("Search Volume", color="black", font_weight="bold"),
+                    )
+                ),
+                rx.table.body(
+                    rx.foreach(
+                        forecast_data,
+                        lambda item, idx: _create_forecast_row(item, idx)
+                    )
+                ),
+                width="100%",
             ),
             width="100%",
+            margin_top="1.5em",
+            padding="1em",
+            background="white",
+            border_radius="md",
+            border="1px solid #EEE",
         )
     )

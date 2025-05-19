@@ -17,54 +17,86 @@ def create_sales_trend_chart(forecast_data):
     # Check if data is empty either as DataFrame or list
     if isinstance(forecast_data, pd.DataFrame):
         if forecast_data.empty:
+            print("Forecast data DataFrame is empty")
             return {}
     elif not forecast_data:
+        print("Forecast data is None or empty list")
         return {}
     
-    # Create the chart
+    # Additional debug info
+    try:
+        print(f"Forecast data type: {type(forecast_data)}")
+        print(f"Forecast data columns: {forecast_data.columns if hasattr(forecast_data, 'columns') else 'No columns'}")
+        print(f"Forecast data shape: {forecast_data.shape if hasattr(forecast_data, 'shape') else 'No shape'}")
+    except Exception as e:
+        print(f"Error inspecting forecast data: {e}")
+      # Create the chart
     fig = go.Figure()
     
-    # Historical sales
-    historical = forecast_data[forecast_data['is_forecast'] == False]
-    fig.add_trace(go.Scatter(
-        x=historical['date'],
-        y=historical['sales'],
-        mode='lines',
-        name='Historical Sales',
-        line=dict(color='blue', width=2)
-    ))
-    
-    # Forecasted sales
-    forecast = forecast_data[forecast_data['is_forecast'] == True]
-    fig.add_trace(go.Scatter(
-        x=forecast['date'],
-        y=forecast['sales'],
-        mode='lines',
-        name='Forecasted Sales',
-        line=dict(color='red', width=2, dash='dash')
-    ))
-      # Update layout
+    try:
+        # Historical sales - with error handling
+        if 'is_forecast' in forecast_data.columns:
+            # Handle if filtering works correctly
+            historical = forecast_data[forecast_data['is_forecast'] == False]
+            if not historical.empty:
+                fig.add_trace(go.Scatter(
+                    x=historical['date'],
+                    y=historical['sales'],
+                    mode='lines',
+                    name='Historical Sales',
+                    line=dict(color='blue', width=2)
+                ))
+            else:
+                print("No historical data after filtering")
+            
+            # Forecasted sales
+            forecast = forecast_data[forecast_data['is_forecast'] == True]
+            if not forecast.empty:
+                fig.add_trace(go.Scatter(
+                    x=forecast['date'],
+                    y=forecast['sales'],
+                    mode='lines',
+                    name='Forecasted Sales',
+                    line=dict(color='red', width=2, dash='dash')
+                ))
+            else:
+                print("No forecast data after filtering")
+        else:
+            # If 'is_forecast' column doesn't exist, just plot all data
+            print("'is_forecast' column not found in data, plotting all as historical")
+            fig.add_trace(go.Scatter(
+                x=forecast_data['date'],
+                y=forecast_data['sales'],
+                mode='lines',
+                name='Sales Data',
+                line=dict(color='blue', width=2)
+            ))
+    except Exception as e:
+        print(f"Error creating chart traces: {e}")      # Update layout with improved visibility settings
     fig.update_layout(
         title={
             'text': 'Sales Trend and Forecast',
-            'font': {'color': 'black', 'size': 18}
+            'font': {'color': 'black', 'size': 20}  # Increased font size
         },
         xaxis_title={
             'text': 'Date',
-            'font': {'color': 'black', 'size': 14}
+            'font': {'color': 'black', 'size': 16}  # Increased font size
         },
         yaxis_title={
             'text': 'Sales Units',
-            'font': {'color': 'black', 'size': 14}
+            'font': {'color': 'black', 'size': 16}  # Increased font size
         },
         legend=dict(
             x=0, 
             y=1, 
             traceorder='normal',
-            font=dict(color='black')
+            font=dict(color='black', size=14)  # Specified size
         ),
         font=dict(color='black'),
         height=500,
+        margin=dict(l=50, r=50, t=80, b=50),  # Improved margins
+        plot_bgcolor='white',  # White background
+        paper_bgcolor='white',  # White paper
     )
       # Return the figure as a dict for consistency with other chart functions
     return fig.to_dict()

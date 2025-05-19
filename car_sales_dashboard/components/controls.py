@@ -203,8 +203,7 @@ def chart_container(title, chart_data, height="400px"):
     
 Returns:
     rx.Component: Chart container component
-    """
-    # We use rx.cond to handle the case when chart_data might be empty
+    """    # We use rx.cond to handle the case when chart_data might be empty
     return rx.box(
         rx.heading(title, color="black", size="4"),
         # The key change: use rx.cond to handle empty data case
@@ -213,14 +212,16 @@ Returns:
             rx.center("No data available for this selection", height="200px", color="black"),
             rx.plotly(
                 figure=chart_data,
-                height=height
+                height=height,
+                width="100%",  # Ensure the plot uses full width
             )
         ),
         width="100%",
-        padding="1em",
+        padding="1.5em",  # Increased padding
         background="white",
         border_radius="md",
         border="1px solid #EEE",
-        margin_top="1em",
+        margin_top="1.5em",  # Increased margin
+        margin_bottom="1.5em",  # Added bottom margin
         height=height,
     )

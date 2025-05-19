@@ -111,13 +111,21 @@ class DashboardState(rx.State):
                 self._scenario_engine.train(self._filtered_df)
         except AttributeError:
             # Handle case where _filtered_df might not be accessible
-            pass
-
-    def generate_forecast(self):
+            pass    def generate_forecast(self):
         """Generate forecast based on selected modifiers"""
         # Generate forecast if we have data - safely check if attribute exists and if dataframe is empty
         try:
             if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
+                print(f"Generating forecast for data with shape {self._filtered_df.shape}")
+                
+                # Make sure engine is initialized
+                if not hasattr(self, "_scenario_engine") or self._scenario_engine is None:
+                    print("Initializing scenario engine")
+                    model_type = "linear" if self.model_type == "Linear Regression" else "forest"
+                    self._scenario_engine = ScenarioEngine(model_type=model_type)
+                    self._scenario_engine.train(self._filtered_df)
+                
+                # Generate forecast
                 forecast_df = self._scenario_engine.forecast(
                     self._filtered_df,
                     unemployment_modifier=self.unemployment_modifier,
@@ -126,14 +134,24 @@ class DashboardState(rx.State):
                     search_volume_modifier=self.search_volume_modifier,
                     months_ahead=self.forecast_months
                 )
-                self._forecast_df = forecast_df
-                self.forecast_data = forecast_df.to_dict("records")
+                
+                if forecast_df is not None and not forecast_df.empty:
+                    print(f"Successfully generated forecast with shape {forecast_df.shape}")
+                    self._forecast_df = forecast_df
+                    self.forecast_data = forecast_df.to_dict("records")
+                else:
+                    print("Forecast engine returned empty DataFrame")
+                    self._forecast_df = pd.DataFrame()
+                    self.forecast_data = []
             else:
+                print("No filtered data available for forecasting")
                 self._forecast_df = pd.DataFrame()
                 self.forecast_data = []
         except Exception as e:
             # Handle any errors during forecast generation
             print(f"Error generating forecast: {e}")
+            import traceback
+            traceback.print_exc()
             self._forecast_df = pd.DataFrame()
             self.forecast_data = []
     
@@ -252,14 +270,34 @@ class DashboardState(rx.State):
         """Toggle the table visibility in the dashboard UI."""
         self.show_table = value
 
-    # Chart creation methods - these must be decorated with @rx.var with type annotations
-    @rx.var
+    # Chart creation methods - these must be decorated with @rx.var with type annotations    @rx.var
     def get_sales_trend_chart(self) -> dict:
         """Get sales trend chart"""
         # Check if _forecast_df is initialized before using it
         if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
-            return create_sales_trend_chart(self._forecast_df)
+            # Add debug print
+            print(f"Forecast DF shape: {self._forecast_df.shape}")
+            print(f"Forecast DF columns: {self._forecast_df.columns.tolist()}")
+            print(f"First 3 rows: {self._forecast_df.head(3).to_dict('records')}")
+            
+            # Generate a sample chart if the real one fails
+            try:
+                return create_sales_trend_chart(self._forecast_df)
+            except Exception as e:
+                print(f"Error creating sales trend chart: {str(e)}")
+                # Create a fallback chart
+                import plotly.graph_objects as go
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(x=[1, 2, 3], y=[4, 5, 6], mode='lines', name='Sample Data'))
+                fig.update_layout(
+                    title='Sample Chart (Error in main chart)',
+                    xaxis_title='Date',
+                    yaxis_title='Sales',
+                    font=dict(color='black'),
+                )
+                return fig.to_dict()
         else:
+            print("No forecast data available for chart")
             return {}
 
     @rx.var

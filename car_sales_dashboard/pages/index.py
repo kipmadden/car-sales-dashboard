@@ -37,19 +37,21 @@ def index():
                         rx.tabs.trigger("Economic Factors", value="economic", color="black", on_click=lambda: DashboardState.update_active_tab("economic")),
                     ),
                     rx.tabs.content(
-                        rx.vstack(
-                            chart_container(
+                        rx.vstack(                            chart_container(
                                 "Sales Trend and Forecast",
                                 DashboardState.get_sales_trend_chart,
                                 height="500px"
                             ),
+                            rx.box(height="20px"),  # Add space between chart and controls
                             rx.hstack(
                                 rx.switch(
                                     on_change=DashboardState.toggle_table,
                                     is_checked=DashboardState.show_table
                                 ),
-                                rx.text("Show Forecast Table"),
-                                margin_top="1em",
+                                rx.text("Show Forecast Table", color="black"),
+                                margin_top="2em",  # Increased margin
+                                margin_bottom="1em",  # Added bottom margin
+                                padding="0.5em",  # Added padding
                             ),
                             rx.cond(
                                 DashboardState.show_table,
