@@ -2,6 +2,7 @@ import reflex as rx
 import pandas as pd
 from car_sales_dashboard.state import DashboardState, df
 from car_sales_dashboard.components.controls import sidebar_filters, exogenous_controls, chart_container
+from car_sales_dashboard.components.chart_fix import chart_container_v2, plotly_chart
 from car_sales_dashboard.components.tables import create_summary_table, create_forecast_table
 
 def index():
@@ -35,12 +36,26 @@ def index():
                         rx.tabs.trigger("Vehicle Analysis", value="vehicles", color="black"),
                         rx.tabs.trigger("Geographic", value="geographic", color="black"),
                         rx.tabs.trigger("Economic Factors", value="economic", color="black"),
-                    ),
-                    rx.tabs.content(
-                        rx.vstack(                            chart_container(
-                                "Sales Trend and Forecast",
-                                DashboardState.get_sales_trend_chart,
-                                height="500px"
+                    ),                    rx.tabs.content(
+                        rx.vstack(
+                            rx.box(
+                                rx.heading("Sales Trend and Forecast", color="black", size="4"),
+                                # Directly use plotly instead of chart_container
+                                rx.cond(
+                                    DashboardState.get_sales_trend_chart == {},
+                                    rx.center("No data available for this selection", height="200px", color="black"),
+                                    rx.plotly(
+                                        figure=DashboardState.get_sales_trend_chart,
+                                        height="500px"
+                                    )
+                                ),
+                                width="100%",
+                                padding="1.5em",
+                                background="white",
+                                border_radius="md",
+                                border="1px solid #EEE",
+                                margin_top="1.5em",
+                                margin_bottom="1.5em",
                             ),
                             rx.box(height="20px"),  # Add space between chart and controls
                             rx.hstack(

@@ -209,11 +209,10 @@ Returns:
         # The key change: use rx.cond to handle empty data case
         rx.cond(
             chart_data == {},
-            rx.center("No data available for this selection", height="200px", color="black"),
-            rx.plotly(
+            rx.center("No data available for this selection", height="200px", color="black"),            rx.plotly(
                 figure=chart_data,
                 height=height,
-                width="100%",  # Ensure the plot uses full width
+                # Removed width="100%" as it may be causing style conflicts
             )
         ),
         width="100%",

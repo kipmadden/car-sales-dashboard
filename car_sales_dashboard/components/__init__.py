@@ -15,6 +15,13 @@ from car_sales_dashboard.components.controls import (
     chart_container
 )
 
+# Import the fixed chart components
+from car_sales_dashboard.components.chart_fix import (
+    chart_container_v2,
+    plotly_chart,
+    create_empty_chart
+)
+
 from car_sales_dashboard.components.tables import (
     create_summary_table,
     create_forecast_table
