@@ -89,7 +89,7 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
                 line=dict(color="red", width=2, dash="dash")
             )
         )
-      fig.update_layout(
+    fig.update_layout(
         title=title,
         xaxis_title="Month",
         yaxis_title="Sales",
