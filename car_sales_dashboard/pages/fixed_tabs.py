@@ -79,7 +79,8 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
                 name="Forecast",
                 line=dict(color="red", width=2, dash="dash")
             )
-        )    fig.update_layout(
+        )
+    fig.update_layout(
         title=title,
         xaxis_title="Month",
         yaxis_title="Sales",
@@ -98,7 +99,7 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
     return rx.box(
         rx.heading(title, color="black", size="4"),
         rx.center(
-            rx.plotly(fig=fig),  # Pass the figure object using the fig parameter
+            rx.plotly(data=fig),  # Pass the figure object using the fig parameter
             height=height,
             width="100%",
         ),
@@ -121,7 +122,8 @@ def create_pie_chart(title: str, labels, values, height: str = "400px"):
             textinfo="label+percent",
             insidetextorientation="radial"
         )
-    )    fig.update_layout(
+    )
+    fig.update_layout(
         title=title,
         font=dict(color="black"),
     )
