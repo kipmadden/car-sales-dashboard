@@ -20,12 +20,6 @@ df = load_data()
 class DashboardState(rx.State):
     """State for the dashboard application"""
     
-    # Create a factory method for ScenarioEngine
-    @staticmethod
-    def _create_default_scenario_engine():
-        """Create a default scenario engine with linear model type."""
-        return ScenarioEngine(model_type="linear")
-    
     # Data states stored as JSON-serializable lists
     filtered_data: list[dict] = df.to_dict("records")
     forecast_data: list[dict] = []
@@ -44,7 +38,7 @@ class DashboardState(rx.State):
     
     # Model states
     model_type: str = "Linear Regression"
-    _scenario_engine: ScenarioEngine = PrivateAttr(default_factory=_create_default_scenario_engine)
+    _scenario_engine: ScenarioEngine = PrivateAttr(default_factory=lambda: ScenarioEngine(model_type="linear"))
     
     # Exogenous variable states
     unemployment_modifier: float = 1.0
