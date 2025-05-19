@@ -30,7 +30,72 @@ def _create_summary_table_from_data(data, groupby_col):
     
     Returns:
         rx.Component: Table component
-    """    # Create a simple table with the most important columns
+    """
+    # Convert to pandas DataFrame for proper grouping
+    import pandas as pd
+    
+    try:
+        # Debug information
+        print(f"Creating summary table with groupby_col: {groupby_col}")
+        print(f"Data sample (first 3 items): {data[:3] if len(data) >= 3 else data}")
+        
+        # Convert the data to a DataFrame
+        df = pd.DataFrame(data)
+        
+        # Check if the groupby column exists in the data
+        if groupby_col not in df.columns:
+            print(f"Warning: Column '{groupby_col}' not found in data. Available columns: {df.columns.tolist()}")
+            # Fall back to a column that definitely exists
+            available_cols = df.columns.tolist()
+            if 'vehicle_type' in available_cols:
+                groupby_col = 'vehicle_type'
+            elif 'region' in available_cols:
+                groupby_col = 'region'
+            elif len(available_cols) > 0:
+                groupby_col = available_cols[0]
+            else:
+                raise ValueError("No columns available for grouping")
+            print(f"Using '{groupby_col}' as fallback grouping column")
+        
+        # Ensure we have 'sales' column for aggregation
+        if 'sales' not in df.columns:
+            print(f"Warning: 'sales' column not found. Using count only.")
+            # Group by the specified column and just count records
+            grouped = df.groupby(groupby_col).size().reset_index(name='count')
+            grouped['sales'] = 0  # Add a placeholder sales column
+        else:
+            # Use a more robust approach with explicit column checks
+            agg_dict = {}
+            if 'sales' in df.columns:
+                agg_dict['sales'] = 'sum'
+            
+            # Add count using a column that definitely exists
+            count_col = 'model' if 'model' in df.columns else df.columns[0]
+            agg_dict[count_col] = 'count'
+            
+            # Group by the specified column and calculate aggregations
+            grouped = df.groupby(groupby_col).agg(agg_dict).reset_index()
+            
+            # Rename the count column to 'count'
+            count_col_name = f"{count_col}_count" if pd.__version__ >= '0.25.0' else count_col
+            grouped = grouped.rename(columns={count_col_name: 'count'})
+        
+        # Sort and limit results
+        grouped = grouped.sort_values('sales', ascending=False).head(10)
+        
+        # Debug the results
+        print(f"Grouped data sample: {grouped.head(3).to_dict('records')}")
+        
+        # Convert back to list of dicts
+        summary_data = grouped.to_dict('records')
+    except Exception as e:
+        # In case of any error, provide detailed error info and fallback to a simple implementation
+        print(f"Error in table creation: {e}")
+        import traceback
+        traceback.print_exc()
+        summary_data = data[:10] if len(data) > 10 else data
+    
+    # Create a simple table with the most important columns
     return rx.table.root(
         rx.table.header(
             rx.table.row(
@@ -40,19 +105,13 @@ def _create_summary_table_from_data(data, groupby_col):
             )
         ),
         rx.table.body(
-            # Use rx.cond to check if data exists and then use rx.foreach
+            # Use foreach to render each row
             rx.foreach(
-                # We use the first 10 items as a simplification
-                # In a real app, proper processing would be done in the backend
-                data,  # Use complete data and limit in the lambda function
-                lambda item, idx: rx.cond(
-                    idx < 10,  # Only render the first 10 items
-                    rx.table.row(
-                        rx.table.cell(item.get(groupby_col, ""), color="black"),
-                        rx.table.cell(f"{item.get('sales', 0):,.0f}", color="black"),
-                        rx.table.cell("1", color="black")  # Simplified count value
-                    ),
-                    rx.fragment()  # Don't render items beyond index 10
+                summary_data,
+                lambda item, idx: rx.table.row(
+                    rx.table.cell(item.get(groupby_col, ""), color="black"),
+                    rx.table.cell(f"{item.get('sales', 0):,.0f}", color="black"),
+                    rx.table.cell(f"{item.get('count', 0):,d}", color="black")
                 )
             )
         ),
