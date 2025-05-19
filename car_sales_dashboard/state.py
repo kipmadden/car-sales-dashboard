@@ -137,30 +137,48 @@ class DashboardState(rx.State):
             self._forecast_df = pd.DataFrame()
             self.forecast_data = []
     
-    # Filter update handlers
-    def update_regions(self, regions):
+    # Filter update handlers    def update_regions(self, regions):
         """Update selected regions"""
-        self.selected_regions = regions
+        # Ensure regions is a list, even if a single string is passed
+        if regions and isinstance(regions, str):
+            self.selected_regions = [regions]
+        else:
+            self.selected_regions = regions
         self.filter_data()
     
     def update_states(self, states):
         """Update selected states"""
-        self.selected_states = states
+        # Ensure states is a list, even if a single string is passed
+        if states and isinstance(states, str):
+            self.selected_states = [states]
+        else:
+            self.selected_states = states
         self.filter_data()
     
     def update_vehicle_types(self, types):
         """Update selected vehicle types"""
-        self.selected_vehicle_types = types
+        # Ensure types is a list, even if a single string is passed
+        if types and isinstance(types, str):
+            self.selected_vehicle_types = [types]
+        else:
+            self.selected_vehicle_types = types
         self.filter_data()
     
     def update_makes(self, makes):
         """Update selected makes"""
-        self.selected_makes = makes
+        # Ensure makes is a list, even if a single string is passed
+        if makes and isinstance(makes, str):
+            self.selected_makes = [makes]
+        else:
+            self.selected_makes = makes
         self.filter_data()
-    
-    def update_models(self, models):
+      def update_models(self, models):
         """Update selected models"""
-        self.selected_models = models
+        # Ensure models is a list, even if a single string is passed
+        if models and isinstance(models, str):
+            self.selected_models = [models]
+        else:
+            self.selected_models = models
         self.filter_data()
     
     def update_years(self, years):
@@ -221,10 +239,12 @@ class DashboardState(rx.State):
         self.model_type = value
         self.train_model()
         self.generate_forecast()
-    
-    def update_active_tab(self, tab: str):
+      def update_active_tab(self, tab: str):
         """Update the active tab."""
+        print(f"Tab changed to: {tab}")  # Debug print
         self.active_tab = tab
+        # Force re-evaluation of charts for the new tab
+        self.filter_data()
 
     # UI update handlers
     def toggle_table(self, value: bool):

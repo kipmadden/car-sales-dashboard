@@ -20,35 +20,43 @@ def sidebar_filters(unique_regions, unique_states, unique_vehicle_types,
     """
     return rx.vstack(
         rx.heading("Filters", size="4", color="black"),
-        
-        # Region filter
+          # Region filter
         rx.text("Regions:", color="black"),
         rx.select(
             unique_regions,
             placeholder="Select regions",
             on_change=state_class.update_regions,
             is_multi=True,
-        ),
-          # State filter
+            color="black",
+            bg="white",
+            border_color="#CCC",
+        ),          # State filter
         rx.text("States:", color="black"),
         rx.select(
             unique_states,
             placeholder="Select states",
             on_change=state_class.update_states,
             is_multi=True,
-        ),
-          # Vehicle type filter
+            color="black",
+            bg="white",
+            border_color="#CCC",
+        ),          # Vehicle type filter
         rx.text("Vehicle Types:", color="black"),
         rx.select(
             unique_vehicle_types,
             placeholder="Select vehicle types",
             on_change=state_class.update_vehicle_types,
             is_multi=True,
-        ),
-          # Make filter
+            color="black",
+            bg="white",
+            border_color="#CCC",
+        ),          # Make filter
         rx.text("Makes:", color="black"),
         rx.select(
             unique_makes,
+            color="black",
+            bg="white",
+            border_color="#CCC",
             placeholder="Select makes",
             on_change=state_class.update_makes,
             is_multi=True,
@@ -161,17 +169,17 @@ def exogenous_controls(state_class):
             ),
             rx.text(state_class.forecast_months.to_string(), width="50px", color="black"),
             width="100%",
-        ),
-          # Model selection
+        ),          # Model selection
         rx.hstack(
-            rx.text("Forecast Model:", width="150px", color="black"),            rx.select(
+            rx.text("Forecast Model:", width="150px", color="black"),
+            rx.select(
                 ["Linear Regression", "Random Forest"],
                 default_value="Linear Regression",
                 on_change=state_class.update_model_type,
-                width="calc(100% - 10px)",
-                max_width="100%",
-                overflow="hidden",
-                text_overflow="ellipsis",
+                width="200px",
+                color="black",
+                bg="white",
+                border_color="#CCC",
             ),
             width="100%",
         ),
@@ -195,16 +203,16 @@ def chart_container(title, chart_data, height="400px"):
     
     Returns:
         rx.Component: Chart container component
-    """
-    # We use rx.cond to handle the case when chart_data might be empty
+    """    # We use rx.cond to handle the case when chart_data might be empty
     return rx.box(
-        rx.heading(title),
+        rx.heading(title, color="black", size="md"),
         # The key change: use rx.cond to handle empty data case
         rx.cond(
             chart_data == {},
-            rx.center("No data available", height="200px"),
+            rx.center("No data available for this selection", height="200px", color="black"),
             rx.plotly(
-                figure=chart_data
+                figure=chart_data,
+                height=height
             )
         ),
         width="100%",

@@ -43,13 +43,27 @@ def create_sales_trend_chart(forecast_data):
         name='Forecasted Sales',
         line=dict(color='red', width=2, dash='dash')
     ))
-    
-    # Update layout
+      # Update layout
     fig.update_layout(
-        title='Sales Trend and Forecast',
-        xaxis_title='Date',
-        yaxis_title='Sales Units',
-        legend=dict(x=0, y=1, traceorder='normal'),
+        title={
+            'text': 'Sales Trend and Forecast',
+            'font': {'color': 'black', 'size': 18}
+        },
+        xaxis_title={
+            'text': 'Date',
+            'font': {'color': 'black', 'size': 14}
+        },
+        yaxis_title={
+            'text': 'Sales Units',
+            'font': {'color': 'black', 'size': 14}
+        },
+        legend=dict(
+            x=0, 
+            y=1, 
+            traceorder='normal',
+            font=dict(color='black')
+        ),
+        font=dict(color='black'),
         height=500,
     )
       # Return the figure as a dict for consistency with other chart functions
