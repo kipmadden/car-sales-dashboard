@@ -242,10 +242,21 @@ def create_tabs():
             value="geographic",
         ),        rx.tabs.content(
             rx.vstack(                # Create a chart for exogenous variables
-                create_exogenous_chart(
-                    "Exogenous Variable Trends",
-                    DashboardState.forecast_data,  # Use forecast_data which contains the exogenous variables
-                    height="500px"
+                rx.cond(
+                    # Check if forecast_data exists and is not empty
+                    (DashboardState.forecast_data != None) & (DashboardState.forecast_data != []),
+                    # Use real data
+                    create_exogenous_chart(
+                        "Exogenous Variable Trends",
+                        DashboardState.forecast_data,
+                        height="500px"
+                    ),
+                    # Use sample data if no forecast data
+                    create_exogenous_chart(
+                        "Exogenous Variable Trends (Sample Data)",
+                        None,
+                        height="500px"
+                    ),
                 ),
                 rx.box(
                     create_summary_table(

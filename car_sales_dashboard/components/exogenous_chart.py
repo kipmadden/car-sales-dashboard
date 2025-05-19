@@ -18,25 +18,72 @@ def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"
         
     Returns:
         rx.Component: Box containing the plotly chart
-    """    # Use rx.cond to handle the case when forecast_data is empty, using lambda functions
-    # to wrap our chart creation functions so they are only called when needed
-    return rx.cond(
-        # Check if forecast_data is empty or None
-        (forecast_data == []) | (forecast_data == None), 
-        lambda: _create_sample_exogenous_chart(title, height),
-        lambda: _process_real_exogenous_data(title, forecast_data, height)
+    """
+    # Note: The conditional logic for handling forecast_data is now handled in fixed_tabs.py
+    # This function now simply processes the data it's given
+    
+    # Process the data we were given - we're assuming this is called with non-Var type data
+    # or that the caller has already handled the conditional logic with rx.cond()
+    if forecast_data is None or (isinstance(forecast_data, list) and len(forecast_data) == 0):
+        # Create sample chart if no data provided
+        fig = _create_sample_exogenous_figure(title)
+    else:
+        # Create chart from provided data
+        try:
+            # Convert to DataFrame if it's a list
+            if isinstance(forecast_data, list):
+                df = pd.DataFrame(forecast_data)
+            else:
+                # It might already be a DataFrame
+                df = forecast_data
+                
+            # Create the figure with the data
+            fig = _create_exogenous_figure_from_df(df, title)
+        except Exception as e:
+            print(f"Error creating exogenous chart: {e}")
+            # Create a figure with an error message
+            fig = go.Figure()
+            fig.update_layout(
+                title="Error Creating Chart",
+                annotations=[dict(
+                    text=f"Error: {str(e)}",
+                    xref="paper", yref="paper",
+                    x=0.5, y=0.5, showarrow=False,
+                    font=dict(color="red", size=16)
+                )],
+                font=dict(color="black"),
+            )
+    
+    # Return the box component with the plotly chart
+    return rx.box(
+        rx.heading(title, color="black", size="4"),
+        rx.center(
+            rx.plotly(
+                figure=fig,
+                height=height,
+                width="100%",
+            ),
+            height=height,
+            width="100%",
+        ),
+        width="100%",
+        padding="1.5em",
+        background="white",
+        border_radius="md",
+        border="1px solid #EEE",
+        margin_top="1.5em",
+        margin_bottom="1.5em",
     )
 
 
-def _create_sample_exogenous_chart(title: str, height: str = "500px"):
-    """Create a sample exogenous chart with synthetic data when no real data is available.
+def _create_sample_exogenous_figure(title: str):
+    """Create a sample exogenous figure with synthetic data when no real data is available.
     
     Args:
         title: The title of the chart
-        height: The height of the chart
         
     Returns:
-        rx.Component: Box containing the plotly chart
+        plotly.graph_objects.Figure: A plotly figure object
     """
     print("No forecast data provided, generating sample data for visualization")
     
@@ -73,87 +120,11 @@ def _create_sample_exogenous_chart(title: str, height: str = "500px"):
     print(f"Generated sample data with {len(forecast_data)} rows")
     
     # Create the figure with synthetic data
-    fig = _create_exogenous_figure_from_df(forecast_data, title)
-    
-    return rx.box(
-    rx.heading(title, color="black", size="4"),
-        rx.center(
-            rx.plotly(
-                figure=fig,
-                height=height,
-                width="100%",
-            ),
-            height=height,
-            width="100%",
-        ),
-        width="100%",
-        padding="1.5em",
-        background="white",
-        border_radius="md",
-        border="1px solid #EEE",
-        margin_top="1.5em",
-        margin_bottom="1.5em",
-    )
+    return _create_exogenous_figure_from_df(forecast_data, title)
 
 
-def _process_real_exogenous_data(title: str, forecast_data, height: str = "500px"):
-    """Process real data for the exogenous chart.
-    
-    Args:
-        title: The title of the chart
-        forecast_data: List of dictionaries containing forecast data
-        height: The height of the chart
-        
-    Returns:
-        rx.Component: Box containing the plotly chart
-    """
-    # If forecast_data is a list (not a DataFrame), convert it
-    if isinstance(forecast_data, list):
-        try:
-            forecast_data = pd.DataFrame(forecast_data)
-        except Exception as e:
-            print(f"Error converting forecast data to DataFrame: {e}")
-            # Create empty DataFrame with required columns
-            forecast_data = pd.DataFrame(columns=['date', 'unemployment', 'gas_price', 'cpi_all', 'search_volume', 'is_forecast'])
-    
-    # Check if we have a valid DataFrame with data
-    if isinstance(forecast_data, pd.DataFrame) and not forecast_data.empty:
-        # Create the figure with the real data
-        fig = _create_exogenous_figure_from_df(forecast_data, title)
-    else:
-        # Create an empty figure with a message
-        fig = go.Figure()
-        fig.update_layout(
-            title="No Data Available",
-            annotations=[dict(
-                text="No forecast data available",
-                xref="paper", yref="paper",
-                x=0.5, y=0.5, showarrow=False,
-                font=dict(color="black", size=16)
-            )],
-            font=dict(color="black"),
-        )
-    
-    # Return the box component with the plotly chart
-    return rx.box(
-        rx.heading(title, color="black", size="4"),
-        rx.center(
-            rx.plotly(
-                figure=fig,
-                height=height,
-                width="100%",
-            ),
-            height=height,
-            width="100%",
-        ),
-        width="100%",
-        padding="1.5em",
-        background="white",
-        border_radius="md",
-        border="1px solid #EEE",
-        margin_top="1.5em",
-        margin_bottom="1.5em",
-    )
+# This function is no longer needed as we've refactored create_exogenous_chart
+# to handle both cases directly
 
 
 def _create_exogenous_figure_from_df(forecast_data, title):
