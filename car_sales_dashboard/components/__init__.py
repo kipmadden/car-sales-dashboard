@@ -35,9 +35,9 @@ from car_sales_dashboard.components.tables import (
     create_forecast_table
 )
 
-from car_sales_dashboard.components.exogenous_chart import (
-    create_exogenous_chart
-)
+# from car_sales_dashboard.components.exogenous_chart import (
+#     create_exogenous_chart
+# )
 
 # This makes it possible to import directly from the components package
 # For example: from components import create_sales_trend_chart, sidebar_filters
