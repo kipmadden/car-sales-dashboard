@@ -15,10 +15,26 @@ def create_tabs():
             rx.tabs.trigger("Economic Factors", value="economic", color="black"),
         ),
         rx.tabs.content(
-            rx.vstack(                create_static_chart(
-                    title="Sales Trend and Forecast",
-                    chart_data=DashboardState.get_sales_trend_chart(),
-                    height="500px"
+            rx.vstack(
+                # Create charts by passing title as a prop, not calling functions directly
+                rx.fragment(
+                    rx.heading("Sales Trend and Forecast", color="black", size="4"),
+                    rx.center(
+                        rx.plotly(
+                            figure=DashboardState.get_sales_trend_chart,
+                            height="500px",
+                            width="100%",
+                        ),
+                        height="500px",
+                        width="100%",
+                    ),
+                    width="100%",
+                    padding="1.5em",
+                    background="white",
+                    border_radius="md",
+                    border="1px solid #EEE",
+                    margin_top="1.5em",
+                    margin_bottom="1.5em",
                 ),
                 rx.box(height="20px"),  # Add space between chart and controls
                 rx.hstack(
@@ -42,46 +58,135 @@ def create_tabs():
         ),
         rx.tabs.content(
             rx.vstack(
-                rx.hstack(                    create_static_chart(
-                        title="Sales by Vehicle Type",
-                        chart_data=DashboardState.get_vehicle_type_chart(),
-                        height="400px"
+                rx.hstack(
+                    # Direct integration of charts with Vars
+                    rx.fragment(
+                        rx.heading("Sales by Vehicle Type", color="black", size="4"),
+                        rx.center(
+                            rx.plotly(
+                                figure=DashboardState.get_vehicle_type_chart,
+                                height="400px",
+                                width="100%",
+                            ),
+                            height="400px",
+                            width="100%",
+                        ),
+                        width="100%",
+                        padding="1.5em",
+                        background="white",
+                        border_radius="md",
+                        border="1px solid #EEE",
+                        margin_top="1.5em",
+                        margin_bottom="1.5em",
                     ),
-                    create_static_chart(
-                        title="Top Models by Sales",
-                        chart_data=DashboardState.get_top_models_chart(),
-                        height="400px"
+                    rx.fragment(
+                        rx.heading("Top Models by Sales", color="black", size="4"),
+                        rx.center(
+                            rx.plotly(
+                                figure=DashboardState.get_top_models_chart,
+                                height="400px",
+                                width="100%",
+                            ),
+                            height="400px",
+                            width="100%",
+                        ),
+                        width="100%",
+                        padding="1.5em",
+                        background="white",
+                        border_radius="md",
+                        border="1px solid #EEE",
+                        margin_top="1.5em",
+                        margin_bottom="1.5em",
                     ),
                     width="100%",
-                ),                create_static_chart(
-                    title="Sales by Month and Vehicle Type",
-                    chart_data=DashboardState.get_sales_by_month_chart(),
-                    height="400px"
+                ),
+                rx.fragment(
+                    rx.heading("Sales by Month and Vehicle Type", color="black", size="4"),
+                    rx.center(
+                        rx.plotly(
+                            figure=DashboardState.get_sales_by_month_chart,
+                            height="400px",
+                            width="100%",
+                        ),
+                        height="400px",
+                        width="100%",
+                    ),
+                    width="100%",
+                    padding="1.5em",
+                    background="white",
+                    border_radius="md",
+                    border="1px solid #EEE",
+                    margin_top="1.5em",
+                    margin_bottom="1.5em",
                 ),
                 width="100%",
             ),
             value="vehicles",
         ),
         rx.tabs.content(
-            rx.vstack(                create_static_chart(
-                    title="Sales by Region",
-                    chart_data=DashboardState.get_region_chart(),
-                    height="400px"
+            rx.vstack(
+                rx.fragment(
+                    rx.heading("Sales by Region", color="black", size="4"),
+                    rx.center(
+                        rx.plotly(
+                            figure=DashboardState.get_region_chart,
+                            height="400px",
+                            width="100%",
+                        ),
+                        height="400px",
+                        width="100%",
+                    ),
+                    width="100%",
+                    padding="1.5em",
+                    background="white",
+                    border_radius="md",
+                    border="1px solid #EEE",
+                    margin_top="1.5em",
+                    margin_bottom="1.5em",
                 ),
-                create_static_chart(
-                    title="Sales by State",
-                    chart_data=DashboardState.get_state_map_chart(),
-                    height="500px"
+                rx.fragment(
+                    rx.heading("Sales by State", color="black", size="4"),
+                    rx.center(
+                        rx.plotly(
+                            figure=DashboardState.get_state_map_chart,
+                            height="500px",
+                            width="100%",
+                        ),
+                        height="500px",
+                        width="100%",
+                    ),
+                    width="100%",
+                    padding="1.5em",
+                    background="white",
+                    border_radius="md",
+                    border="1px solid #EEE",
+                    margin_top="1.5em",
+                    margin_bottom="1.5em",
                 ),
                 width="100%",
             ),
             value="geographic",
         ),
         rx.tabs.content(
-            rx.vstack(                create_static_chart(
-                    title="Exogenous Variable Trends",
-                    chart_data=DashboardState.get_exogenous_impact_chart(),
-                    height="500px"
+            rx.vstack(
+                rx.fragment(
+                    rx.heading("Exogenous Variable Trends", color="black", size="4"),
+                    rx.center(
+                        rx.plotly(
+                            figure=DashboardState.get_exogenous_impact_chart,
+                            height="500px",
+                            width="100%",
+                        ),
+                        height="500px",
+                        width="100%",
+                    ),
+                    width="100%",
+                    padding="1.5em",
+                    background="white", 
+                    border_radius="md",
+                    border="1px solid #EEE",
+                    margin_top="1.5em",
+                    margin_bottom="1.5em",
                 ),
                 rx.box(
                     create_summary_table(
