@@ -21,13 +21,14 @@ def index():
                 unique_vehicle_types,
                 unique_makes,
                 unique_models,
-                unique_years,                DashboardState
+                unique_years,
+                DashboardState
             ),
             rx.vstack(
-                rx.heading("Automotive Sales Forecast Dashboard", size="6"),
-                rx.text(
+                rx.heading("Automotive Sales Forecast Dashboard", size="6"),                rx.text(
                     "Explore the impact of exogenous factors on vehicle sales",
-                    margin_bottom="1em",                ),
+                    margin_bottom="1em",
+                ),
                 exogenous_controls(DashboardState),
                 rx.tabs.root(
                     rx.tabs.list(
@@ -100,7 +101,7 @@ def index():
                             ),
                             width="100%",
                         ),
-                        value="geographic"
+                        value="geographic",
                     ),
                     rx.tabs.content(
                         rx.vstack(
@@ -129,13 +130,14 @@ def index():
                     orientation="horizontal",
                     width="100%",
                     variant="enclosed",
-                    margin_top="1em",                ),
+                    margin_top="1em",
+                ),
                 rx.text(
                     "Built with Reflex | Data is synthetic",
                     margin_top="2em",
-                    font_size="sm",
-                    color="gray",
-                ),            ),
+                    font_size="sm",                    color="gray",
+                ),
+            ),
         ),
         padding="2em",
         max_width="1400px",
