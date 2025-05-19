@@ -49,14 +49,11 @@ def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"
                 font=dict(color="red", size=16)
             )],
             font=dict(color="black"),
-        )    # Convert figure to JSON format for Reflex
-    fig_dict = fig.to_json()
-    
-    # Return the box component with the plotly chart
+        )    # Return the box component with the plotly chart
     return rx.box(
         rx.heading(title, color="black", size="4"),
         rx.center(
-            rx.plotly(data=fig_dict),  # Pass the JSON representation
+            rx.plotly(fig=fig),  # Pass the figure object using the fig parameter
             height=height,
             width="100%",
         ),
