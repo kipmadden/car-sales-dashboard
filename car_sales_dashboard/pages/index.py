@@ -35,14 +35,15 @@ def index():
                     "Explore the impact of exogenous factors on vehicle sales",
                     margin_bottom="1em",
                 ),
-                exogenous_controls(DashboardState),                rx.tabs.root(
-                    on_change=DashboardState.update_active_tab,
+                exogenous_controls(DashboardState),
+                rx.tabs.root(
                     rx.tabs.list(
                         rx.tabs.trigger("Sales Forecast", value="sales", color="black"),
                         rx.tabs.trigger("Vehicle Analysis", value="vehicles", color="black"),
                         rx.tabs.trigger("Geographic", value="geographic", color="black"),
                         rx.tabs.trigger("Economic Factors", value="economic", color="black"),
-                    ),rx.tabs.content(
+                    ),
+                    rx.tabs.content(
                         rx.vstack(                            # Use responsive chart container for sales trend chart
                             responsive_chart_container(
                                 title="Sales Trend and Forecast",
@@ -137,6 +138,7 @@ def index():
                     font_size="sm",
                     color="gray",
                 ),
+            on_change=DashboardState.update_active_tab,
             ),
         ),
         padding="2em",
