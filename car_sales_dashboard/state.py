@@ -111,21 +111,13 @@ class DashboardState(rx.State):
                 self._scenario_engine.train(self._filtered_df)
         except AttributeError:
             # Handle case where _filtered_df might not be accessible
-            pass    def generate_forecast(self):
+            pass
+
+    def generate_forecast(self):
         """Generate forecast based on selected modifiers"""
         # Generate forecast if we have data - safely check if attribute exists and if dataframe is empty
         try:
             if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
-                print(f"Generating forecast for data with shape {self._filtered_df.shape}")
-                
-                # Make sure engine is initialized
-                if not hasattr(self, "_scenario_engine") or self._scenario_engine is None:
-                    print("Initializing scenario engine")
-                    model_type = "linear" if self.model_type == "Linear Regression" else "forest"
-                    self._scenario_engine = ScenarioEngine(model_type=model_type)
-                    self._scenario_engine.train(self._filtered_df)
-                
-                # Generate forecast
                 forecast_df = self._scenario_engine.forecast(
                     self._filtered_df,
                     unemployment_modifier=self.unemployment_modifier,
@@ -134,24 +126,14 @@ class DashboardState(rx.State):
                     search_volume_modifier=self.search_volume_modifier,
                     months_ahead=self.forecast_months
                 )
-                
-                if forecast_df is not None and not forecast_df.empty:
-                    print(f"Successfully generated forecast with shape {forecast_df.shape}")
-                    self._forecast_df = forecast_df
-                    self.forecast_data = forecast_df.to_dict("records")
-                else:
-                    print("Forecast engine returned empty DataFrame")
-                    self._forecast_df = pd.DataFrame()
-                    self.forecast_data = []
+                self._forecast_df = forecast_df
+                self.forecast_data = forecast_df.to_dict("records")
             else:
-                print("No filtered data available for forecasting")
                 self._forecast_df = pd.DataFrame()
                 self.forecast_data = []
         except Exception as e:
             # Handle any errors during forecast generation
             print(f"Error generating forecast: {e}")
-            import traceback
-            traceback.print_exc()
             self._forecast_df = pd.DataFrame()
             self.forecast_data = []
     
