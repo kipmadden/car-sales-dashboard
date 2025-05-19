@@ -166,22 +166,25 @@ def _create_forecast_row(item, idx):
     
     Returns:
         rx.Component: Table row
-    """    # Use rx.cond instead of regular if/else for handling Vars
-    return rx.cond(
-        item.get("is_forecast", False),
-        rx.table.row(
-            rx.table.cell(
-                item.get("date", ""), 
-                color="black", 
-                font_weight=rx.cond(idx == 0, "bold", "normal")
-            ),
-            rx.table.cell(f"{item.get('sales', 0):,.0f}", color="black"),
-            rx.table.cell(f"{item.get('unemployment', 0):.2f}", color="black"),
-            rx.table.cell(f"${item.get('gas_price', 0):.2f}", color="black"),
-            rx.table.cell(f"{item.get('cpi_all', 0):.1f}", color="black"),
-            rx.table.cell(f"{item.get('search_volume', 0):.0f}", color="black"),
+    """
+    # Display all rows regardless of is_forecast flag
+    return rx.table.row(
+        rx.table.cell(
+            item.get("date", ""), 
+            color="black", 
+            font_weight=rx.cond(idx == 0, "bold", "normal")
         ),
-        rx.fragment() # Empty fragment for non-forecast rows
+        rx.table.cell(f"{item.get('sales', 0):,.0f}", color="black"),
+        rx.table.cell(f"{item.get('unemployment', 0):.2f}", color="black"),
+        rx.table.cell(f"${item.get('gas_price', 0):.2f}", color="black"),
+        rx.table.cell(f"{item.get('cpi_all', 0):.1f}", color="black"),
+        rx.table.cell(f"{item.get('search_volume', 0):.0f}", color="black"),
+        # Add highlighting for forecast rows
+        background=rx.cond(
+            item.get("is_forecast", False),
+            "rgba(255, 240, 240, 0.5)",  # Light pink background for forecast rows
+            "white"  # White background for historical rows
+        )
     )
 
 

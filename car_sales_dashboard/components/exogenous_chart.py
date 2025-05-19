@@ -53,9 +53,10 @@ def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"
     return rx.box(
         rx.heading(title, color="black", size="4"),
         rx.center(
-            rx.plotly(fig=fig),  # Pass the figure object using the fig parameter
+            rx.plotly(data=fig),  # Use data parameter as it works
             height=height,
             width="100%",
+            config={"responsive": True},
         ),
         width="100%",
         padding="1.5em",
@@ -221,14 +222,36 @@ def _create_exogenous_figure_from_df(forecast_data, title):
                     )
     except Exception as e:
         print(f"Error adding forecast divider: {e}")
-    
-    # Update layout
+      # Update layout
     fig.update_layout(
         height=500,
         title=title,
         font=dict(color="black"),
-        plot_bgcolor='white',
+        plot_bgcolor='#E5ECF6',  # Light blue/gray background
+        paper_bgcolor='white',
         margin=dict(t=40, b=10, l=10, r=10),
     )
+    
+    # Add grid lines to all subplots
+    for i in range(1, 3):
+        for j in range(1, 3):
+            fig.update_xaxes(
+                showgrid=True,
+                gridwidth=1,
+                gridcolor='white',
+                zeroline=True,
+                zerolinewidth=1,
+                zerolinecolor='white',
+                row=i, col=j
+            )
+            fig.update_yaxes(
+                showgrid=True,
+                gridwidth=1,
+                gridcolor='white',
+                zeroline=True,
+                zerolinewidth=1,
+                zerolinecolor='white',
+                row=i, col=j
+            )
     
     return fig

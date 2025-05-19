@@ -27,13 +27,32 @@ def create_simple_bar_chart(title: str, x_values, y_values, height: str = "400px
         xaxis_title="",
         yaxis_title="Sales",
         font=dict(color="black"),
-        plot_bgcolor='white',
+        plot_bgcolor='#E5ECF6',  # Light blue/gray background
+        paper_bgcolor='white',
+    )
+    
+    # Add grid lines
+    fig.update_xaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='white',
+        zeroline=True,
+        zerolinewidth=1,
+        zerolinecolor='white'
+    )
+    fig.update_yaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='white',
+        zeroline=True,
+        zerolinewidth=1,
+        zerolinecolor='white'
     )
       # Use the figure object directly with rx.plotly
     return rx.box(
         rx.heading(title, color="black", size="4"),
         rx.center(
-            rx.plotly(fig=fig),  # Pass the figure object using the fig parameter
+            rx.plotly(data=fig),  # Pass the figure object using the fig parameter
             height=height,
             width="100%",
         ),
@@ -67,8 +86,17 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
         split_point = len(y_values) - 1
         fig.add_vline(x=split_point, line_width=1, line_dash="dash", line_color="gray")
         
+        # Create month names for forecast periods - continue the pattern
+        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        forecast_months = []
+        last_month_idx = months.index(x_values[split_point])
+        
+        for i in range(len(forecast_y_values) + 1):
+            next_month_idx = (last_month_idx + i + 1) % 12  # Wrap around for next year
+            forecast_months.append(months[next_month_idx])
+        
         # Add forecast line - starting from last historical point
-        forecast_x = list(range(split_point, split_point + len(forecast_y_values) + 1))
+        forecast_x = forecast_months
         forecast_y = [y_values[-1]] + forecast_y_values  # Connect with last historical point
         
         fig.add_trace(
@@ -85,7 +113,9 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
         xaxis_title="Month",
         yaxis_title="Sales",
         font=dict(color="black"),
-        plot_bgcolor='white',
+        plot_bgcolor='#E5ECF6',  # Light blue/gray background
+        paper_bgcolor='white',
+        gridcolor='white',
         legend=dict(
             orientation="h",
             yanchor="bottom",
@@ -93,6 +123,24 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
             xanchor="right",
             x=1
         )
+    )
+    
+    # Add grid lines
+    fig.update_xaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='white',
+        zeroline=True,
+        zerolinewidth=1,
+        zerolinecolor='white'
+    )
+    fig.update_yaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='white',
+        zeroline=True,
+        zerolinewidth=1,
+        zerolinecolor='white'
     )
     
     # Use the figure object directly with rx.plotly
@@ -126,13 +174,15 @@ def create_pie_chart(title: str, labels, values, height: str = "400px"):
     fig.update_layout(
         title=title,
         font=dict(color="black"),
+        plot_bgcolor='#E5ECF6',  # Light blue/gray background
+        paper_bgcolor='white'
     )
     
     # Use the figure object directly with rx.plotly
     return rx.box(
         rx.heading(title, color="black", size="4"),
         rx.center(
-            rx.plotly(fig=fig),  # Pass the figure object using the fig parameter
+            rx.plotly(data=fig),  # Pass the figure object using the fig parameter
             height=height,
             width="100%",
         ),
