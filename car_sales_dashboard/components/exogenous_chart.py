@@ -49,17 +49,12 @@ def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"
                 font=dict(color="red", size=16)
             )],
             font=dict(color="black"),
-        )
-      # Convert the figure to a dictionary that can be properly serialized by Reflex
-    fig_dict = fig.to_dict()
-    
-    # Return the box component with the plotly chart
+        )    # Return the box component with the plotly chart - pass the figure directly 
     return rx.box(
         rx.heading(title, color="black", size="4"),
         rx.center(
             rx.plotly(
-                data=fig_dict.get('data', []),
-                layout=fig_dict.get('layout', {}),
+                fig,  # Pass the figure directly, not as a dictionary
                 config={"responsive": True},
                 height=height,
                 width="100%",

@@ -30,15 +30,11 @@ def create_simple_bar_chart(title: str, x_values, y_values, height: str = "400px
         plot_bgcolor='white',
     )
     
-    # Convert the figure to a dictionary for proper serialization
-    fig_dict = fig.to_dict()
-    
     return rx.box(
         rx.heading(title, color="black", size="4"),
         rx.center(
             rx.plotly(
-                data=fig_dict.get('data', []),
-                layout=fig_dict.get('layout', {}),
+                fig,  # Pass the figure directly, not as a dictionary
                 config={"responsive": True},
                 height=height,
                 width="100%",
@@ -104,15 +100,11 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
         )
     )
     
-    # Convert the figure to a dictionary for proper serialization
-    fig_dict = fig.to_dict()
-    
     return rx.box(
         rx.heading(title, color="black", size="4"),
         rx.center(
             rx.plotly(
-                data=fig_dict.get('data', []),
-                layout=fig_dict.get('layout', {}),
+                fig,  # Pass the figure directly, not as a dictionary
                 config={"responsive": True},
                 height=height,
                 width="100%",
@@ -145,15 +137,11 @@ def create_pie_chart(title: str, labels, values, height: str = "400px"):
         font=dict(color="black"),
     )
     
-    # Convert the figure to a dictionary for proper serialization
-    fig_dict = fig.to_dict()
-    
     return rx.box(
         rx.heading(title, color="black", size="4"),
         rx.center(
             rx.plotly(
-                data=fig_dict.get('data', []),
-                layout=fig_dict.get('layout', {}),
+                fig,  # Pass the figure directly, not as a dictionary
                 config={"responsive": True},
                 height=height,
                 width="100%",
