@@ -107,15 +107,13 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
                 name="Forecast",
                 line=dict(color="red", width=2, dash="dash")
             )
-        )
-    fig.update_layout(
+        )    fig.update_layout(
         title=title,
         xaxis_title="Month",
         yaxis_title="Sales",
         font=dict(color="black"),
         plot_bgcolor='#E5ECF6',  # Light blue/gray background
         paper_bgcolor='white',
-        gridcolor='white',
         legend=dict(
             orientation="h",
             yanchor="bottom",
