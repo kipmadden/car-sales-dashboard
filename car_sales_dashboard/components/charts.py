@@ -30,17 +30,21 @@ def create_sales_trend_chart(forecast_data):
         print(f"Forecast data shape: {forecast_data.shape if hasattr(forecast_data, 'shape') else 'No shape'}")
     except Exception as e:
         print(f"Error inspecting forecast data: {e}")
-      # Create the chart
+      
+    # Create the chart
     fig = go.Figure()
     
     try:
+        # Convert to numeric indices for x-axis to avoid text rendering issues
+        forecast_data['x_index'] = range(len(forecast_data))
+        
         # Historical sales - with error handling
         if 'is_forecast' in forecast_data.columns:
             # Handle if filtering works correctly
             historical = forecast_data[forecast_data['is_forecast'] == False]
             if not historical.empty:
                 fig.add_trace(go.Scatter(
-                    x=historical['date'],
+                    x=historical['x_index'],  # Use numeric indices for x-axis
                     y=historical['sales'],
                     mode='lines',
                     name='Historical Sales',
@@ -53,26 +57,45 @@ def create_sales_trend_chart(forecast_data):
             forecast = forecast_data[forecast_data['is_forecast'] == True]
             if not forecast.empty:
                 fig.add_trace(go.Scatter(
-                    x=forecast['date'],
+                    x=forecast['x_index'],  # Use numeric indices for x-axis
                     y=forecast['sales'],
                     mode='lines',
                     name='Forecasted Sales',
                     line=dict(color='red', width=2, dash='dash')
                 ))
+                
+                # Add a vertical line to separate historical from forecast
+                if not historical.empty:
+                    fig.add_vline(
+                        x=historical['x_index'].max(),
+                        line_width=1,
+                        line_dash="dash",
+                        line_color="gray"
+                    )
             else:
                 print("No forecast data after filtering")
+                
+            # Create custom tick labels from the date column
+            tick_vals = forecast_data['x_index'].tolist()
+            tick_text = forecast_data['date'].tolist()
         else:
             # If 'is_forecast' column doesn't exist, just plot all data
             print("'is_forecast' column not found in data, plotting all as historical")
             fig.add_trace(go.Scatter(
-                x=forecast_data['date'],
+                x=forecast_data['x_index'],
                 y=forecast_data['sales'],
                 mode='lines',
                 name='Sales Data',
                 line=dict(color='blue', width=2)
             ))
+            # Create custom tick labels from the date column
+            tick_vals = forecast_data['x_index'].tolist()
+            tick_text = forecast_data['date'].tolist() 
     except Exception as e:
-        print(f"Error creating chart traces: {e}")      # Update layout with improved visibility settings
+        print(f"Error creating chart traces: {e}")
+        # Set default tick values if the above code fails
+        tick_vals = list(range(12))
+        tick_text = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]    # Update layout with improved visibility settings and custom x-axis ticks
     fig.update_layout(
         title={
             'text': 'Sales Trend and Forecast',
@@ -95,8 +118,33 @@ def create_sales_trend_chart(forecast_data):
         font=dict(color='black'),
         height=500,
         margin=dict(l=50, r=50, t=80, b=50),  # Improved margins
-        plot_bgcolor='white',  # White background
+        plot_bgcolor='#E5ECF6',  # Light blue/gray background for consistency
         paper_bgcolor='white',  # White paper
+        # Set custom tick positions and labels
+        xaxis=dict(
+            tickmode='array',
+            tickvals=tick_vals,
+            ticktext=tick_text,
+            tickangle=45  # Angle the labels for better readability
+        )
+    )
+    
+    # Add grid lines
+    fig.update_xaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='white',
+        zeroline=True,
+        zerolinewidth=1,
+        zerolinecolor='white'
+    )
+    fig.update_yaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='white',
+        zeroline=True,
+        zerolinewidth=1,
+        zerolinecolor='white'
     )
       # Return the figure as a dict for consistency with other chart functions
     return fig.to_dict()

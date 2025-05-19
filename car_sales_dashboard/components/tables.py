@@ -235,8 +235,8 @@ def create_forecast_table(forecast_data):
     return rx.box(
         rx.heading("Sales Forecast Data", size="4", color="black"),
         rx.cond(
-            # Check if forecast_data is empty (works with Vars)
-            forecast_data == [],
+            # Check if forecast_data is empty or None (works with Vars)
+            forecast_data is None,
             # If empty, show a message
             rx.text("No forecast data available", color="black", padding="1em"),
             # If not empty, show the table

@@ -225,7 +225,8 @@ class DashboardState(rx.State):
         value = float(value)
         print(f"Updating gas price modifier to {value}")
         self.gas_price_modifier = value
-        # Force forecast regeneration
+        # Force forecast regeneration with explicit logging
+        print("Generating new forecast after gas price update")
         self.generate_forecast()
     
     def update_cpi(self, value):

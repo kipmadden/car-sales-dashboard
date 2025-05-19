@@ -69,10 +69,13 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
     """Create a line chart with both historical and forecast data."""
     fig = go.Figure()
     
-    # Add historical data
+    # Create numerical x-axis to avoid overlap issues
+    numeric_x = list(range(len(y_values)))
+    
+    # Add historical data with numerical x-axis
     fig.add_trace(
         go.Scatter(
-            x=x_values[:len(y_values)],
+            x=numeric_x,
             y=y_values,
             mode="lines+markers",
             name="Historical",
@@ -82,32 +85,58 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
     
     # Add forecast data if provided
     if forecast_y_values is not None:
-        # Add vertical line to separate historical from forecast
+        # Define the boundary between historical and forecast
         split_point = len(y_values) - 1
+        
+        # Create contiguous numerical x-axis for forecast data
+        # Start from the last historical point + 1
+        forecast_numeric_x = list(range(split_point, split_point + len(forecast_y_values) + 1))
+        
+        # Add vertical line at the forecast boundary
         fig.add_vline(x=split_point, line_width=1, line_dash="dash", line_color="gray")
         
-        # Create month names for forecast periods - continue the pattern
-        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        forecast_months = []
-        last_month_idx = months.index(x_values[split_point])
+        # # Create month names for forecast periods - continue the pattern
+        # months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        # forecast_months = []
+        # last_month_idx = months.index(x_values[split_point])
         
-        for i in range(len(forecast_y_values) + 1):
-            next_month_idx = (last_month_idx + i + 1) % 12  # Wrap around for next year
-            forecast_months.append(months[next_month_idx])
+        # for i in range(len(forecast_y_values) + 1):
+        #     next_month_idx = (last_month_idx + i + 1) % 12  # Wrap around for next year
+        #     forecast_months.append(months[next_month_idx])
         
         # Add forecast line - starting from last historical point
-        forecast_x = forecast_months
         forecast_y = [y_values[-1]] + forecast_y_values  # Connect with last historical point
         fig.add_trace(
             go.Scatter(
-                x=forecast_x,
+                x=forecast_numeric_x,
                 y=forecast_y,
                 mode="lines+markers",
                 name="Forecast",
                 line=dict(color="red", width=2, dash="dash")
             )
         )
+          # Combine all month labels for the entire chart
+    all_month_labels = x_values.copy()
+    
+    # Add forecast month labels if forecast data exists
+    if forecast_y_values is not None:
+        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        next_months = []
+        last_month_idx = months.index(x_values[-1])
         
+        for i in range(len(forecast_y_values)):
+            next_month_idx = (last_month_idx + i + 1) % 12
+            next_month = months[next_month_idx]
+            forecast_month = next_month
+            # Add year indicator for January to make timeline clearer
+            if next_month == "Jan":
+                forecast_month = "Jan*"
+            next_months.append(forecast_month)
+        all_month_labels.extend(next_months)
+    
+    # Create numeric ticks with custom labels
+    all_numeric_x = list(range(len(all_month_labels)))
+    
     fig.update_layout(
         title=title,
         xaxis_title="Month",
@@ -121,6 +150,12 @@ def create_line_chart(title: str, x_values, y_values, forecast_y_values=None, he
             y=1.02,
             xanchor="right",
             x=1
+        ),
+        # Set custom tick positions and labels
+        xaxis=dict(
+            tickmode='array',
+            tickvals=all_numeric_x,
+            ticktext=all_month_labels
         )
     )
     
