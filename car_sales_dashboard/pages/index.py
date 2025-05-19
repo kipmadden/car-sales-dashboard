@@ -25,7 +25,8 @@ def index():
                 DashboardState
             ),
             rx.vstack(
-                rx.heading("Automotive Sales Forecast Dashboard", size="6"),                rx.text(
+                rx.heading("Automotive Sales Forecast Dashboard", size="6"),
+                rx.text(
                     "Explore the impact of exogenous factors on vehicle sales",
                     margin_bottom="1em",
                 ),
@@ -61,8 +62,6 @@ def index():
                         ),
                         value="sales",
                     ),
-                    on_value_change=DashboardState.update_active_tab,
-                    value=DashboardState.active_tab,
                     rx.tabs.content(
                         rx.vstack(
                             rx.hstack(
@@ -83,9 +82,8 @@ def index():
                                 DashboardState.get_sales_by_month_chart,
                                 height="400px"
                             ),
-                            width="100%",
-                        ),
-                        value="vehicles"
+                            width="100%",                        ),
+                        value="vehicles",
                     ),
                     rx.tabs.content(
                         rx.vstack(
@@ -126,6 +124,9 @@ def index():
                         ),
                         value="economic",
                     ),
+                    # All keyword arguments must come after all positional arguments
+                    on_value_change=DashboardState.update_active_tab,
+                    value=DashboardState.active_tab,
                     default_value="sales",
                     orientation="horizontal",
                     width="100%",
@@ -135,7 +136,8 @@ def index():
                 rx.text(
                     "Built with Reflex | Data is synthetic",
                     margin_top="2em",
-                    font_size="sm",                    color="gray",
+                    font_size="sm",
+                    color="gray",
                 ),
             ),
         ),
