@@ -8,91 +8,91 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
-def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"):
-    """Create a chart showing the impact of exogenous variables.
+# def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"):
+#     """Create a chart showing the impact of exogenous variables.
     
-    Args:
-        title: The title of the chart
-        forecast_data: List of dictionaries containing forecast data (can be a Var)
-        height: The height of the chart
+#     Args:
+#         title: The title of the chart
+#         forecast_data: List of dictionaries containing forecast data (can be a Var)
+#         height: The height of the chart
         
-    Returns:
-        rx.Component: Box containing the plotly chart
-    """
-    # The key to reactivity is using rx.cond to properly handle Var values
-    # This approach ensures the component will re-render when the Var changes
+#     Returns:
+#         rx.Component: Box containing the plotly chart
+#     """
+#     # The key to reactivity is using rx.cond to properly handle Var values
+#     # This approach ensures the component will re-render when the Var changes
     
-    # Use rx.cond for a proper reactive implementation
-    return rx.cond(
-        # Check if forecast_data is empty
-        forecast_data == [],  # This works for both regular lists and Var
+#     # Use rx.cond for a proper reactive implementation
+#     return rx.cond(
+#         # Check if forecast_data is empty
+#         forecast_data == [],  # This works for both regular lists and Var
         
-        # True branch: Return a component with sample data
-        rx.box(
-            rx.heading(title, color="black", size="4"),
-            rx.center(
-                rx.plotly(
-                    data=_create_sample_exogenous_figure(title),
-                    height=height,
-                    width="100%",
-                    config={"responsive": True},
-                ),
-                height=height,
-                width="100%",
-            ),
-            width="100%",
-            padding="1.5em",
-            background="white",
-            border_radius="md",
-            border="1px solid #EEE",
-            margin_top="1.5em",
-            margin_bottom="1.5em",
-        ),
+#         # True branch: Return a component with sample data
+#         rx.box(
+#             rx.heading(title, color="black", size="4"),
+#             rx.center(
+#                 rx.plotly(
+#                     data=_create_sample_exogenous_figure(title),
+#                     height=height,
+#                     width="100%",
+#                     config={"responsive": True},
+#                 ),
+#                 height=height,
+#                 width="100%",
+#             ),
+#             width="100%",
+#             padding="1.5em",
+#             background="white",
+#             border_radius="md",
+#             border="1px solid #EEE",
+#             margin_top="1.5em",
+#             margin_bottom="1.5em",
+#         ),
         
-        # False branch: Return a component with the actual data
-        # This branch recreates the chart each time forecast_data changes
-        rx.box(
-            rx.heading(title, color="black", size="4"),
-            rx.center(
-                rx.plotly(
-                    # We're using a lambda to force reactivity
-                    data=lambda: _create_data_figure(forecast_data, title),
-                    height=height,
-                    width="100%",
-                    config={"responsive": True},
-                ),
-                height=height,
-                width="100%",
-            ),
-            width="100%",
-            padding="1.5em",
-            background="white",
-            border_radius="md",
-            border="1px solid #EEE",
-            margin_top="1.5em",
-            margin_bottom="1.5em",
-        )
-    )
+#         # False branch: Return a component with the actual data
+#         # This branch recreates the chart each time forecast_data changes
+#         rx.box(
+#             rx.heading(title, color="black", size="4"),
+#             rx.center(
+#                 rx.plotly(
+#                     # We're using a lambda to force reactivity
+#                     data=lambda: _create_data_figure(forecast_data, title),
+#                     height=height,
+#                     width="100%",
+#                     config={"responsive": True},
+#                 ),
+#                 height=height,
+#                 width="100%",
+#             ),
+#             width="100%",
+#             padding="1.5em",
+#             background="white",
+#             border_radius="md",
+#             border="1px solid #EEE",
+#             margin_top="1.5em",
+#             margin_bottom="1.5em",
+#         )
+#     )
 
-def _create_data_figure(forecast_data, title):
-    """Helper function to create the chart from Var or regular data.
+# def _create_data_figure(forecast_data, title):
+#     """Helper function to create the chart from Var or regular data.
     
-    This function is designed to be used with a lambda to force reactivity.
-    """
-    print(f"Creating exogenous chart with forecast data")
-    try:
-        # Convert forecast_data to DataFrame - works for both Var and regular data
-        df = pd.DataFrame(forecast_data)
-        if len(df) > 0:
-            print(f"Successfully created DataFrame with {len(df)} rows of data")
-            return _create_exogenous_figure_from_df(df, title)
-        else:
-            print("DataFrame is empty, using sample data")
-            return _create_sample_exogenous_figure(title)
-    except Exception as e:
-        print(f"Error creating exogenous chart with data: {e}")
-        return _create_sample_exogenous_figure(title)
-      # Removed the return statement as we're now using rx.cond to handle both cases
+#     This function is designed to be used with a lambda to force reactivity.
+#     """
+#     print(f"Creating exogenous chart with forecast data")
+#     try:
+#         # Convert forecast_data to DataFrame - works for both Var and regular data
+#         df = pd.DataFrame(forecast_data)
+#         if len(df) > 0:
+#             print(f"Successfully created DataFrame with {len(df)} rows of data")
+#             return _create_exogenous_figure_from_df(df, title)
+#         else:
+#             print("DataFrame is empty, using sample data")
+#             return _create_sample_exogenous_figure(title)
+#     except Exception as e:
+#         print(f"Error creating exogenous chart with data: {e}")
+#         return _create_sample_exogenous_figure(title)
+#       # Removed the return statement as we're now using rx.cond to handle both cases
 
 
 def _create_sample_exogenous_figure(title: str):
@@ -155,6 +155,11 @@ def create_exogenous_figure(title: str, forecast_data) -> go.Figure:
     Returns:
         plotly.graph_objects.Figure: The chart.
     """
+    # Handle empty or None forecast_data by generating sample data
+    if not forecast_data or (isinstance(forecast_data, list) and len(forecast_data) == 0):
+        print("No forecast data provided, generating sample data for visualization")
+        return _create_sample_exogenous_figure(title)
+
     # Accept both list-of-dicts and DataFrame
     if isinstance(forecast_data, list):
         df = pd.DataFrame(forecast_data)
@@ -166,6 +171,7 @@ def create_exogenous_figure(title: str, forecast_data) -> go.Figure:
     print(f"Creating exogenous chart with {len(df)} rows of data")
     print(f"Data columns: {df.columns.tolist()}")
 
+    # (the rest of your existing plotting logic here)
     fig = make_subplots(
         rows=2, 
         cols=2, 
@@ -178,6 +184,8 @@ def create_exogenous_figure(title: str, forecast_data) -> go.Figure:
     )
 
     available_columns = df.columns.tolist()
+    # Add traces as before...
+
     # Unemployment
     if 'date' in available_columns and 'unemployment' in available_columns:
         fig.add_trace(
@@ -271,6 +279,7 @@ def create_exogenous_figure(title: str, forecast_data) -> go.Figure:
                 row=i, col=j
             )
     return fig
+
 
 def _create_exogenous_figure_from_df(forecast_data, title):
     """Helper function to create the exogenous figure from a DataFrame.

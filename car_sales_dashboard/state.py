@@ -13,7 +13,6 @@ from car_sales_dashboard.components import (
     create_top_models_chart,
     create_state_map_chart,
     create_heatmap_chart,
-    create_exogenous_chart
 )
 
 # Load data
@@ -337,16 +336,16 @@ class DashboardState(rx.State):
         )
 
 
-    @rx.var
-    def get_exogenous_variable_chart(self) -> rx.Component:
-        """Get exogenous variable chart - returns a component for direct use in UI"""
-        print(f"Creating exogenous variable chart with gas_price={self.gas_price_modifier}")
-        # Use directly in UI - returns the component, not just the figure data
-        return create_exogenous_chart(
-            "Exogenous Variable Trends",
-            self.forecast_data,  # This is a Var and will trigger updates when it changes
-            height="500px"
-        )
+    # @rx.var
+    # def get_exogenous_variable_chart(self) -> rx.Component:
+    #     """Get exogenous variable chart - returns a component for direct use in UI"""
+    #     print(f"Creating exogenous variable chart with gas_price={self.gas_price_modifier}")
+    #     # Use directly in UI - returns the component, not just the figure data
+    #     return create_exogenous_chart(
+    #         "Exogenous Variable Trends",
+    #         self.forecast_data,  # This is a Var and will trigger updates when it changes
+    #         height="500px"
+    #     )
     
     @rx.var
     def get_top_models_chart(self) -> dict:
