@@ -270,7 +270,8 @@ class DashboardState(rx.State):
         self.show_table = value
         # No need to regenerate forecast or filter data, just update the UI state
 
-    # Chart creation methods - these must be decorated with @rx.var with type annotations    @rx.var
+    # Chart creation methods - these must be decorated with @rx.var with type annotations    
+    @rx.var
     def get_sales_trend_chart(self) -> dict:
         """Get sales trend chart"""
         # Check if _forecast_df is initialized before using it
@@ -314,7 +315,9 @@ class DashboardState(rx.State):
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
             return create_region_chart(self._filtered_df)
         else:
-            return {}    @rx.var
+            return {}
+
+    @rx.var
     def get_exogenous_impact_chart(self) -> dict:
         """Get exogenous impact chart"""
         if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
