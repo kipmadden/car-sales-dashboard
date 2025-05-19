@@ -90,15 +90,14 @@ class DashboardState(rx.State):
         # Apply year filter
         if self.selected_years:
             filtered = filtered[filtered['model_year'].isin(self.selected_years)]
-        
-        # Update filtered data
+          # Update filtered data
         self._filtered_df = filtered
         self.filtered_data = filtered.to_dict("records")
         
         # Update model and forecast after filtering
         self.train_model()
         self.generate_forecast()
-
+        
     def train_model(self):
         """Train the forecasting model with filtered data"""
         # Initialize model based on selected type
@@ -111,11 +110,11 @@ class DashboardState(rx.State):
                 self._scenario_engine.train(self._filtered_df)
         except AttributeError:
             # Handle case where _filtered_df might not be accessible
-                pass
+            pass
     
-        def generate_forecast(self):
-            """Generate forecast based on selected modifiers"""
-            # Generate forecast if we have data - safely check if attribute exists and if dataframe is empty
+    def generate_forecast(self):
+        """Generate forecast based on selected modifiers"""
+        # Generate forecast if we have data - safely check if attribute exists and if dataframe is empty
         try:
             if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
                 # Log the current modifiers being used
@@ -314,15 +313,24 @@ class DashboardState(rx.State):
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
             return create_region_chart(self._filtered_df)
         else:
-            return {}
-
-    @rx.var
+            return {}    @rx.var
     def get_exogenous_impact_chart(self) -> dict:
         """Get exogenous impact chart"""
         if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
             return create_exogenous_impact_chart(self._forecast_df)
         else:
             return {}
+    
+    @rx.var
+    def get_exogenous_variable_chart(self) -> rx.Component:
+        """Get exogenous variable chart - returns a component for direct use in UI"""
+        print(f"Creating exogenous variable chart with gas_price={self.gas_price_modifier}")
+        # Use directly in UI - returns the component, not just the figure data
+        return create_exogenous_chart(
+            "Exogenous Variable Trends",
+            self.forecast_data,  # This is a Var and will trigger updates when it changes
+            height="500px"
+        )
     
     @rx.var
     def get_top_models_chart(self) -> dict:

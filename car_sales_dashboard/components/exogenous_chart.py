@@ -19,62 +19,80 @@ def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"
     Returns:
         rx.Component: Box containing the plotly chart
     """
-    # We need to ensure our component properly reacts to Reflex Vars
-    # The key insight is to use rx.cond to handle the different scenarios
+    # The key to reactivity is using rx.cond to properly handle Var values
+    # This approach ensures the component will re-render when the Var changes
     
-    # Return a function that will be evaluated only when the component is rendered
-    def create_chart():
-        try:
-            # Check if forecast_data is None or empty by attempting to convert it
-            try:
-                # This will work if forecast_data is a regular Python object
-                if forecast_data is None or len(forecast_data) == 0:
-                    print("No forecast data provided (direct check), using sample data")
-                    return _create_sample_exogenous_figure(title)
-                
-                # If we got here, we have real data
-                df = pd.DataFrame(forecast_data)
-                print(f"Successfully created DataFrame with {len(df)} rows")
-                return _create_exogenous_figure_from_df(df, title)
-            except Exception as e:
-                # This likely means forecast_data is a Var that can't be directly accessed
-                print(f"Initial data check failed (likely a Var): {e}")
-                # We'll rely on rx.cond to handle this at render time
-                return _create_sample_exogenous_figure(title)
-        except Exception as e:
-            print(f"Error in exogenous chart creation: {e}")
-            # Create a simple error figure
-            fig = go.Figure()
-            fig.update_layout(
-                title="Error Creating Chart",
-                annotations=[dict(
-                    text=f"Error: {str(e)}",
-                    xref="paper", yref="paper",
-                    x=0.5, y=0.5, showarrow=False,
-                    font=dict(color="red", size=16)
-                )],
-                font=dict(color="black"),
-            )
-            return fig    # Create the figure once
-    fig = create_chart()
-    
-    # Return the box component with the plotly chart
-    return rx.box(
-        rx.heading(title, color="black", size="4"),
-        rx.center(
-            rx.plotly(data=fig),  # Use data parameter with the figure object
-            height=height,
+    # Use rx.cond for a proper reactive implementation
+    return rx.cond(
+        # Check if forecast_data is empty
+        forecast_data == [],  # This works for both regular lists and Var
+        
+        # True branch: Return a component with sample data
+        rx.box(
+            rx.heading(title, color="black", size="4"),
+            rx.center(
+                rx.plotly(
+                    data=_create_sample_exogenous_figure(title),
+                    height=height,
+                    width="100%",
+                    config={"responsive": True},
+                ),
+                height=height,
+                width="100%",
+            ),
             width="100%",
-            config={"responsive": True},
+            padding="1.5em",
+            background="white",
+            border_radius="md",
+            border="1px solid #EEE",
+            margin_top="1.5em",
+            margin_bottom="1.5em",
         ),
-        width="100%",
-        padding="1.5em",
-        background="white",
-        border_radius="md",
-        border="1px solid #EEE",
-        margin_top="1.5em",
-        margin_bottom="1.5em",
+        
+        # False branch: Return a component with the actual data
+        # This branch recreates the chart each time forecast_data changes
+        rx.box(
+            rx.heading(title, color="black", size="4"),
+            rx.center(
+                rx.plotly(
+                    # We're using a lambda to force reactivity
+                    data=lambda: _create_data_figure(forecast_data, title),
+                    height=height,
+                    width="100%",
+                    config={"responsive": True},
+                ),
+                height=height,
+                width="100%",
+            ),
+            width="100%",
+            padding="1.5em",
+            background="white",
+            border_radius="md",
+            border="1px solid #EEE",
+            margin_top="1.5em",
+            margin_bottom="1.5em",
+        )
     )
+
+def _create_data_figure(forecast_data, title):
+    """Helper function to create the chart from Var or regular data.
+    
+    This function is designed to be used with a lambda to force reactivity.
+    """
+    print(f"Creating exogenous chart with forecast data")
+    try:
+        # Convert forecast_data to DataFrame - works for both Var and regular data
+        df = pd.DataFrame(forecast_data)
+        if len(df) > 0:
+            print(f"Successfully created DataFrame with {len(df)} rows of data")
+            return _create_exogenous_figure_from_df(df, title)
+        else:
+            print("DataFrame is empty, using sample data")
+            return _create_sample_exogenous_figure(title)
+    except Exception as e:
+        print(f"Error creating exogenous chart with data: {e}")
+        return _create_sample_exogenous_figure(title)
+      # Removed the return statement as we're now using rx.cond to handle both cases
 
 
 def _create_sample_exogenous_figure(title: str):
