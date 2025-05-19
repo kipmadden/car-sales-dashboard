@@ -70,12 +70,15 @@ def _create_forecast_row(item, idx):
     
     Returns:
         rx.Component: Table row
-    """
-    # Use rx.cond instead of regular if/else for handling Vars
+    """    # Use rx.cond instead of regular if/else for handling Vars
     return rx.cond(
         item.get("is_forecast", False),
         rx.table.row(
-            rx.table.cell(item.get("date", ""), color="black", font_weight="bold" if idx == 0 else "normal"),
+            rx.table.cell(
+                item.get("date", ""), 
+                color="black", 
+                font_weight=rx.cond(idx == 0, "bold", "normal")
+            ),
             rx.table.cell(f"{item.get('sales', 0):,.0f}", color="black"),
             rx.table.cell(f"{item.get('unemployment', 0):.2f}", color="black"),
             rx.table.cell(f"${item.get('gas_price', 0):.2f}", color="black"),
