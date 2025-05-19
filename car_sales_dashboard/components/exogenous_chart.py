@@ -18,14 +18,13 @@ def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"
         
     Returns:
         rx.Component: Box containing the plotly chart
-    """
-    # Use rx.cond to handle the case when forecast_data is empty, using create_sample_chart or process_real_data
-    # This effectively wraps the functionality in a reactive conditional
+    """    # Use rx.cond to handle the case when forecast_data is empty, using lambda functions
+    # to wrap our chart creation functions so they are only called when needed
     return rx.cond(
         # Check if forecast_data is empty or None
         (forecast_data == []) | (forecast_data == None), 
-        _create_sample_exogenous_chart(title, height),
-        _process_real_exogenous_data(title, forecast_data, height)
+        lambda: _create_sample_exogenous_chart(title, height),
+        lambda: _process_real_exogenous_data(title, forecast_data, height)
     )
 
 
@@ -77,7 +76,7 @@ def _create_sample_exogenous_chart(title: str, height: str = "500px"):
     fig = _create_exogenous_figure_from_df(forecast_data, title)
     
     return rx.box(
-        rx.heading(title, color="black", size="4"),
+    rx.heading(title, color="black", size="4"),
         rx.center(
             rx.plotly(
                 figure=fig,
@@ -94,7 +93,10 @@ def _create_sample_exogenous_chart(title: str, height: str = "500px"):
         border="1px solid #EEE",
         margin_top="1.5em",
         margin_bottom="1.5em",
-    )def _process_real_exogenous_data(title: str, forecast_data, height: str = "500px"):
+    )
+
+
+def _process_real_exogenous_data(title: str, forecast_data, height: str = "500px"):
     """Process real data for the exogenous chart.
     
     Args:
