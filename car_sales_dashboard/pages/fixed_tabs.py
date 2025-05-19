@@ -1,7 +1,7 @@
 # This file contains the fixed tabs implementation
 import reflex as rx
 from car_sales_dashboard.state import DashboardState
-from car_sales_dashboard.components import responsive_chart_container
+from car_sales_dashboard.components.static_charts import create_static_chart
 from car_sales_dashboard.components.tables import create_forecast_table, create_summary_table
 
 def create_tabs():
@@ -15,10 +15,9 @@ def create_tabs():
             rx.tabs.trigger("Economic Factors", value="economic", color="black"),
         ),
         rx.tabs.content(
-            rx.vstack(
-                responsive_chart_container(
+            rx.vstack(                create_static_chart(
                     title="Sales Trend and Forecast",
-                    chart_id="sales-trend-chart",
+                    chart_data=DashboardState.get_sales_trend_chart(),
                     height="500px"
                 ),
                 rx.box(height="20px"),  # Add space between chart and controls
@@ -43,22 +42,20 @@ def create_tabs():
         ),
         rx.tabs.content(
             rx.vstack(
-                rx.hstack(
-                    responsive_chart_container(
+                rx.hstack(                    create_static_chart(
                         title="Sales by Vehicle Type",
-                        chart_id="vehicle-type-chart",
+                        chart_data=DashboardState.get_vehicle_type_chart(),
                         height="400px"
                     ),
-                    responsive_chart_container(
+                    create_static_chart(
                         title="Top Models by Sales",
-                        chart_id="top-models-chart",
+                        chart_data=DashboardState.get_top_models_chart(),
                         height="400px"
                     ),
                     width="100%",
-                ),
-                responsive_chart_container(
+                ),                create_static_chart(
                     title="Sales by Month and Vehicle Type",
-                    chart_id="sales-by-month-chart",
+                    chart_data=DashboardState.get_sales_by_month_chart(),
                     height="400px"
                 ),
                 width="100%",
@@ -66,15 +63,14 @@ def create_tabs():
             value="vehicles",
         ),
         rx.tabs.content(
-            rx.vstack(
-                responsive_chart_container(
+            rx.vstack(                create_static_chart(
                     title="Sales by Region",
-                    chart_id="region-chart",
+                    chart_data=DashboardState.get_region_chart(),
                     height="400px"
                 ),
-                responsive_chart_container(
-                    title="Sales by State", 
-                    chart_id="state-map-chart",
+                create_static_chart(
+                    title="Sales by State",
+                    chart_data=DashboardState.get_state_map_chart(),
                     height="500px"
                 ),
                 width="100%",
@@ -82,10 +78,9 @@ def create_tabs():
             value="geographic",
         ),
         rx.tabs.content(
-            rx.vstack(
-                responsive_chart_container(
+            rx.vstack(                create_static_chart(
                     title="Exogenous Variable Trends",
-                    chart_id="exogenous-impact-chart",
+                    chart_data=DashboardState.get_exogenous_impact_chart(),
                     height="500px"
                 ),
                 rx.box(
