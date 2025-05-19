@@ -1,6 +1,8 @@
 import reflex as rx
 import pandas as pd
+import plotly.graph_objects as go
 
+from car_sales_dashboard.components.exogenous_chart import create_exogenous_figure
 from car_sales_dashboard.models import load_data, ScenarioEngine
 from pydantic import PrivateAttr
 from car_sales_dashboard.components import (
@@ -325,6 +327,16 @@ class DashboardState(rx.State):
         else:
             return {}
     
+    @rx.var
+    def get_exogenous_figure(self) -> go.Figure:
+        """Get exogenous variable chart as a Plotly Figure."""
+        print(f"get_exogenous_figure with gas_price={self.gas_price_modifier}")
+        return create_exogenous_figure(
+            "Exogenous Variable Trends",
+            self.forecast_data
+        )
+
+
     @rx.var
     def get_exogenous_variable_chart(self) -> rx.Component:
         """Get exogenous variable chart - returns a component for direct use in UI"""

@@ -9,7 +9,7 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 from car_sales_dashboard.state import DashboardState, df
 from car_sales_dashboard.components.tables import create_forecast_table, create_summary_table
-from car_sales_dashboard.components.exogenous_chart import create_exogenous_chart
+
 
 # Create basic chart functions directly here to avoid circular imports
 def create_simple_bar_chart(title: str, x_values, y_values, height: str = "400px"):
@@ -247,7 +247,8 @@ def create_tabs():
                 width="100%",
             ),
             value="sales",
-        ),        rx.tabs.content(
+        ),
+        rx.tabs.content(
             rx.vstack(
                 rx.hstack(
                     create_simple_bar_chart("Sales by Vehicle Type", vehicle_types, vehicle_sales),
@@ -268,7 +269,8 @@ def create_tabs():
                 width="100%",
             ),
             value="vehicles",
-        ),        rx.tabs.content(
+        ),
+        rx.tabs.content(
             rx.vstack(
                 create_simple_bar_chart("Sales by Region", regions, region_sales),
                 create_pie_chart("Sales by State", 
@@ -278,10 +280,25 @@ def create_tabs():
                 width="100%",
             ),
             value="geographic",
-        ),        rx.tabs.content(
+        ),
+        rx.tabs.content(
             rx.vstack(
                 # Use the state method directly to ensure reactivity
-                DashboardState.get_exogenous_variable_chart,
+                rx.box(
+                    rx.heading("Exogenous Variable Trends", color="black", size="4"),
+                    rx.center(
+                        rx.plotly(data=DashboardState.get_exogenous_figure),
+                        height="500px",
+                        width="100%",
+                        ),
+                        width="100%",
+                        padding="1.5em",
+                        background="white",
+                        border_radius="md",
+                        border="1px solid #EEE",
+                        margin_top="1.5em",
+                        margin_bottom="1.5em",
+                    ),
                 rx.box(
                     # Use a simple static component for the summary table
                     rx.table.root(

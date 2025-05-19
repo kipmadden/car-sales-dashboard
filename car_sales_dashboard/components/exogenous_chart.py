@@ -145,6 +145,132 @@ def _create_sample_exogenous_figure(title: str):
 # This function is no longer needed as we've refactored create_exogenous_chart
 # to handle both cases directly
 
+def create_exogenous_figure(title: str, forecast_data) -> go.Figure:
+    """Create a Plotly figure for exogenous variables using forecast_data.
+
+    Args:
+        title: The chart title.
+        forecast_data: List[dict] or DataFrame with exogenous data.
+
+    Returns:
+        plotly.graph_objects.Figure: The chart.
+    """
+    # Accept both list-of-dicts and DataFrame
+    if isinstance(forecast_data, list):
+        df = pd.DataFrame(forecast_data)
+    elif isinstance(forecast_data, pd.DataFrame):
+        df = forecast_data
+    else:
+        raise ValueError("forecast_data must be a list of dicts or a DataFrame.")
+
+    print(f"Creating exogenous chart with {len(df)} rows of data")
+    print(f"Data columns: {df.columns.tolist()}")
+
+    fig = make_subplots(
+        rows=2, 
+        cols=2, 
+        subplot_titles=(
+            'Unemployment Rate', 
+            'Gas Price', 
+            'Consumer Price Index', 
+            'Search Volume'
+        )
+    )
+
+    available_columns = df.columns.tolist()
+    # Unemployment
+    if 'date' in available_columns and 'unemployment' in available_columns:
+        fig.add_trace(
+            go.Scatter(
+                x=df['date'],
+                y=df['unemployment'],
+                mode='lines',
+                name='Unemployment',
+                line=dict(color="blue", width=2)
+            ),
+            row=1, col=1
+        )
+    # Gas Price
+    if 'date' in available_columns and 'gas_price' in available_columns:
+        fig.add_trace(
+            go.Scatter(
+                x=df['date'],
+                y=df['gas_price'],
+                mode='lines',
+                name='Gas Price',
+                line=dict(color="green", width=2)
+            ),
+            row=1, col=2
+        )
+    # CPI
+    if 'date' in available_columns and 'cpi_all' in available_columns:
+        fig.add_trace(
+            go.Scatter(
+                x=df['date'],
+                y=df['cpi_all'],
+                mode='lines',
+                name='CPI',
+                line=dict(color="orange", width=2)
+            ),
+            row=2, col=1
+        )
+    # Search Volume
+    if 'date' in available_columns and 'search_volume' in available_columns:
+        fig.add_trace(
+            go.Scatter(
+                x=df['date'],
+                y=df['search_volume'],
+                mode='lines',
+                name='Search Volume',
+                line=dict(color="purple", width=2)
+            ),
+            row=2, col=2
+        )
+    # Forecast region divider
+    try:
+        if 'is_forecast' in available_columns and any(df['is_forecast']):
+            first_forecast_date = df[df['is_forecast']]['date'].min()
+            for i in range(1, 3):
+                for j in range(1, 3):
+                    fig.add_vline(
+                        x=first_forecast_date, 
+                        line_width=1, 
+                        line_dash="dash", 
+                        line_color="gray",
+                        row=i, col=j
+                    )
+    except Exception as e:
+        print(f"Error adding forecast divider: {e}")
+    # Layout and grid
+    fig.update_layout(
+        height=500,
+        title=title,
+        font=dict(color="black"),
+        plot_bgcolor='#E5ECF6',
+        paper_bgcolor='white',
+        margin=dict(t=40, b=10, l=10, r=10),
+    )
+    for i in range(1, 3):
+        for j in range(1, 3):
+            fig.update_xaxes(
+                showgrid=True,
+                gridwidth=1,
+                gridcolor='white',
+                zeroline=True,
+                zerolinewidth=1,
+                zerolinecolor='white',
+                row=i, col=j
+            )
+            fig.update_yaxes(
+                showgrid=True,
+                gridwidth=1,
+                gridcolor='white',
+                zeroline=True,
+                zerolinewidth=1,
+                zerolinecolor='white',
+                row=i, col=j
+            )
+    return fig
 
 def _create_exogenous_figure_from_df(forecast_data, title):
     """Helper function to create the exogenous figure from a DataFrame.
