@@ -21,24 +21,22 @@ def index():
                 unique_vehicle_types,
                 unique_makes,
                 unique_models,
-                unique_years,
-                DashboardState
+                unique_years,                DashboardState
             ),
             rx.vstack(
                 rx.heading("Automotive Sales Forecast Dashboard", size="6"),
                 rx.text(
                     "Explore the impact of exogenous factors on vehicle sales",
-                    margin_bottom="1em",
-                ),
-                exogenous_controls(DashboardState),                rx.tabs.root(
+                    margin_bottom="1em",                ),
+                exogenous_controls(DashboardState),
+                rx.tabs.root(
                     rx.tabs.list(
                         rx.tabs.trigger("Sales Forecast", value="sales"),
                         rx.tabs.trigger("Vehicle Analysis", value="vehicles"),
                         rx.tabs.trigger("Geographic", value="geographic"),
                         rx.tabs.trigger("Economic Factors", value="economic"),
                     ),
-                    on_value_change=DashboardState.update_active_tab,
-                    value=DashboardState.active_tab,rx.tabs.content(
+                    rx.tabs.content(
                         rx.vstack(
                             chart_container(
                                 "Sales Trend and Forecast",
@@ -52,7 +50,8 @@ def index():
                                 ),
                                 rx.text("Show Forecast Table"),
                                 margin_top="1em",
-                            ),                            rx.cond(
+                            ),
+                            rx.cond(
                                 DashboardState.show_table,
                                 create_forecast_table(DashboardState.forecast_data),
                                 rx.text("")
@@ -61,40 +60,47 @@ def index():
                         ),
                         value="sales",
                     ),
+                    on_value_change=DashboardState.update_active_tab,
+                    value=DashboardState.active_tab,
                     rx.tabs.content(
                         rx.vstack(
                             rx.hstack(
-                                chart_container(                                    "Sales by Vehicle Type",
+                                chart_container(
+                                    "Sales by Vehicle Type",
                                     DashboardState.get_vehicle_type_chart,
                                     height="400px"
                                 ),
-                                chart_container(                                    "Top Models by Sales",
+                                chart_container(
+                                    "Top Models by Sales",
                                     DashboardState.get_top_models_chart,
                                     height="400px"
                                 ),
                                 width="100%",
-                            ),                            chart_container(
+                            ),
+                            chart_container(
                                 "Sales by Month and Vehicle Type",
                                 DashboardState.get_sales_by_month_chart,
                                 height="400px"
                             ),
                             width="100%",
                         ),
-                        value="vehicles",
+                        value="vehicles"
                     ),
                     rx.tabs.content(
                         rx.vstack(
-                            chart_container(                                "Sales by Region",
+                            chart_container(
+                                "Sales by Region",
                                 DashboardState.get_region_chart,
                                 height="400px"
                             ),
-                            chart_container(                                "Sales by State",
+                            chart_container(
+                                "Sales by State",
                                 DashboardState.get_state_map_chart,
                                 height="500px"
                             ),
                             width="100%",
                         ),
-                        value="geographic",
+                        value="geographic"
                     ),
                     rx.tabs.content(
                         rx.vstack(
@@ -123,19 +129,13 @@ def index():
                     orientation="horizontal",
                     width="100%",
                     variant="enclosed",
-                    margin_top="1em",
-                ),
+                    margin_top="1em",                ),
                 rx.text(
                     "Built with Reflex | Data is synthetic",
                     margin_top="2em",
                     font_size="sm",
                     color="gray",
-                ),
-                width="100%",
-                spacing="4",
-            ),
-            align_items="start",
-            width="100%",
+                ),            ),
         ),
         padding="2em",
         max_width="1400px",

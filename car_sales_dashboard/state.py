@@ -280,7 +280,9 @@ class DashboardState(rx.State):
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
             return create_state_map_chart(self._filtered_df)
         else:
-            return {}    @rx.var
+            return {}
+    
+    @rx.var
     def get_sales_by_month_chart(self) -> dict:
         """Get sales by month heatmap"""
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
