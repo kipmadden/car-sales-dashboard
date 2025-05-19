@@ -111,9 +111,11 @@ class DashboardState(rx.State):
                 self._scenario_engine.train(self._filtered_df)
         except AttributeError:
             # Handle case where _filtered_df might not be accessible
-            pass    def generate_forecast(self):
-        """Generate forecast based on selected modifiers"""
-        # Generate forecast if we have data - safely check if attribute exists and if dataframe is empty
+                pass
+    
+        def generate_forecast(self):
+            """Generate forecast based on selected modifiers"""
+            # Generate forecast if we have data - safely check if attribute exists and if dataframe is empty
         try:
             if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
                 # Log the current modifiers being used
@@ -213,7 +215,8 @@ class DashboardState(rx.State):
             value = float(value[0])
         self.unemployment_modifier = float(value)
         self.generate_forecast()
-      def update_gas_price(self, value):
+
+    def update_gas_price(self, value):
         """Update gas price modifier"""
         # Convert value to float if it's a list
         if isinstance(value, list) and len(value) > 0:
@@ -260,7 +263,8 @@ class DashboardState(rx.State):
         # Force re-evaluation of charts for the new tab
         self.filter_data()
 
-    # UI update handlers    def toggle_table(self, value: bool):
+    # UI update handlers
+    def toggle_table(self, value: bool):
         """Toggle the table visibility in the dashboard UI."""
         print(f"Toggling table visibility to: {value}")
         self.show_table = value

@@ -8,7 +8,8 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
-def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"):    """Create a chart showing the impact of exogenous variables.
+def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"):
+    """Create a chart showing the impact of exogenous variables.
     
     Args:
         title: The title of the chart
