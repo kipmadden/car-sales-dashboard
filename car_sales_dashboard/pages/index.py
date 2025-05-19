@@ -125,7 +125,6 @@ def index():
                         value="economic",
                     ),
                     # All keyword arguments must come after all positional arguments
-                    on_value_change=DashboardState.update_active_tab,
                     value=DashboardState.active_tab,
                     default_value="sales",
                     orientation="horizontal",
