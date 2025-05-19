@@ -37,8 +37,6 @@ def index():
                         rx.tabs.trigger("Geographic", value="geographic", color="black"),
                         rx.tabs.trigger("Economic Factors", value="economic", color="black"),
                     ),
-                    value=DashboardState.active_tab,
-                    on_value_change=DashboardState.update_active_tab,
                     rx.tabs.content(
                         rx.vstack(
                             chart_container(
@@ -126,6 +124,7 @@ def index():
                         value="economic",
                     ),
                     # All keyword arguments must come after all positional arguments
+                    on_value_change=DashboardState.update_active_tab,
                     value=DashboardState.active_tab,
                     default_value="sales",
                     orientation="horizontal",

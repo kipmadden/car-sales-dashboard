@@ -137,7 +137,8 @@ class DashboardState(rx.State):
             self._forecast_df = pd.DataFrame()
             self.forecast_data = []
     
-    # Filter update handlers    def update_regions(self, regions):
+    # Filter update handlers
+    def update_regions(self, regions):
         """Update selected regions"""
         # Ensure regions is a list, even if a single string is passed
         if regions and isinstance(regions, str):
@@ -172,7 +173,7 @@ class DashboardState(rx.State):
         else:
             self.selected_makes = makes
         self.filter_data()
-      def update_models(self, models):
+    def update_models(self, models):
         """Update selected models"""
         # Ensure models is a list, even if a single string is passed
         if models and isinstance(models, str):
@@ -239,7 +240,7 @@ class DashboardState(rx.State):
         self.model_type = value
         self.train_model()
         self.generate_forecast()
-      def update_active_tab(self, tab: str):
+    def update_active_tab(self, tab: str):
         """Update the active tab."""
         print(f"Tab changed to: {tab}")  # Debug print
         self.active_tab = tab
