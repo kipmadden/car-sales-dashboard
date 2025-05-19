@@ -23,9 +23,7 @@ from car_sales_dashboard.components.chart_fix import (
 )
 
 # Import client-side chart effects
-from car_sales_dashboard.components.chart_client import (
-    chart_client_effects
-)
+# Chart client effects are now implemented directly in index.py
 
 # Import the responsive chart container
 from car_sales_dashboard.components.chart_components import (
