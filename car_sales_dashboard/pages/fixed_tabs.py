@@ -9,6 +9,7 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 from car_sales_dashboard.state import DashboardState, df
 from car_sales_dashboard.components.tables import create_forecast_table, create_summary_table
+from car_sales_dashboard.components.exogenous_chart import create_exogenous_chart
 
 # Create basic chart functions directly here to avoid circular imports
 def create_simple_bar_chart(title: str, x_values, y_values, height: str = "400px"):
@@ -155,141 +156,7 @@ def create_pie_chart(title: str, labels, values, height: str = "400px"):
         margin_bottom="1.5em",
     )
 
-def create_exogenous_chart(title: str, forecast_data, height: str = "500px"):
-    """Create a chart showing the impact of exogenous variables.
-    
-    Args:
-        title: The title of the chart
-        forecast_data: List of dictionaries containing forecast data
-        height: The height of the chart
-        
-    Returns:
-        rx.Component: Box containing the plotly chart
-    """
-    # Convert to DataFrame if necessary
-    if isinstance(forecast_data, list):
-        import pandas as pd
-        forecast_data = pd.DataFrame(forecast_data)
-    
-    # Check if we have data
-    if forecast_data.empty:
-        fig = go.Figure()
-        fig.update_layout(
-            title="No Data Available",
-            annotations=[dict(
-                text="No forecast data available",
-                xref="paper", yref="paper",
-                x=0.5, y=0.5, showarrow=False,
-                font=dict(color="black", size=16)
-            )],
-            font=dict(color="black"),
-        )
-    else:
-        # Create subplots
-        fig = make_subplots(
-            rows=2, 
-            cols=2, 
-            subplot_titles=(
-                'Unemployment Rate', 
-                'Gas Price', 
-                'Consumer Price Index', 
-                'Search Volume'
-            )
-        )
-        
-        # Add unemployment trace
-        fig.add_trace(
-            go.Scatter(
-                x=forecast_data['date'],
-                y=forecast_data['unemployment'],
-                mode='lines',
-                name='Unemployment',
-                line=dict(color="blue", width=2)
-            ),
-            row=1, col=1
-        )
-        
-        # Add gas price trace
-        fig.add_trace(
-            go.Scatter(
-                x=forecast_data['date'],
-                y=forecast_data['gas_price'],
-                mode='lines',
-                name='Gas Price',
-                line=dict(color="green", width=2)
-            ),
-            row=1, col=2
-        )
-        
-        # Add CPI trace
-        fig.add_trace(
-            go.Scatter(
-                x=forecast_data['date'],
-                y=forecast_data['cpi_all'],
-                mode='lines',
-                name='CPI',
-                line=dict(color="orange", width=2)
-            ),
-            row=2, col=1
-        )
-        
-        # Add search volume trace
-        fig.add_trace(
-            go.Scatter(
-                x=forecast_data['date'],
-                y=forecast_data['search_volume'],
-                mode='lines',
-                name='Search Volume',
-                line=dict(color="purple", width=2)
-            ),
-            row=2, col=2
-        )
-        
-        # Highlight forecast region with a vertical line if forecast data is available
-        try:
-            if 'is_forecast' in forecast_data.columns and any(forecast_data['is_forecast']):
-                first_forecast_date = forecast_data[forecast_data['is_forecast']]['date'].min()
-                
-                # Add vertical lines to all subplots
-                for i in range(1, 3):
-                    for j in range(1, 3):
-                        fig.add_vline(
-                            x=first_forecast_date, 
-                            line_width=1, 
-                            line_dash="dash", 
-                            line_color="gray",
-                            row=i, col=j
-                        )
-        except Exception as e:
-            print(f"Error adding forecast divider: {e}")
-        
-        # Update layout
-        fig.update_layout(
-            height=500,
-            title=title,
-            font=dict(color="black"),
-            plot_bgcolor='white',
-        )
-    
-    return rx.box(
-        rx.heading(title, color="black", size="4"),
-        rx.center(
-            rx.plotly(
-                figure=fig,
-                height=height,
-                width="100%",
-            ),
-            height=height,
-            width="100%",
-        ),
-        width="100%",
-        padding="1.5em",
-        background="white",
-        border_radius="md",
-        border="1px solid #EEE",
-        margin_top="1.5em",
-        margin_bottom="1.5em",
-    )
+# This function is now imported from components.exogenous_chart
 
 def create_tabs():
     """Create the tabs component with correct argument ordering"""
