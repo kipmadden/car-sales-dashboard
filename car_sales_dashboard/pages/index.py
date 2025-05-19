@@ -1,9 +1,9 @@
 import reflex as rx
 import pandas as pd
 from car_sales_dashboard.state import DashboardState, df
-from car_sales_dashboard.components.controls import sidebar_filters, exogenous_controls, chart_container
-from car_sales_dashboard.components.chart_fix import chart_container_v2, plotly_chart
+from car_sales_dashboard.components.controls import sidebar_filters, exogenous_controls
 from car_sales_dashboard.components.tables import create_summary_table, create_forecast_table
+from car_sales_dashboard.components import chart_client_effects, responsive_chart_container
 
 def index():
     """Main page of the dashboard"""
@@ -13,6 +13,10 @@ def index():
     unique_makes = sorted(df['make'].unique())
     unique_models = sorted(df['model'].unique())
     unique_years = sorted(str(int(year)) for year in df['model_year'].unique())
+    
+    # Include client-side effects to update charts
+    for effect in chart_client_effects:
+        rx.include(effect)
 
     return rx.container(
         rx.hstack(
@@ -31,31 +35,19 @@ def index():
                     "Explore the impact of exogenous factors on vehicle sales",
                     margin_bottom="1em",
                 ),
-                exogenous_controls(DashboardState),                rx.tabs.root(                    rx.tabs.list(
+                exogenous_controls(DashboardState),                rx.tabs.root(
+                    on_change=DashboardState.update_active_tab,
+                    rx.tabs.list(
                         rx.tabs.trigger("Sales Forecast", value="sales", color="black"),
                         rx.tabs.trigger("Vehicle Analysis", value="vehicles", color="black"),
                         rx.tabs.trigger("Geographic", value="geographic", color="black"),
                         rx.tabs.trigger("Economic Factors", value="economic", color="black"),
-                    ),                    rx.tabs.content(
-                        rx.vstack(
-                            rx.box(
-                                rx.heading("Sales Trend and Forecast", color="black", size="4"),
-                                # Directly use plotly instead of chart_container
-                                rx.cond(
-                                    DashboardState.get_sales_trend_chart == {},
-                                    rx.center("No data available for this selection", height="200px", color="black"),
-                                    rx.plotly(
-                                        figure=DashboardState.get_sales_trend_chart,
-                                        height="500px"
-                                    )
-                                ),
-                                width="100%",
-                                padding="1.5em",
-                                background="white",
-                                border_radius="md",
-                                border="1px solid #EEE",
-                                margin_top="1.5em",
-                                margin_bottom="1.5em",
+                    ),rx.tabs.content(
+                        rx.vstack(                            # Use responsive chart container for sales trend chart
+                            responsive_chart_container(
+                                title="Sales Trend and Forecast",
+                                chart_id="sales-trend-chart",
+                                height="500px"
                             ),
                             rx.box(height="20px"),  # Add space between chart and controls
                             rx.hstack(
@@ -78,38 +70,34 @@ def index():
                         value="sales",
                     ),
                     rx.tabs.content(
-                        rx.vstack(
-                            rx.hstack(
-                                chart_container(
-                                    "Sales by Vehicle Type",
-                                    DashboardState.get_vehicle_type_chart,
+                        rx.vstack(                            rx.hstack(                                responsive_chart_container(
+                                    title="Sales by Vehicle Type",
+                                    chart_id="vehicle-type-chart",
                                     height="400px"
                                 ),
-                                chart_container(
-                                    "Top Models by Sales",
-                                    DashboardState.get_top_models_chart,
+                                responsive_chart_container(
+                                    title="Top Models by Sales",
+                                    chart_id="top-models-chart",
                                     height="400px"
                                 ),
                                 width="100%",
-                            ),
-                            chart_container(
-                                "Sales by Month and Vehicle Type",
-                                DashboardState.get_sales_by_month_chart,
+                            ),                            responsive_chart_container(
+                                title="Sales by Month and Vehicle Type",
+                                chart_id="sales-by-month-chart",
                                 height="400px"
                             ),
                             width="100%",                        ),
                         value="vehicles",
                     ),
                     rx.tabs.content(
-                        rx.vstack(
-                            chart_container(
-                                "Sales by Region",
-                                DashboardState.get_region_chart,
+                        rx.vstack(                            responsive_chart_container(
+                                title="Sales by Region",
+                                chart_id="region-chart",
                                 height="400px"
                             ),
-                            chart_container(
-                                "Sales by State",
-                                DashboardState.get_state_map_chart,
+                            responsive_chart_container(
+                                title="Sales by State",
+                                chart_id="state-map-chart",
                                 height="500px"
                             ),
                             width="100%",
@@ -117,10 +105,9 @@ def index():
                         value="geographic",
                     ),
                     rx.tabs.content(
-                        rx.vstack(
-                            chart_container(
-                                "Exogenous Variable Trends",
-                                DashboardState.get_exogenous_impact_chart,
+                        rx.vstack(                            responsive_chart_container(
+                                title="Exogenous Variable Trends",
+                                chart_id="exogenous-impact-chart",
                                 height="500px"
                             ),
                             rx.box(

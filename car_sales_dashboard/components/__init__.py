@@ -22,6 +22,16 @@ from car_sales_dashboard.components.chart_fix import (
     create_empty_chart
 )
 
+# Import client-side chart effects
+from car_sales_dashboard.components.chart_client import (
+    chart_client_effects
+)
+
+# Import the responsive chart container
+from car_sales_dashboard.components.chart_components import (
+    responsive_chart_container
+)
+
 from car_sales_dashboard.components.tables import (
     create_summary_table,
     create_forecast_table
