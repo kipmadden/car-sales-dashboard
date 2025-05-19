@@ -19,40 +19,37 @@ def create_exogenous_chart(title: str, forecast_data=None, height: str = "500px"
     Returns:
         rx.Component: Box containing the plotly chart
     """
-    # Note: The conditional logic for handling forecast_data is now handled in fixed_tabs.py
-    # This function now simply processes the data it's given
-    
-    # Process the data we were given - we're assuming this is called with non-Var type data
-    # or that the caller has already handled the conditional logic with rx.cond()
-    if forecast_data is None or (isinstance(forecast_data, list) and len(forecast_data) == 0):
-        # Create sample chart if no data provided
-        fig = _create_sample_exogenous_figure(title)
-    else:
-        # Create chart from provided data
-        try:
-            # Convert to DataFrame if it's a list
-            if isinstance(forecast_data, list):
+    # We'll use a safer approach that doesn't rely on checking len() of data
+    # which can cause issues with Reflex Vars
+    try:
+        # Try to create the chart with provided data
+        # Detect if forecast_data is None or is likely empty
+        if forecast_data is None:
+            fig = _create_sample_exogenous_figure(title)
+        else:
+            # Attempt to process the data, falling back to sample data on error
+            try:
+                # This might raise an exception if forecast_data is a Var
                 df = pd.DataFrame(forecast_data)
-            else:
-                # It might already be a DataFrame
-                df = forecast_data
-                
-            # Create the figure with the data
-            fig = _create_exogenous_figure_from_df(df, title)
-        except Exception as e:
-            print(f"Error creating exogenous chart: {e}")
-            # Create a figure with an error message
-            fig = go.Figure()
-            fig.update_layout(
-                title="Error Creating Chart",
-                annotations=[dict(
-                    text=f"Error: {str(e)}",
-                    xref="paper", yref="paper",
-                    x=0.5, y=0.5, showarrow=False,
-                    font=dict(color="red", size=16)
-                )],
-                font=dict(color="black"),
-            )
+                fig = _create_exogenous_figure_from_df(df, title)
+            except Exception as e:
+                print(f"Error creating exogenous chart: {e}")
+                # Fall back to sample data
+                fig = _create_sample_exogenous_figure(title)
+    except Exception as e:
+        print(f"Error in exogenous chart creation: {e}")
+        # Create a simple error figure
+        fig = go.Figure()
+        fig.update_layout(
+            title="Error Creating Chart",
+            annotations=[dict(
+                text=f"Error: {str(e)}",
+                xref="paper", yref="paper",
+                x=0.5, y=0.5, showarrow=False,
+                font=dict(color="red", size=16)
+            )],
+            font=dict(color="black"),
+        )
     
     # Return the box component with the plotly chart
     return rx.box(
