@@ -2,49 +2,154 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import os
+from scipy.stats import truncnorm
+from typing import Dict, Any, Optional
 
-def generate_sample_data():
+# Import configuration
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+from rxconfig import DEFAULT_SEED, DATA_BOUNDS
+
+# Import logging
+from car_sales_dashboard.utils.logging_config import logger
+
+
+def clamp_value(value: float, min_val: float, max_val: float) -> float:
+    """Clamp a value to be within specified bounds."""
+    return max(min_val, min(max_val, value))
+
+
+def generate_bounded_random(
+    distribution: str, 
+    size: int, 
+    bounds: Dict[str, float], 
+    **kwargs
+) -> np.ndarray:
+    """
+    Generate random values within realistic bounds using truncated normal distribution.
+    
+    Args:
+        distribution: Type of distribution ('normal', 'uniform')
+        size: Number of values to generate
+        bounds: Dictionary with 'min' and 'max' keys
+        **kwargs: Additional parameters for the distribution
+        
+    Returns:
+        np.ndarray: Array of bounded random values
+    """
+    min_val = bounds['min']
+    max_val = bounds['max']
+    
+    if distribution == 'normal':
+        # Use truncated normal distribution for more realistic data
+        mean = kwargs.get('mean', (min_val + max_val) / 2)
+        std = kwargs.get('std', (max_val - min_val) / 6)  # 99.7% within bounds
+        
+        # Standardize parameters for truncnorm
+        a = (min_val - mean) / std
+        b = (max_val - mean) / std
+        
+        values = truncnorm.rvs(a, b, loc=mean, scale=std, size=size)
+        
+    elif distribution == 'uniform':
+        values = np.random.uniform(min_val, max_val, size)
+        
+    else:
+        raise ValueError(f"Unsupported distribution: {distribution}")
+    
+    # Ensure all values are within bounds (safety check)
+    return np.array([clamp_value(v, min_val, max_val) for v in values])
+
+
+def generate_sample_data(seed: Optional[int] = None) -> pd.DataFrame:
     """
     Generate synthetic car sales data with exogenous factors.
+    
+    Args:
+        seed: Random seed for reproducible data generation
     
     Returns:
         pd.DataFrame: A DataFrame with synthetic sales data
     """
+    # Set seed for reproducibility (S5 remediation)
+    if seed is None:
+        seed = DEFAULT_SEED
+    
+    np.random.seed(seed)
+    logger.info(f"Generating synthetic data with seed: {seed}")
+    
     # Define date range
     start_date = datetime(2015, 1, 1)
     dates = [start_date + timedelta(days=30*i) for i in range(36)]
     
-    # Create base data
+    # Generate realistic exogenous variables with proper bounds
+    sales_base = generate_bounded_random(
+        'normal', 36, DATA_BOUNDS['sales'], 
+        mean=15000, std=3000
+    )
+    
+    unemployment = generate_bounded_random(
+        'normal', 36, DATA_BOUNDS['unemployment'],
+        mean=5.5, std=1.2
+    )
+    
+    gas_price = generate_bounded_random(
+        'normal', 36, DATA_BOUNDS['gas_price'],
+        mean=3.0, std=0.8
+    )
+    
+    cpi_energy = generate_bounded_random(
+        'normal', 36, DATA_BOUNDS['cpi_energy'],
+        mean=215, std=25
+    )
+    
+    cpi_all = generate_bounded_random(
+        'normal', 36, DATA_BOUNDS['cpi_all'],
+        mean=250, std=15
+    )
+    
+    search_volume = generate_bounded_random(
+        'normal', 36, DATA_BOUNDS['search_volume'],
+        mean=70, std=20
+    )
+    
+    # Create base data with bounded random variables
     data = {
         'date': dates,
         'year': [d.year for d in dates],
         'month': [d.month for d in dates],
-        'sales': np.random.normal(15000, 3000, 36),  # Random sales data
-        'unemployment': np.random.uniform(3.5, 7.5, 36),
-        'gas_price': np.random.uniform(2.0, 4.5, 36),
-        'cpi_energy': np.random.uniform(180, 250, 36),
-        'cpi_all': np.random.uniform(220, 280, 36),
-        'search_volume': np.random.uniform(40, 100, 36)
+        'sales': sales_base,
+        'unemployment': unemployment,
+        'gas_price': gas_price,
+        'cpi_energy': cpi_energy,
+        'cpi_all': cpi_all,
+        'search_volume': search_volume
     }
     
-    # Add seasonal effect
+    # Apply economic effects with clamping to maintain realistic bounds
     for i, month in enumerate(data['month']):
-        # Higher sales in spring and end of year
-        if month in [3, 4, 5, 11, 12]:
-            data['sales'][i] *= 1.2
-        # Lower sales in winter
-        elif month in [1, 2]:
-            data['sales'][i] *= 0.8
+        sales_modifier = 1.0
+        
+        # Seasonal effects
+        if month in [3, 4, 5, 11, 12]:  # Spring and holiday season
+            sales_modifier *= 1.2
+        elif month in [1, 2]:  # Winter slowdown
+            sales_modifier *= 0.8
             
-        # Gas price effects
+        # Gas price effects (bounded)
         if data['gas_price'][i] > 3.5:
-            data['sales'][i] *= 0.9  # High gas prices reduce sales
+            sales_modifier *= 0.9  # High gas prices reduce sales
             
-        # Unemployment effects
+        # Unemployment effects (bounded)
         if data['unemployment'][i] > 6.0:
-            data['sales'][i] *= 0.85  # High unemployment reduces sales
+            sales_modifier *= 0.85  # High unemployment reduces sales
+        
+        # Apply modifier and clamp result
+        new_sales = data['sales'][i] * sales_modifier
+        data['sales'][i] = clamp_value(new_sales, DATA_BOUNDS['sales']['min'], DATA_BOUNDS['sales']['max'])
     
     df = pd.DataFrame(data)
+    logger.debug(f"Generated base data with {len(df)} time periods")
     
     # Add vehicle categories and regions for filtering
     vehicle_types = ['Sedan', 'SUV', 'Truck', 'Compact']
@@ -95,9 +200,16 @@ def generate_sample_data():
                         elif vehicle == 'Compact':
                             sales_modifier *= 1.1  # Compacts do better with high gas prices
                     
-                    # Create new row
+                    # Create new row with bounded random variation
                     new_row = row.copy()
-                    new_row['sales'] = row['sales'] * sales_modifier * np.random.uniform(0.8, 1.2)
+                    
+                    # Apply modifier with bounded random noise
+                    base_sales = row['sales'] * sales_modifier
+                    random_factor = np.random.uniform(0.8, 1.2)
+                    final_sales = base_sales * random_factor
+                    
+                    # Clamp to realistic bounds
+                    new_row['sales'] = clamp_value(final_sales, DATA_BOUNDS['sales']['min'], DATA_BOUNDS['sales']['max'])
                     new_row['vehicle_type'] = vehicle
                     new_row['region'] = region
                     new_row['state'] = state
@@ -135,9 +247,16 @@ def generate_sample_data():
             if make_model in ['Toyota Camry', 'Honda Civic', 'Ford F-150']:
                 sales_modifier *= 1.3  # Best sellers
             
-            # Create new row
+            # Create new row with bounded random variation
             new_row = row.copy()
-            new_row['sales'] = row['sales'] * sales_modifier * np.random.uniform(0.9, 1.1)
+            
+            # Apply modifier with bounded random noise
+            base_sales = row['sales'] * sales_modifier
+            random_factor = np.random.uniform(0.9, 1.1)
+            final_sales = base_sales * random_factor
+            
+            # Clamp to realistic bounds
+            new_row['sales'] = clamp_value(final_sales, DATA_BOUNDS['sales']['min'], DATA_BOUNDS['sales']['max'])
             new_row['make'] = make
             new_row['model'] = model
             
@@ -156,37 +275,69 @@ def generate_sample_data():
             age = 2024 - year
             sales_modifier *= (1.0 - (age * 0.15))  # Reduce sales by 15% per year of age
             
-            # Create new row
+            # Create new row with bounded random variation
             new_row = row.copy()
-            new_row['sales'] = row['sales'] * sales_modifier * np.random.uniform(0.9, 1.1)
+            
+            # Apply modifier with bounded random noise
+            base_sales = row['sales'] * sales_modifier
+            random_factor = np.random.uniform(0.9, 1.1)
+            final_sales = base_sales * random_factor
+            
+            # Clamp to realistic bounds
+            new_row['sales'] = clamp_value(final_sales, DATA_BOUNDS['sales']['min'], DATA_BOUNDS['sales']['max'])
             new_row['model_year'] = year
             
             year_data.append(new_row)
     
     complete_df = pd.DataFrame(year_data)
     
+    # Add data quality logging
+    logger.info(f"Generated synthetic dataset with {len(complete_df)} records")
+    logger.debug(f"Sales range: {complete_df['sales'].min():.0f} - {complete_df['sales'].max():.0f}")
+    logger.debug(f"Unemployment range: {complete_df['unemployment'].min():.2f}% - {complete_df['unemployment'].max():.2f}%")
+    logger.debug(f"Gas price range: ${complete_df['gas_price'].min():.2f} - ${complete_df['gas_price'].max():.2f}")
+    
     # Save to CSV if data directory exists
     data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
     
-    csv_path = os.path.join(data_dir, 'synthetic_car_sales.csv')
+    csv_path = os.path.join(data_dir, f'synthetic_car_sales_seed_{seed}.csv')
     complete_df.to_csv(csv_path, index=False)
+    logger.info(f"Saved synthetic data to {csv_path}")
     
     return complete_df
 
 
-def load_data():
+def load_data(seed: Optional[int] = None, force_regenerate: bool = False) -> pd.DataFrame:
     """
     Load data from CSV file if it exists, otherwise generate sample data.
+    
+    Args:
+        seed: Random seed for reproducible data generation
+        force_regenerate: If True, regenerate data even if CSV exists
     
     Returns:
         pd.DataFrame: A DataFrame with car sales data
     """
-    data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
-    csv_path = os.path.join(data_dir, 'synthetic_car_sales.csv')
+    if seed is None:
+        seed = DEFAULT_SEED
     
-    if os.path.exists(csv_path):
-        return pd.read_csv(csv_path, parse_dates=['date'])
+    data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+    csv_path = os.path.join(data_dir, f'synthetic_car_sales_seed_{seed}.csv')
+    
+    # Load existing data if available and not forcing regeneration
+    if os.path.exists(csv_path) and not force_regenerate:
+        logger.info(f"Loading existing synthetic data from {csv_path}")
+        df = pd.read_csv(csv_path, parse_dates=['date'])
+        
+        # Validate data bounds
+        sales_min, sales_max = df['sales'].min(), df['sales'].max()
+        if sales_min < DATA_BOUNDS['sales']['min'] or sales_max > DATA_BOUNDS['sales']['max']:
+            logger.warning(f"Existing data has sales outside bounds ({sales_min:.0f}-{sales_max:.0f}), regenerating...")
+            return generate_sample_data(seed)
+            
+        return df
     else:
-        return generate_sample_data()
+        logger.info(f"Generating new synthetic data with seed {seed}")
+        return generate_sample_data(seed)

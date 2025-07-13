@@ -3,18 +3,29 @@ Consolidated chart creation module for the Car Sales Dashboard.
 
 This module provides all chart creation functionality with a clean public API.
 """
-import reflex as rx
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, TYPE_CHECKING, Any
 
 from car_sales_dashboard.utils.logging_config import logger, perf_logger
 from car_sales_dashboard.exceptions import ChartBuildError
-from car_sales_dashboard.utils.ui_utils import create_chart_error_component
+
+# Conditional imports for Reflex components (only loaded when needed)
+if TYPE_CHECKING:
+    import reflex as rx
+
+try:
+    import reflex as rx
+    from car_sales_dashboard.utils.ui_utils import create_chart_error_component
+    REFLEX_AVAILABLE = True
+except ImportError:
+    REFLEX_AVAILABLE = False
+    rx = None
+    create_chart_error_component = None
 
 
 # =============================================================================
@@ -507,7 +518,7 @@ def create_heatmap_chart(filtered_data: pd.DataFrame, x_col: str = 'month', y_co
 # Chart Container Components
 # =============================================================================
 
-def chart_container(title: str, chart_data: Union[Dict, rx.Var], height: str = "500px") -> rx.Component:
+def chart_container(title: str, chart_data: Union[Dict, Any], height: str = "500px") -> Any:
     """
     Create a responsive chart container with error handling.
     
@@ -519,6 +530,9 @@ def chart_container(title: str, chart_data: Union[Dict, rx.Var], height: str = "
     Returns:
         rx.Component: Chart container with title and plotly chart
     """
+    if not REFLEX_AVAILABLE:
+        raise ImportError("Reflex is not available. Chart container requires Reflex components.")
+    
     return rx.box(
         rx.heading(title, color="black", size="4", margin_bottom="1em"),
         rx.cond(
@@ -585,22 +599,71 @@ def _create_empty_chart(title: str, error_msg: Optional[str] = None) -> Dict:
     return fig.to_dict()
 
 
-def generate_sample_data(n_points: int = 24) -> pd.DataFrame:
-    """Generate sample data for testing charts."""
+def generate_sample_data(n_points: int = 24, seed: Optional[int] = None) -> pd.DataFrame:
+    """
+    Generate sample data for testing charts with proper seeding.
+    
+    Args:
+        n_points: Number of data points to generate
+        seed: Random seed for reproducible data
+        
+    Returns:
+        pd.DataFrame: Sample data with realistic bounds
+    """
+    # Import here to avoid circular imports
+    from rxconfig import DEFAULT_SEED, DATA_BOUNDS
+    
+    # Set seed for reproducibility
+    if seed is None:
+        seed = DEFAULT_SEED
+    np.random.seed(seed)
+    
     dates = pd.date_range(start='2022-01-01', periods=n_points, freq='ME')  # ME = Month End
     
-    # Create sample data with trend and seasonality
+    # Create sample data with trend and seasonality using bounded generation
     trend = np.linspace(1000, 1500, n_points)
     seasonal = 200 * np.sin(2 * np.pi * np.arange(n_points) / 12)
     noise = np.random.normal(0, 50, n_points)
     
     sales = trend + seasonal + noise
     
-    # Create exogenous variables
-    unemployment = 5 + np.sin(np.linspace(0, 4*np.pi, n_points)) * 0.5
-    gas_price = 3.5 + np.cos(np.linspace(0, 3*np.pi, n_points)) * 0.3
-    cpi_all = 260 + np.linspace(0, 10, n_points) + np.sin(np.linspace(0, 2*np.pi, n_points)) * 2
-    search_volume = 100 + np.sin(np.linspace(0, 6*np.pi, n_points)) * 20
+    # Generate exogenous variables with realistic bounds
+    from scipy.stats import truncnorm
+    
+    def bounded_normal(mean, std, min_val, max_val, size):
+        a, b = (min_val - mean) / std, (max_val - mean) / std
+        return truncnorm.rvs(a, b, loc=mean, scale=std, size=size)
+    
+    unemployment = bounded_normal(
+        5.0, 0.5, 
+        DATA_BOUNDS['unemployment']['min'], 
+        DATA_BOUNDS['unemployment']['max'], 
+        n_points
+    )
+    
+    gas_price = bounded_normal(
+        3.5, 0.3,
+        DATA_BOUNDS['gas_price']['min'],
+        DATA_BOUNDS['gas_price']['max'],
+        n_points
+    )
+    
+    cpi_all = bounded_normal(
+        260, 10,
+        DATA_BOUNDS['cpi_all']['min'],
+        DATA_BOUNDS['cpi_all']['max'],
+        n_points
+    )
+    
+    search_volume = bounded_normal(
+        70, 20,
+        DATA_BOUNDS['search_volume']['min'],
+        DATA_BOUNDS['search_volume']['max'],
+        n_points
+    )
+    
+    # Clamp sales to realistic bounds
+    sales = np.clip(sales, DATA_BOUNDS['sales']['min'], DATA_BOUNDS['sales']['max'])
     
     # Mark last 6 months as forecast
     is_forecast = [False] * (n_points - 6) + [True] * 6

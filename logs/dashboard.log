@@ -1,0 +1,50 @@
+2025-07-12 23:24:11 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:24:11 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:28:54 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:28:54 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:29:42 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:29:42 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:29:42 - dashboard - INFO - load_data:342 - Generating new synthetic data with seed 42
+2025-07-12 23:29:42 - dashboard - INFO - generate_sample_data:79 - Generating synthetic data with seed: 42
+2025-07-12 23:30:07 - dashboard - INFO - generate_sample_data:295 - Generated synthetic dataset with 64512 records
+2025-07-12 23:30:07 - dashboard - INFO - generate_sample_data:307 - Saved synthetic data to C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:30:08 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:30:08 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:30:08 - dashboard - INFO - load_data:342 - Generating new synthetic data with seed 999
+2025-07-12 23:30:08 - dashboard - INFO - generate_sample_data:79 - Generating synthetic data with seed: 999
+2025-07-12 23:30:34 - dashboard - INFO - generate_sample_data:295 - Generated synthetic dataset with 64512 records
+2025-07-12 23:30:34 - dashboard - INFO - generate_sample_data:307 - Saved synthetic data to C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:30:34 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:30:35 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:32:11 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:32:11 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:32:11 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:32:11 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:32:11 - dashboard - INFO - load_data:342 - Generating new synthetic data with seed 123
+2025-07-12 23:32:11 - dashboard - INFO - generate_sample_data:79 - Generating synthetic data with seed: 123
+2025-07-12 23:32:35 - dashboard - INFO - generate_sample_data:295 - Generated synthetic dataset with 64512 records
+2025-07-12 23:32:35 - dashboard - INFO - generate_sample_data:307 - Saved synthetic data to C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_123.csv
+2025-07-12 23:32:36 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:32:36 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:32:36 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:32:36 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:32:39 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:32:39 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:32:40 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:32:40 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:32:40 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_123.csv
+2025-07-12 23:32:40 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:32:40 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:32:40 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:32:40 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:32:49 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:32:49 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:32:49 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:32:50 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:32:50 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_123.csv
+2025-07-12 23:32:50 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-12 23:32:50 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:32:50 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:32:50 - dashboard - INFO - load_data:331 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_999.csv
+2025-07-12 23:33:13 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-12 23:33:13 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO

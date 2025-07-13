@@ -223,3 +223,8 @@ def get_performance_logger(name: str = None) -> PerformanceLogger:
     """Get a performance logger for monitoring operations."""
     logger = get_logger(name)
     return PerformanceLogger(logger)
+
+
+# Module-level logger instances for easy importing
+logger = get_logger('dashboard')
+perf_logger = get_performance_logger('dashboard.performance')

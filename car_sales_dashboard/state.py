@@ -17,8 +17,9 @@ from car_sales_dashboard.utils.logging_config import logger, perf_logger
 from car_sales_dashboard.exceptions import ChartBuildError
 from car_sales_dashboard.utils.ui_utils import create_chart_error_component
 
-# Load data
-df = load_data()
+# Load data with reproducible seeding (S5 remediation)
+from rxconfig import DEFAULT_SEED
+df = load_data(seed=DEFAULT_SEED)
 
 
 class DashboardState(rx.State):
