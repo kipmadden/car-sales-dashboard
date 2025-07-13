@@ -13,6 +13,11 @@ from car_sales_dashboard.components.charts import (
 )
 from car_sales_dashboard.models import load_data, ScenarioEngine
 from pydantic import PrivateAttr
+from car_sales_dashboard.utils.logging_config import get_logger, get_performance_logger
+
+# Initialize logging for this module
+logger = get_logger(__name__)
+perf_logger = get_performance_logger(__name__)
 
 # Load data
 df = load_data()
@@ -119,9 +124,9 @@ class DashboardState(rx.State):
         try:
             if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
                 # Log the current modifiers being used
-                print(f"Generating forecast with modifiers: unemployment={self.unemployment_modifier}, " 
-                      f"gas_price={self.gas_price_modifier}, cpi={self.cpi_modifier}, "
-                      f"search_volume={self.search_volume_modifier}, months={self.forecast_months}")
+                logger.debug(f"Generating forecast with modifiers: unemployment={self.unemployment_modifier}, " 
+                           f"gas_price={self.gas_price_modifier}, cpi={self.cpi_modifier}, "
+                           f"search_volume={self.search_volume_modifier}, months={self.forecast_months}")
                 
                 forecast_df = self._scenario_engine.forecast(
                     self._filtered_df,
@@ -137,16 +142,14 @@ class DashboardState(rx.State):
                 self.forecast_data = forecast_df.to_dict("records")
                 
                 # Log success information for debugging
-                print(f"Forecast generated successfully with {len(self.forecast_data)} records")
+                logger.info(f"Forecast generated successfully with {len(self.forecast_data)} records")
             else:
-                print("Cannot generate forecast: No filtered data available")
+                logger.warning("Cannot generate forecast: No filtered data available")
                 self._forecast_df = pd.DataFrame()
                 self.forecast_data = []
         except Exception as e:
             # Handle any errors during forecast generation
-            print(f"Error generating forecast: {e}")
-            import traceback
-            traceback.print_exc()
+            logger.error(f"Error generating forecast: {e}", exc_info=True)
             self._forecast_df = pd.DataFrame()
             self.forecast_data = []
     
@@ -203,7 +206,7 @@ class DashboardState(rx.State):
             self.selected_years = [int(y) for y in years]
         except Exception as e:
             # Handle conversion error, e.g., log or set to empty
-            print(f"Error converting years: {e}")
+            logger.error(f"Error converting years: {e}", exc_info=True)
             self.selected_years = []
         self.filter_data()
 
@@ -222,10 +225,11 @@ class DashboardState(rx.State):
         if isinstance(value, list) and len(value) > 0:
             value = float(value[0])
         value = float(value)
-        print(f"Updating gas price modifier to {value}")
+        logger.debug(f"Updating gas price modifier to {value}")
+        perf_logger.log_user_action("gas_price_update", f"new_value={value}")
         self.gas_price_modifier = value
         # Force forecast regeneration with explicit logging
-        print("Generating new forecast after gas price update")
+        logger.debug("Generating new forecast after gas price update")
         self.generate_forecast()
     
     def update_cpi(self, value):
@@ -259,7 +263,8 @@ class DashboardState(rx.State):
         self.generate_forecast()
     def update_active_tab(self, tab: str):
         """Update the active tab."""
-        print(f"Tab changed to: {tab}")  # Debug print
+        logger.debug(f"Tab changed to: {tab}")
+        perf_logger.log_user_action("tab_change", f"new_tab={tab}")
         self.active_tab = tab
         # Force re-evaluation of charts for the new tab
         self.filter_data()
@@ -267,7 +272,8 @@ class DashboardState(rx.State):
     # UI update handlers
     def toggle_table(self, value: bool):
         """Toggle the table visibility in the dashboard UI."""
-        print(f"Toggling table visibility to: {value}")
+        logger.debug(f"Toggling table visibility to: {value}")
+        perf_logger.log_user_action("table_toggle", f"show_table={value}")
         self.show_table = value
         # No need to regenerate forecast or filter data, just update the UI state
 
@@ -277,16 +283,16 @@ class DashboardState(rx.State):
         """Get sales trend chart"""
         # Check if _forecast_df is initialized before using it
         if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
-            # Add debug print
-            print(f"Forecast DF shape: {self._forecast_df.shape}")
-            print(f"Forecast DF columns: {self._forecast_df.columns.tolist()}")
-            print(f"First 3 rows: {self._forecast_df.head(3).to_dict('records')}")
+            # Add debug logging
+            logger.debug(f"Forecast DF shape: {self._forecast_df.shape}")
+            logger.debug(f"Forecast DF columns: {self._forecast_df.columns.tolist()}")
+            logger.debug(f"First 3 rows: {self._forecast_df.head(3).to_dict('records')}")
             
             # Generate a sample chart if the real one fails
             try:
                 return create_sales_trend_chart(self._forecast_df)
             except Exception as e:
-                print(f"Error creating sales trend chart: {str(e)}")
+                logger.error(f"Error creating sales trend chart: {str(e)}")
                 # Create a fallback chart
                 import plotly.graph_objects as go
                 fig = go.Figure()
@@ -299,7 +305,7 @@ class DashboardState(rx.State):
                 )
                 return fig.to_dict()
         else:
-            print("No forecast data available for chart")
+            logger.warning("No forecast data available for chart")
             return {}
 
     @rx.var
@@ -329,10 +335,11 @@ class DashboardState(rx.State):
     @rx.var
     def get_exogenous_figure(self) -> dict:
         """Get exogenous variable chart as a dictionary."""
-        print(f"get_exogenous_figure with gas_price={self.gas_price_modifier}")
+        logger.debug(f"get_exogenous_figure with gas_price={self.gas_price_modifier}")
         if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
             return create_exogenous_variables_chart(self._forecast_df)
         else:
+            logger.warning("No forecast data available for exogenous chart")
             return {}
 
 

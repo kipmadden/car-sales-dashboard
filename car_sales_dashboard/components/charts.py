@@ -12,6 +12,12 @@ import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Union
 
+from car_sales_dashboard.utils.logging_config import get_logger, get_performance_logger
+
+# Initialize logging for this module
+logger = get_logger(__name__)
+perf_logger = get_performance_logger(__name__)
+
 
 # =============================================================================
 # Core Chart Creation Functions
@@ -27,7 +33,10 @@ def create_sales_trend_chart(forecast_data: pd.DataFrame) -> Dict:
     Returns:
         Dict representation of Plotly figure
     """
+    perf_logger.log_function_call("create_sales_trend_chart", data_shape=forecast_data.shape if not forecast_data.empty else "empty")
+    
     if forecast_data.empty:
+        logger.warning("Cannot create sales trend chart: No data provided")
         return _create_empty_chart("Sales Trend Chart")
     
     fig = go.Figure()
@@ -41,6 +50,8 @@ def create_sales_trend_chart(forecast_data: pd.DataFrame) -> Dict:
         if 'is_forecast' in forecast_data.columns:
             historical = forecast_data[forecast_data['is_forecast'] == False]
             forecast = forecast_data[forecast_data['is_forecast'] == True]
+            
+            logger.debug(f"Data split: {len(historical)} historical, {len(forecast)} forecast points")
             
             # Add historical data
             if not historical.empty:
@@ -79,6 +90,7 @@ def create_sales_trend_chart(forecast_data: pd.DataFrame) -> Dict:
             tick_text = forecast_data['date'].tolist() if 'date' in forecast_data.columns else tick_vals
         else:
             # No forecast distinction, plot all as historical
+            logger.debug("No 'is_forecast' column found, treating all data as historical")
             fig.add_trace(go.Scatter(
                 x=forecast_data['x_index'],
                 y=forecast_data['sales'],
@@ -129,8 +141,11 @@ def create_sales_trend_chart(forecast_data: pd.DataFrame) -> Dict:
             margin=dict(l=60, r=40, t=80, b=60)
         )
         
+        perf_logger.log_chart_creation("sales_trend", forecast_data.shape, success=True)
+        
     except Exception as e:
-        print(f"Error creating sales trend chart: {e}")
+        logger.error(f"Error creating sales trend chart: {e}", exc_info=True)
+        perf_logger.log_chart_creation("sales_trend", forecast_data.shape, success=False)
         return _create_empty_chart("Sales Trend Chart", error_msg=str(e))
     
     return fig.to_dict()
@@ -254,9 +269,11 @@ def create_exogenous_variables_chart(forecast_data: pd.DataFrame) -> Dict:
                     gridcolor='#E5E5E5',
                     row=i, col=j
                 )
+        perf_logger.log_chart_creation("exogenous_variables", forecast_data.shape, success=True)
         
     except Exception as e:
-        print(f"Error creating exogenous variables chart: {e}")
+        logger.error(f"Error creating exogenous variables chart: {e}", exc_info=True)
+        perf_logger.log_chart_creation("exogenous_variables", forecast_data.shape, success=False)
         return _create_empty_chart("Exogenous Variables", error_msg=str(e))
     
     return fig.to_dict()
@@ -264,13 +281,18 @@ def create_exogenous_variables_chart(forecast_data: pd.DataFrame) -> Dict:
 
 def create_vehicle_type_chart(filtered_data: pd.DataFrame) -> Dict:
     """Create a bar chart showing sales by vehicle type."""
+    perf_logger.log_function_call("create_vehicle_type_chart", data_shape=filtered_data.shape if not filtered_data.empty else "empty")
+    
     if filtered_data.empty:
+        logger.warning("Cannot create vehicle type chart: No data provided")
         return _create_empty_chart("Vehicle Type Sales")
     
     try:
         # Group by vehicle type
         vehicle_data = filtered_data.groupby('vehicle_type')['sales'].sum().reset_index()
         vehicle_data = vehicle_data.sort_values('sales', ascending=False)
+        
+        logger.debug(f"Vehicle type chart data: {len(vehicle_data)} categories")
         
         fig = go.Figure()
         fig.add_trace(go.Bar(
@@ -293,10 +315,12 @@ def create_vehicle_type_chart(filtered_data: pd.DataFrame) -> Dict:
             margin=dict(l=60, r=40, t=60, b=60)
         )
         
+        perf_logger.log_chart_creation("vehicle_type", filtered_data.shape, success=True)
         return fig.to_dict()
         
     except Exception as e:
-        print(f"Error creating vehicle type chart: {e}")
+        logger.error(f"Error creating vehicle type chart: {e}", exc_info=True)
+        perf_logger.log_chart_creation("vehicle_type", filtered_data.shape, success=False)
         return _create_empty_chart("Vehicle Type Sales", error_msg=str(e))
 
 
@@ -330,11 +354,12 @@ def create_region_chart(filtered_data: pd.DataFrame) -> Dict:
             paper_bgcolor='white',
             margin=dict(l=60, r=40, t=60, b=60)
         )
-        
+        perf_logger.log_chart_creation("region", filtered_data.shape, success=True)
         return fig.to_dict()
         
     except Exception as e:
-        print(f"Error creating region chart: {e}")
+        logger.error(f"Error creating region chart: {e}", exc_info=True)
+        perf_logger.log_chart_creation("region", filtered_data.shape, success=False)
         return _create_empty_chart("Regional Sales", error_msg=str(e))
 
 
@@ -369,11 +394,12 @@ def create_top_models_chart(filtered_data: pd.DataFrame) -> Dict:
             paper_bgcolor='white',
             margin=dict(l=120, r=40, t=60, b=60)
         )
-        
+        perf_logger.log_chart_creation("top_models", filtered_data.shape, success=True)
         return fig.to_dict()
         
     except Exception as e:
-        print(f"Error creating top models chart: {e}")
+        logger.error(f"Error creating top models chart: {e}", exc_info=True)
+        perf_logger.log_chart_creation("top_models", filtered_data.shape, success=False)
         return _create_empty_chart("Top Models", error_msg=str(e))
 
 
@@ -403,11 +429,12 @@ def create_state_map_chart(filtered_data: pd.DataFrame) -> Dict:
             font=dict(color='black'),
             paper_bgcolor='white'
         )
-        
+        perf_logger.log_chart_creation("state_map", filtered_data.shape, success=True)
         return fig.to_dict()
         
     except Exception as e:
-        print(f"Error creating state map chart: {e}")
+        logger.error(f"Error creating state map chart: {e}", exc_info=True)
+        perf_logger.log_chart_creation("state_map", filtered_data.shape, success=False)
         return _create_empty_chart("State Sales Map", error_msg=str(e))
 
 
@@ -447,11 +474,12 @@ def create_heatmap_chart(filtered_data: pd.DataFrame, x_col: str = 'month', y_co
             plot_bgcolor='white',
             paper_bgcolor='white'
         )
-        
+        perf_logger.log_chart_creation("heatmap", filtered_data.shape, success=True)
         return fig.to_dict()
         
     except Exception as e:
-        print(f"Error creating heatmap chart: {e}")
+        logger.error(f"Error creating heatmap chart: {e}", exc_info=True)
+        perf_logger.log_chart_creation("heatmap", filtered_data.shape, success=False)
         return _create_empty_chart("Sales Heatmap", error_msg=str(e))
 
 

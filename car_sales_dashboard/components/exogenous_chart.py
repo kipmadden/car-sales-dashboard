@@ -8,6 +8,9 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
+# Import logging
+from car_sales_dashboard.utils.logging_config import logger, perf_logger
+
 
 def _create_sample_exogenous_figure(title: str):
     """Create a sample exogenous figure with synthetic data when no real data is available.
@@ -16,7 +19,7 @@ def _create_sample_exogenous_figure(title: str):
     Returns:
         plotly.graph_objects.Figure: A plotly figure object
     """
-    print("No forecast data provided, generating sample data for visualization")
+    logger.warning("No forecast data provided, generating sample data for visualization")
 
     # Set last historical date to April 2025
     last_hist_date = pd.Timestamp(year=2025, month=4, day=1)
@@ -48,7 +51,7 @@ def _create_sample_exogenous_figure(title: str):
         'is_forecast': [False] * len(hist_dates) + [True] * len(forecast_dates)
     }
     forecast_data = pd.DataFrame(sample_data)
-    print(f"Generated sample data with {len(forecast_data)} rows, last hist: {date_strs[len(hist_dates)-1]}, first forecast: {date_strs[len(hist_dates)]}")
+    logger.debug(f"Generated sample data with {len(forecast_data)} rows, last hist: {date_strs[len(hist_dates)-1]}, first forecast: {date_strs[len(hist_dates)]}")
     return _create_exogenous_figure_from_df(forecast_data, title)
 
 
@@ -64,7 +67,7 @@ def create_exogenous_figure(title: str, forecast_data) -> go.Figure:
     """
     # Handle empty or None forecast_data by generating sample data
     if not forecast_data or (isinstance(forecast_data, list) and len(forecast_data) == 0):
-        print("No forecast data provided, generating sample data for visualization")
+        logger.warning("No forecast data provided, generating sample data for visualization")
         return _create_sample_exogenous_figure(title)
 
     # Accept both list-of-dicts and DataFrame
@@ -75,8 +78,8 @@ def create_exogenous_figure(title: str, forecast_data) -> go.Figure:
     else:
         raise ValueError("forecast_data must be a list of dicts or a DataFrame.")
 
-    print(f"Creating exogenous chart with {len(df)} rows of data")
-    print(f"Data columns: {df.columns.tolist()}")
+    logger.debug(f"Creating exogenous chart with {len(df)} rows of data")
+    logger.debug(f"Data columns: {df.columns.tolist()}")
 
     # (the rest of your existing plotting logic here)
     fig = make_subplots(
@@ -155,7 +158,7 @@ def create_exogenous_figure(title: str, forecast_data) -> go.Figure:
                         row=i, col=j
                     )
     except Exception as e:
-        print(f"Error adding forecast divider: {e}")
+        logger.error(f"Error adding forecast divider: {e}")
     # Layout and grid
     fig.update_layout(
         height=500,
@@ -199,8 +202,8 @@ def _create_exogenous_figure_from_df(forecast_data, title):
         plotly.graph_objects.Figure: A plotly figure object
     """
     # Print info about the data we're plotting
-    print(f"Creating exogenous chart with {len(forecast_data)} rows of data")
-    print(f"Data columns: {forecast_data.columns.tolist()}")
+    logger.debug(f"Creating exogenous chart with {len(forecast_data)} rows of data")
+    logger.debug(f"Data columns: {forecast_data.columns.tolist()}")
     
     # Create subplots
     fig = make_subplots(
@@ -216,7 +219,7 @@ def _create_exogenous_figure_from_df(forecast_data, title):
     
     # Check and print available columns for debugging
     available_columns = forecast_data.columns.tolist()
-    print(f"Available columns in forecast_data: {available_columns}")
+    logger.debug(f"Available columns in forecast_data: {available_columns}")
     
     # Add unemployment trace if column exists
     if 'date' in available_columns and 'unemployment' in available_columns:
@@ -231,7 +234,7 @@ def _create_exogenous_figure_from_df(forecast_data, title):
             row=1, col=1
         )
     else:
-        print("Warning: 'date' or 'unemployment' column missing")
+        logger.warning("'date' or 'unemployment' column missing")
     
     # Add gas price trace if column exists
     if 'date' in available_columns and 'gas_price' in available_columns:
@@ -246,7 +249,7 @@ def _create_exogenous_figure_from_df(forecast_data, title):
             row=1, col=2
         )
     else:
-        print("Warning: 'date' or 'gas_price' column missing")
+        logger.warning("'date' or 'gas_price' column missing")
     
     # Add CPI trace if column exists
     if 'date' in available_columns and 'cpi_all' in available_columns:
@@ -261,7 +264,7 @@ def _create_exogenous_figure_from_df(forecast_data, title):
             row=2, col=1
         )
     else:
-        print("Warning: 'date' or 'cpi_all' column missing")
+        logger.warning("'date' or 'cpi_all' column missing")
     
     # Add search volume trace if column exists
     if 'date' in available_columns and 'search_volume' in available_columns:
@@ -276,7 +279,7 @@ def _create_exogenous_figure_from_df(forecast_data, title):
             row=2, col=2
         )
     else:
-        print("Warning: 'date' or 'search_volume' column missing")
+        logger.warning("'date' or 'search_volume' column missing")
     
     # Highlight forecast region with a vertical line if forecast data is available
     try:
@@ -294,7 +297,7 @@ def _create_exogenous_figure_from_df(forecast_data, title):
                         row=i, col=j
                     )
     except Exception as e:
-        print(f"Error adding forecast divider: {e}")
+        logger.error(f"Error adding forecast divider: {e}")
       # Update layout
     fig.update_layout(
         height=500,

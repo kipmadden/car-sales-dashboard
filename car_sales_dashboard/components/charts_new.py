@@ -8,6 +8,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pandas as pd
+
+# Import logging
+from car_sales_dashboard.utils.logging_config import logger, perf_logger
 import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Union
@@ -130,7 +133,7 @@ def create_sales_trend_chart(forecast_data: pd.DataFrame) -> Dict:
         )
         
     except Exception as e:
-        print(f"Error creating sales trend chart: {e}")
+        logger.error(f"Error creating sales trend chart: {e}")
         return _create_empty_chart("Sales Trend Chart", error_msg=str(e))
     
     return fig.to_dict()
@@ -256,7 +259,7 @@ def create_exogenous_variables_chart(forecast_data: pd.DataFrame) -> Dict:
                 )
         
     except Exception as e:
-        print(f"Error creating exogenous variables chart: {e}")
+        logger.error(f"Error creating exogenous variables chart: {e}")
         return _create_empty_chart("Exogenous Variables", error_msg=str(e))
     
     return fig.to_dict()
@@ -296,7 +299,7 @@ def create_vehicle_type_chart(filtered_data: pd.DataFrame) -> Dict:
         return fig.to_dict()
         
     except Exception as e:
-        print(f"Error creating vehicle type chart: {e}")
+        logger.error(f"Error creating vehicle type chart: {e}")
         return _create_empty_chart("Vehicle Type Sales", error_msg=str(e))
 
 
@@ -334,7 +337,7 @@ def create_region_chart(filtered_data: pd.DataFrame) -> Dict:
         return fig.to_dict()
         
     except Exception as e:
-        print(f"Error creating region chart: {e}")
+        logger.error(f"Error creating region chart: {e}")
         return _create_empty_chart("Regional Sales", error_msg=str(e))
 
 
@@ -373,7 +376,7 @@ def create_top_models_chart(filtered_data: pd.DataFrame) -> Dict:
         return fig.to_dict()
         
     except Exception as e:
-        print(f"Error creating top models chart: {e}")
+        logger.error(f"Error creating top models chart: {e}")
         return _create_empty_chart("Top Models", error_msg=str(e))
 
 
@@ -407,7 +410,7 @@ def create_state_map_chart(filtered_data: pd.DataFrame) -> Dict:
         return fig.to_dict()
         
     except Exception as e:
-        print(f"Error creating state map chart: {e}")
+        logger.error(f"Error creating state map chart: {e}")
         return _create_empty_chart("State Sales Map", error_msg=str(e))
 
 
@@ -451,7 +454,7 @@ def create_heatmap_chart(filtered_data: pd.DataFrame, x_col: str = 'month', y_co
         return fig.to_dict()
         
     except Exception as e:
-        print(f"Error creating heatmap chart: {e}")
+        logger.error(f"Error creating heatmap chart: {e}")
         return _create_empty_chart("Sales Heatmap", error_msg=str(e))
 
 

@@ -1,5 +1,8 @@
 import reflex as rx
 
+# Import logging
+from car_sales_dashboard.utils.logging_config import logger, perf_logger
+
 
 def create_summary_table(data, groupby_col='region'):
     """
@@ -66,7 +69,7 @@ def _create_summary_table_from_data(data, groupby_col):
     
     try:
         # Debug information
-        print(f"Creating summary table with groupby_col: {groupby_col}")
+        logger.debug(f"Creating summary table with groupby_col: {groupby_col}")
         
         # Don't try to access slices or length of data directly if it's a Var
         # Convert the data to a DataFrame - with error handling for Var types
@@ -74,14 +77,14 @@ def _create_summary_table_from_data(data, groupby_col):
             df = pd.DataFrame(data)
         except TypeError as e:
             if "has no attribute 'columns'" in str(e) or "has no len()" in str(e):
-                print(f"Data appears to be a Reflex Var, creating a simple table instead")
+                logger.warning(f"Data appears to be a Reflex Var, creating a simple table instead")
                 return create_fallback_table()
             else:
                 raise e
                 
         # Check if the groupby column exists in the data
         if groupby_col not in df.columns:
-            print(f"Warning: Column '{groupby_col}' not found in data. Available columns: {df.columns.tolist()}")
+            logger.warning(f"Column '{groupby_col}' not found in data. Available columns: {df.columns.tolist()}")
             # Fall back to a column that definitely exists
             available_cols = df.columns.tolist()
             if 'vehicle_type' in available_cols:
@@ -92,11 +95,11 @@ def _create_summary_table_from_data(data, groupby_col):
                 groupby_col = available_cols[0]
             else:
                 raise ValueError("No columns available for grouping")
-            print(f"Using '{groupby_col}' as fallback grouping column")
+            logger.debug(f"Using '{groupby_col}' as fallback grouping column")
         
         # Ensure we have 'sales' column for aggregation
         if 'sales' not in df.columns:
-            print(f"Warning: 'sales' column not found. Using count only.")
+            logger.warning("'sales' column not found. Using count only.")
             # Group by the specified column and just count records
             grouped = df.groupby(groupby_col).size().reset_index(name='count')
             grouped['sales'] = 0  # Add a placeholder sales column
@@ -120,13 +123,13 @@ def _create_summary_table_from_data(data, groupby_col):
         grouped = grouped.sort_values('sales', ascending=False).head(10)
         
         # Debug the results
-        print(f"Grouped data sample: {grouped.head(3).to_dict('records')}")
+        logger.debug(f"Grouped data sample: {grouped.head(3).to_dict('records')}")
         
         # Convert back to list of dicts
         summary_data = grouped.to_dict('records')
     except Exception as e:
         # In case of any error, provide detailed error info and fallback to a simple implementation
-        print(f"Error in table creation: {e}")
+        logger.error(f"Error in table creation: {e}")
         import traceback
         traceback.print_exc()
           # Use fallback static data
@@ -206,7 +209,7 @@ def _create_forecast_row(item, idx):
         )
     except Exception as e:
         # Fallback for any errors
-        print(f"Error creating forecast row: {e}")
+        logger.error(f"Error creating forecast row: {e}")
         return rx.table.row(
             rx.table.cell("Error", color="red"),
             rx.table.cell("", color="black"),
@@ -228,7 +231,7 @@ def create_forecast_table(forecast_data):
         rx.Component: Table component
     """
     # Print debug information about the forecast_data
-    print(f"Creating forecast table - data type: {type(forecast_data)}")
+    logger.debug(f"Creating forecast table - data type: {type(forecast_data)}")
     
     # Always return a table component, but handle empty data within the component
     # This approach is more reliable with Reflex Vars
