@@ -34,4 +34,8 @@ config = rx.Config(
     # Redis configuration for production
     redis_host=os.getenv('REDIS_HOST', 'localhost'),
     redis_port=int(os.getenv('REDIS_PORT', '6379')),
+    # Network configuration for Docker deployment
+    backend_host="0.0.0.0" if os.getenv('REFLEX_ENV') == 'prod' else "localhost",
+    backend_port=8000,
+    frontend_port=3000,
 )

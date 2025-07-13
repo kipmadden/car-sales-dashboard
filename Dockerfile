@@ -57,8 +57,8 @@ ENV REFLEX_ENV=prod
 HEALTHCHECK --interval=30s --timeout=30s --start-period=180s --retries=5 \
     CMD curl -f http://localhost:3000/healthz || exit 1
 
-# Expose port
-EXPOSE 3000
+# Expose ports (frontend on 3000, backend on 8000)
+EXPOSE 3000 8000
 
 # Default command
-CMD ["sh", "-c", "redis-server --port 6379 --bind 127.0.0.1 --dir /tmp/redis --daemonize yes && reflex run --env prod --host 0.0.0.0 --port 3000"]
+CMD ["sh", "-c", "redis-server --port 6379 --bind 127.0.0.1 --dir /tmp/redis --daemonize yes && reflex run --env prod"]

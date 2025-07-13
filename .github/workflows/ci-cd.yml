@@ -99,7 +99,7 @@ jobs:
       - name: Test Docker image
         run: |
           # Start container in background
-          docker run -d --name test-container -p 3000:3000 car-sales-dashboard:test
+          docker run -d --name test-container -p 3000:3000 -p 8000:8000 car-sales-dashboard:test
           
           # Wait longer for container to start
           echo "Waiting for container to start..."
