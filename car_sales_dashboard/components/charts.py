@@ -20,9 +20,10 @@ if TYPE_CHECKING:
 
 try:
     import reflex as rx
-    from car_sales_dashboard.utils.ui_utils import create_chart_error_component
     REFLEX_AVAILABLE = True
-except ImportError:
+    # Import ui_utils only when needed to avoid SSL issues
+    create_chart_error_component = None
+except (ImportError, OSError):
     REFLEX_AVAILABLE = False
     rx = None
     create_chart_error_component = None

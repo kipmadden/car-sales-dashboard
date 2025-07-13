@@ -217,6 +217,10 @@ class PerformanceLogger:
         """Log user interactions."""
         detail_info = f" - {details}" if details else ""
         self.logger.info(f"User action: {action}{detail_info}")
+    
+    def log_performance_metric(self, operation: str, status: str, execution_time: float) -> None:
+        """Log performance metrics for operations."""
+        self.logger.info(f"Performance metric: {operation} ({status}) - {execution_time:.3f}s")
 
 
 def get_performance_logger(name: str = None) -> PerformanceLogger:

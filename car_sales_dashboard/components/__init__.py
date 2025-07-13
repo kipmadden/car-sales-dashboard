@@ -4,6 +4,17 @@ Main components package for the Car Sales Dashboard.
 This package provides a clean public API for all dashboard components.
 """
 
+# User feedback and error handling components (temporarily disabled due to SSL import issue)
+# from car_sales_dashboard.components.feedback import (
+#     create_error_alert,
+#     create_loading_spinner,
+#     create_validation_message,
+#     create_success_message,
+#     create_info_tooltip,
+#     create_chart_placeholder,
+#     create_data_quality_indicator
+# )
+
 # Core chart functions - single source of truth
 from car_sales_dashboard.components.charts import (
     create_sales_trend_chart,

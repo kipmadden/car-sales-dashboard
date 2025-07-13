@@ -112,3 +112,59 @@
 2025-07-13 01:00:48 - dashboard - INFO - load_data:334 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
 2025-07-13 01:00:48 - dashboard - INFO - load_data:334 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
 2025-07-13 18:00:16 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:02:33 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:07:33 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:07:42 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:07:43 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:07:44 - dashboard - INFO - load_data:334 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-13 18:08:31 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:11:40 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:11:40 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:11:41 - dashboard - INFO - load_data:334 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-13 18:11:41 - dashboard - INFO - load_data:334 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-13 18:11:41 - dashboard.performance - INFO - log_chart_creation:214 - Chart creation succeeded: sales_trend (data shape: (10, 18))
+2025-07-13 18:11:56 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:11:56 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:11:56 - dashboard - INFO - load_data:334 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-13 18:11:56 - dashboard - INFO - load_data:334 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-13 18:11:56 - dashboard.performance - INFO - log_chart_creation:214 - Chart creation succeeded: sales_trend (data shape: (10, 18))
+2025-07-13 18:22:05 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:22:06 - numexpr.utils - INFO - _init_num_threads:162 - NumExpr defaulting to 12 threads.
+2025-07-13 18:22:39 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:22:40 - car_sales_dashboard.utils.error_handler - ERROR - wrapper:229 - Error in failing_function: Test error
+Traceback (most recent call last):
+  File "C:\repos\IP\car-sales-dashboard\car_sales_dashboard\utils\error_handler.py", line 226, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\repos\IP\car-sales-dashboard\test_fix2.py", line 75, in failing_function
+    raise ValueError("Test error")
+ValueError: Test error
+2025-07-13 18:22:40 - numexpr.utils - INFO - _init_num_threads:162 - NumExpr defaulting to 12 threads.
+2025-07-13 18:29:15 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:29:15 - numexpr.utils - INFO - _init_num_threads:162 - NumExpr defaulting to 12 threads.
+2025-07-13 18:29:16 - car_sales_dashboard.utils.performance - INFO - invalidate:131 - Cache completely cleared
+2025-07-13 18:29:16 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 82.2% memory reduction
+2025-07-13 18:29:16 - car_sales_dashboard.utils.performance - INFO - invalidate:131 - Cache completely cleared
+2025-07-13 18:30:05 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:30:05 - numexpr.utils - INFO - _init_num_threads:162 - NumExpr defaulting to 12 threads.
+2025-07-13 18:30:06 - car_sales_dashboard.utils.performance - INFO - invalidate:131 - Cache completely cleared
+2025-07-13 18:30:06 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: cache_miss (expensive_function) - 0.014s
+2025-07-13 18:30:06 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: cache_hit (expensive_function) - 0.000s
+2025-07-13 18:30:06 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: test_operation (success) - 0.054s
+2025-07-13 18:30:06 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 82.2% memory reduction
+2025-07-13 18:30:06 - car_sales_dashboard.utils.performance - INFO - invalidate:131 - Cache completely cleared
+2025-07-13 18:36:49 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:38:15 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:38:36 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:40:48 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:40:49 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:44:22 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:44:23 - numexpr.utils - INFO - _init_num_threads:162 - NumExpr defaulting to 12 threads.
+2025-07-13 18:44:34 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:44:34 - numexpr.utils - INFO - _init_num_threads:162 - NumExpr defaulting to 12 threads.
+2025-07-13 18:45:51 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:45:51 - numexpr.utils - INFO - _init_num_threads:162 - NumExpr defaulting to 12 threads.
+2025-07-13 18:45:57 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:45:58 - numexpr.utils - INFO - _init_num_threads:162 - NumExpr defaulting to 12 threads.
+2025-07-13 18:46:37 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:46:38 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO

@@ -1,0 +1,8 @@
+2025-07-13 18:22:40 - car_sales_dashboard.utils.error_handler - ERROR - wrapper:229 - Error in failing_function: Test error
+Traceback (most recent call last):
+  File "C:\repos\IP\car-sales-dashboard\car_sales_dashboard\utils\error_handler.py", line 226, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\repos\IP\car-sales-dashboard\test_fix2.py", line 75, in failing_function
+    raise ValueError("Test error")
+ValueError: Test error
