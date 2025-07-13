@@ -29,6 +29,6 @@ DATA_BOUNDS = {
 config = rx.Config(
     app_name="car_sales_dashboard",
     db_url="sqlite:///auto_sales.db",
-    env=rx.Env.DEV,
+    env=rx.Env.PROD if os.getenv('REFLEX_ENV') == 'prod' else rx.Env.DEV,
     state_serializer="dill",
 )

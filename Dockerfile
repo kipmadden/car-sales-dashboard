@@ -38,12 +38,15 @@ USER appuser
 # Create necessary directories
 RUN mkdir -p logs assets
 
+# Set environment for Reflex
+ENV REFLEX_ENV=prod
+
 # Health check endpoint
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=3 \
     CMD curl -f http://localhost:3000/healthz || exit 1
 
 # Expose port
 EXPOSE 3000
 
 # Default command
-CMD ["reflex", "run", "--env", "prod", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["sh", "-c", "reflex init && reflex run --env prod --host 0.0.0.0 --port 3000"]
