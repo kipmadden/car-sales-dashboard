@@ -128,7 +128,7 @@ def exogenous_controls(state_class):
             ),
             # Use dynamic text that updates with the state value
             rx.text(
-                rx.dynamic(lambda: f"{state_class.gas_price_modifier:.2f}"), 
+                rx.dynamic(lambda state: f"{state.gas_price_modifier:.2f}"), 
                 color="black", 
                 width="50px"
             ),
