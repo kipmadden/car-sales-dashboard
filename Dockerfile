@@ -20,6 +20,9 @@ RUN apt-get update && apt-get install -y \
     curl \
     build-essential \
     redis-server \
+    unzip \
+    nodejs \
+    npm \
     && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user for security
@@ -44,6 +47,9 @@ USER appuser
 # Create necessary directories
 RUN mkdir -p logs assets /tmp/redis
 
+# Initialize Reflex during build (downloads frontend dependencies)
+RUN reflex init
+
 # Set environment for Reflex
 ENV REFLEX_ENV=prod
 
@@ -55,4 +61,4 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=180s --retries=5 \
 EXPOSE 3000
 
 # Default command
-CMD ["sh", "-c", "redis-server --port 6379 --bind 127.0.0.1 --dir /tmp/redis --daemonize yes && reflex init && reflex run --env prod --host 0.0.0.0 --port 3000"]
+CMD ["sh", "-c", "redis-server --port 6379 --bind 127.0.0.1 --dir /tmp/redis --daemonize yes && reflex run --env prod --host 0.0.0.0 --port 3000"]
