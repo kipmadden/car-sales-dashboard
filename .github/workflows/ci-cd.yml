@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12"]
     
     steps:
       - name: Checkout code
@@ -45,14 +45,9 @@ jobs:
           # Validate requirements compatibility
           python scripts/validate-requirements.py ${{ matrix.python-version }}
           
-          # Use Python 3.9 specific requirements for compatibility
-          if [ "${{ matrix.python-version }}" == "3.9" ]; then
-            echo "Installing Python 3.9 compatible requirements"
-            pip install -r requirements/python39.txt
-          else
-            echo "Installing standard requirements for Python ${{ matrix.python-version }}"
-            pip install -r requirements/dev.txt
-          fi
+          # Install standard requirements
+          echo "Installing requirements for Python ${{ matrix.python-version }}"
+          pip install -r requirements/dev.txt
       
       - name: Lint with flake8
         run: |

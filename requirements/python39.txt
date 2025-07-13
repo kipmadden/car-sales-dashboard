@@ -1,8 +1,8 @@
 # Python 3.9 compatible requirements
 # This file ensures compatibility with the minimum supported Python version
 
-# Core framework
-reflex>=0.7.11,<0.8.0
+# Core framework - Python 3.9 compatible version
+reflex>=0.6.8,<0.7.0
 
 # Data processing
 pandas>=2.0.0,<3.0.0

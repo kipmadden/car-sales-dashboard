@@ -33,23 +33,23 @@ compile_for_python() {
 echo "🧹 Cleaning existing compiled requirements..."
 rm -f requirements/*.txt
 
-# Compile for Python 3.9 (minimum supported)
-if command -v python3.9 &> /dev/null; then
-    compile_for_python "3.9" "-py39"
+# Compile for Python 3.10 (minimum supported)
+if command -v python3.10 &> /dev/null; then
+    compile_for_python "3.10" "-py310"
     
-    # Use Python 3.9 compiled requirements as the default
-    cp requirements/base-py39.txt requirements/base.txt
-    cp requirements/dev-py39.txt requirements/dev.txt
-    cp requirements/production-py39.txt requirements/production.txt
+    # Use Python 3.10 compiled requirements as the default
+    cp requirements/base-py310.txt requirements/base.txt
+    cp requirements/dev-py310.txt requirements/dev.txt
+    cp requirements/production-py310.txt requirements/production.txt
     
-    echo "✅ Using Python 3.9 compiled requirements as default"
+    echo "✅ Using Python 3.10 compiled requirements as default"
 else
-    echo "⚠️  Python 3.9 not available, compiling with current Python"
+    echo "⚠️  Python 3.10 not available, compiling with current Python"
     compile_for_python "" ""
 fi
 
 # Compile for other versions if available
-for version in "3.10" "3.11" "3.12"; do
+for version in "3.11" "3.12"; do
     if command -v python$version &> /dev/null; then
         compile_for_python "$version" "-py${version//.}"
     else
