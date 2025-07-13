@@ -6,7 +6,6 @@ from datetime import datetime
 from car_sales_dashboard.pages import index
 
 # Health check endpoint
-@rx.page("/healthz")
 def health_check():
     """Health check endpoint for monitoring and Docker health checks."""
     return rx.box(

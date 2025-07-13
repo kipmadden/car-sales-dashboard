@@ -127,7 +127,11 @@ def exogenous_controls(state_class):
                 focus_thumb_on_change=True,  # Ensure slider thumb stays in focus during changes
             ),
             # Use dynamic text that updates with the state value
-            rx.dynamic(lambda: f"{state_class.gas_price_modifier:.2f}", color="black", width="50px"),
+            rx.text(
+                rx.dynamic(lambda: f"{state_class.gas_price_modifier:.2f}"), 
+                color="black", 
+                width="50px"
+            ),
             width="100%",
         ),
           # CPI modifier
