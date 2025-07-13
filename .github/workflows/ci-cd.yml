@@ -40,7 +40,19 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements/dev.txt
+          pip install packaging  # For requirements validation
+          
+          # Validate requirements compatibility
+          python scripts/validate-requirements.py ${{ matrix.python-version }}
+          
+          # Use Python 3.9 specific requirements for compatibility
+          if [ "${{ matrix.python-version }}" == "3.9" ]; then
+            echo "Installing Python 3.9 compatible requirements"
+            pip install -r requirements/python39.txt
+          else
+            echo "Installing standard requirements for Python ${{ matrix.python-version }}"
+            pip install -r requirements/dev.txt
+          fi
       
       - name: Lint with flake8
         run: |
