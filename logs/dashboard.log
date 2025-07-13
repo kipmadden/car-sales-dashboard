@@ -111,3 +111,4 @@
 2025-07-13 01:00:48 - dashboard - INFO - load_data:334 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
 2025-07-13 01:00:48 - dashboard - INFO - load_data:334 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
 2025-07-13 01:00:48 - dashboard - INFO - load_data:334 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-13 18:00:16 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
