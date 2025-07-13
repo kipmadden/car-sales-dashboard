@@ -31,4 +31,7 @@ config = rx.Config(
     db_url="sqlite:///auto_sales.db",
     env=rx.Env.PROD if os.getenv('REFLEX_ENV') == 'prod' else rx.Env.DEV,
     state_serializer="dill",
+    # Redis configuration for production
+    redis_host=os.getenv('REDIS_HOST', 'localhost'),
+    redis_port=int(os.getenv('REDIS_PORT', '6379')),
 )

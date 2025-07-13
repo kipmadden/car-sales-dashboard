@@ -101,11 +101,34 @@ jobs:
           # Start container in background
           docker run -d --name test-container -p 3000:3000 car-sales-dashboard:test
           
-          # Wait for container to start
-          sleep 30
+          # Wait longer for container to start
+          echo "Waiting for container to start..."
+          sleep 60
           
-          # Test health endpoint
-          curl -f http://localhost:3000/healthz || exit 1
+          # Check container status
+          echo "Container status:"
+          docker ps -a
+          
+          # Check container logs
+          echo "Container logs:"
+          docker logs test-container
+          
+          # Test health endpoint with retries
+          echo "Testing health endpoint..."
+          for i in {1..5}; do
+            if curl -f http://localhost:3000/healthz; then
+              echo "Health check passed!"
+              break
+            else
+              echo "Health check attempt $i failed, waiting 10 seconds..."
+              sleep 10
+              if [ $i -eq 5 ]; then
+                echo "All health check attempts failed, showing final logs:"
+                docker logs test-container
+                exit 1
+              fi
+            fi
+          done
           
           # Clean up
           docker stop test-container
