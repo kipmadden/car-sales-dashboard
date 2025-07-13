@@ -1,0 +1,12 @@
+# Production deployment dependencies
+-r base.in
+
+# Web server
+gunicorn>=21.0.0,<22.0.0
+uvicorn[standard]>=0.23.0,<1.0.0
+
+# Monitoring and logging
+sentry-sdk>=1.30.0,<2.0.0
+
+# Performance
+redis>=4.6.0,<5.0.0
