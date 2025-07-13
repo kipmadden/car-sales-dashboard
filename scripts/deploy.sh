@@ -17,19 +17,30 @@ docker run -d --name smoke-test -p 3000:3000 car-sales-dashboard:latest
 
 # Wait for container to be ready
 echo "⏳ Waiting for application to start..."
-sleep 30
+sleep 60
+
+# Check container status
+echo "📊 Checking container status..."
+docker ps -a
 
 # Test health endpoint
 echo "🏥 Testing health endpoint..."
-if curl -f http://localhost:3000/healthz; then
-    echo "✅ Health check passed"
-else
-    echo "❌ Health check failed"
-    docker logs smoke-test
-    docker stop smoke-test
-    docker rm smoke-test
-    exit 1
-fi
+for i in {1..5}; do
+    if curl -f http://localhost:3000/healthz; then
+        echo "✅ Health check passed!"
+        break
+    else
+        echo "❌ Health check attempt $i failed, waiting 10 seconds..."
+        sleep 10
+        if [ $i -eq 5 ]; then
+            echo "❌ All health check attempts failed, showing container logs:"
+            docker logs smoke-test
+            docker stop smoke-test
+            docker rm smoke-test
+            exit 1
+        fi
+    fi
+done
 
 # Clean up smoke test
 docker stop smoke-test

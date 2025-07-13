@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user for security
-RUN groupadd -r appuser && useradd -r -g appuser appuser
+RUN groupadd -r appuser && useradd -r -g appuser -m appuser
 
 # Copy requirements and install Python dependencies
 COPY requirements/production.txt requirements.txt
@@ -34,6 +34,11 @@ COPY . .
 
 # Change ownership to non-root user
 RUN chown -R appuser:appuser /app
+
+# Create necessary directories for Reflex
+RUN mkdir -p /home/appuser/.local/share/reflex && \
+    chown -R appuser:appuser /home/appuser
+
 USER appuser
 
 # Create necessary directories
