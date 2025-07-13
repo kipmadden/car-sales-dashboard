@@ -529,7 +529,7 @@ def _create_empty_chart(title: str, error_msg: Optional[str] = None) -> Dict:
 
 def generate_sample_data(n_points: int = 24) -> pd.DataFrame:
     """Generate sample data for testing charts."""
-    dates = pd.date_range(start='2022-01-01', periods=n_points, freq='ME')  # ME = Month End
+    dates = pd.date_range(start='2022-01-01', periods=n_points, freq='M')
     
     # Create sample data with trend and seasonality
     trend = np.linspace(1000, 1500, n_points)

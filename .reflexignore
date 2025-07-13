@@ -1,0 +1,21 @@
+# Ignore experimental and temporary files
+car_sales_dashboard/experiments/
+*.tmp
+*.temp
+*_backup.*
+*_old.*
+*.log
+__pycache__/
+*.py[cod]
+*$py.class
+.DS_Store
+.env
+.venv
+env/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/

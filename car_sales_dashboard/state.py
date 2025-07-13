@@ -2,18 +2,17 @@ import reflex as rx
 import pandas as pd
 import plotly.graph_objects as go
 
-from car_sales_dashboard.components.exogenous_chart import create_exogenous_figure
-from car_sales_dashboard.models import load_data, ScenarioEngine
-from pydantic import PrivateAttr
-from car_sales_dashboard.components import (
+from car_sales_dashboard.components.charts import (
     create_sales_trend_chart,
+    create_exogenous_variables_chart,
     create_vehicle_type_chart,
     create_region_chart,
-    create_exogenous_impact_chart,
     create_top_models_chart,
     create_state_map_chart,
-    create_heatmap_chart,
+    create_heatmap_chart
 )
+from car_sales_dashboard.models import load_data, ScenarioEngine
+from pydantic import PrivateAttr
 
 # Load data
 df = load_data()
@@ -323,18 +322,18 @@ class DashboardState(rx.State):
     def get_exogenous_impact_chart(self) -> dict:
         """Get exogenous impact chart"""
         if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
-            return create_exogenous_impact_chart(self._forecast_df)
+            return create_exogenous_variables_chart(self._forecast_df)
         else:
             return {}
     
     @rx.var
-    def get_exogenous_figure(self) -> go.Figure:
-        """Get exogenous variable chart as a Plotly Figure."""
+    def get_exogenous_figure(self) -> dict:
+        """Get exogenous variable chart as a dictionary."""
         print(f"get_exogenous_figure with gas_price={self.gas_price_modifier}")
-        return create_exogenous_figure(
-            "Exogenous Variable Trends",
-            self.forecast_data
-        )
+        if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
+            return create_exogenous_variables_chart(self._forecast_df)
+        else:
+            return {}
 
 
     # @rx.var

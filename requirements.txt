@@ -4,3 +4,9 @@ numpy
 scikit-learn
 plotly
 dill>=0.3.8
+# Additional dependencies for comprehensive functionality
+statsmodels
+seaborn
+matplotlib
+typing-extensions
+pydantic
