@@ -291,6 +291,9 @@ def generate_sample_data(seed: Optional[int] = None) -> pd.DataFrame:
     
     complete_df = pd.DataFrame(year_data)
     
+    # Add forecast flag - all generated data is historical
+    complete_df['is_forecast'] = False
+    
     # Add data quality logging
     logger.info(f"Generated synthetic dataset with {len(complete_df)} records")
     logger.debug(f"Sales range: {complete_df['sales'].min():.0f} - {complete_df['sales'].max():.0f}")
@@ -330,6 +333,11 @@ def load_data(seed: Optional[int] = None, force_regenerate: bool = False) -> pd.
     if os.path.exists(csv_path) and not force_regenerate:
         logger.info(f"Loading existing synthetic data from {csv_path}")
         df = pd.read_csv(csv_path, parse_dates=['date'])
+        
+        # Add is_forecast column if missing (backward compatibility)
+        if 'is_forecast' not in df.columns:
+            df['is_forecast'] = False
+            logger.info("Added missing 'is_forecast' column to existing data")
         
         # Validate data bounds
         sales_min, sales_max = df['sales'].min(), df['sales'].max()

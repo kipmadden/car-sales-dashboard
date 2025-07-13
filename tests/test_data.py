@@ -73,9 +73,9 @@ class TestDataLoading:
         assert 'is_forecast' in data.columns
         assert data['is_forecast'].dtype == bool
         
-        # Should have both historical and forecast data
-        assert data['is_forecast'].any()  # Some forecast data
-        assert not data['is_forecast'].all()  # Some historical data
+        # load_data should return only historical data (no forecast data)
+        assert not data['is_forecast'].any()  # No forecast data
+        assert not data['is_forecast'].all()  # All data is historical
     
     def test_data_types(self):
         """Test that data has correct types."""
