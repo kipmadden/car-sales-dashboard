@@ -12,11 +12,9 @@ import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Union
 
-from car_sales_dashboard.utils.logging_config import get_logger, get_performance_logger
-
-# Initialize logging for this module
-logger = get_logger(__name__)
-perf_logger = get_performance_logger(__name__)
+from car_sales_dashboard.utils.logging_config import logger, perf_logger
+from car_sales_dashboard.exceptions import ChartBuildError
+from car_sales_dashboard.utils.ui_utils import create_chart_error_component
 
 
 # =============================================================================
@@ -32,16 +30,22 @@ def create_sales_trend_chart(forecast_data: pd.DataFrame) -> Dict:
         
     Returns:
         Dict representation of Plotly figure
+        
+    Raises:
+        ChartBuildError: When chart creation fails
     """
     perf_logger.log_function_call("create_sales_trend_chart", data_shape=forecast_data.shape if not forecast_data.empty else "empty")
     
-    if forecast_data.empty:
-        logger.warning("Cannot create sales trend chart: No data provided")
-        return _create_empty_chart("Sales Trend Chart")
-    
-    fig = go.Figure()
-    
     try:
+        if forecast_data.empty:
+            raise ChartBuildError(
+                "Sales Trend", 
+                ValueError("No data provided"),
+                data_info="Empty DataFrame"
+            )
+
+        fig = go.Figure()
+        
         # Add numeric index for consistent x-axis handling
         forecast_data = forecast_data.copy()
         forecast_data['x_index'] = range(len(forecast_data))
@@ -142,13 +146,17 @@ def create_sales_trend_chart(forecast_data: pd.DataFrame) -> Dict:
         )
         
         perf_logger.log_chart_creation("sales_trend", forecast_data.shape, success=True)
+        return fig.to_dict()
+        
+    except ChartBuildError:
+        # Re-raise ChartBuildError as-is
+        perf_logger.log_chart_creation("sales_trend", forecast_data.shape, success=False)
+        raise
         
     except Exception as e:
-        logger.error(f"Error creating sales trend chart: {e}", exc_info=True)
         perf_logger.log_chart_creation("sales_trend", forecast_data.shape, success=False)
-        return _create_empty_chart("Sales Trend Chart", error_msg=str(e))
-    
-    return fig.to_dict()
+        data_info = f"Shape: {forecast_data.shape}, Columns: {list(forecast_data.columns)}"
+        raise ChartBuildError("Sales Trend", e, data_info)
 
 
 def create_exogenous_variables_chart(forecast_data: pd.DataFrame) -> Dict:
@@ -160,19 +168,26 @@ def create_exogenous_variables_chart(forecast_data: pd.DataFrame) -> Dict:
         
     Returns:
         Dict representation of Plotly figure with subplots
+        
+    Raises:
+        ChartBuildError: When chart creation fails
     """
-    if forecast_data.empty:
-        return _create_empty_chart("Exogenous Variables")
-    
-    # Create subplots
-    fig = make_subplots(
-        rows=2, cols=2,
-        subplot_titles=('Unemployment Rate (%)', 'Gas Price ($)', 'Consumer Price Index', 'Search Volume'),
-        vertical_spacing=0.12,
-        horizontal_spacing=0.1
-    )
-    
     try:
+        if forecast_data.empty:
+            raise ChartBuildError(
+                "Exogenous Variables", 
+                ValueError("No data provided"),
+                data_info="Empty DataFrame"
+            )
+        
+        # Create subplots
+        fig = make_subplots(
+            rows=2, cols=2,
+            subplot_titles=('Unemployment Rate (%)', 'Gas Price ($)', 'Consumer Price Index', 'Search Volume'),
+            vertical_spacing=0.12,
+            horizontal_spacing=0.1
+        )
+        
         # Define variable mappings
         variables = [
             ('unemployment', 'blue', 1, 1),
@@ -269,14 +284,19 @@ def create_exogenous_variables_chart(forecast_data: pd.DataFrame) -> Dict:
                     gridcolor='#E5E5E5',
                     row=i, col=j
                 )
+        
         perf_logger.log_chart_creation("exogenous_variables", forecast_data.shape, success=True)
+        return fig.to_dict()
+        
+    except ChartBuildError:
+        # Re-raise ChartBuildError as-is
+        perf_logger.log_chart_creation("exogenous_variables", forecast_data.shape, success=False)
+        raise
         
     except Exception as e:
-        logger.error(f"Error creating exogenous variables chart: {e}", exc_info=True)
         perf_logger.log_chart_creation("exogenous_variables", forecast_data.shape, success=False)
-        return _create_empty_chart("Exogenous Variables", error_msg=str(e))
-    
-    return fig.to_dict()
+        data_info = f"Shape: {forecast_data.shape}, Columns: {list(forecast_data.columns)}"
+        raise ChartBuildError("Exogenous Variables", e, data_info)
 
 
 def create_vehicle_type_chart(filtered_data: pd.DataFrame) -> Dict:
@@ -526,8 +546,18 @@ def chart_container(title: str, chart_data: Union[Dict, rx.Var], height: str = "
 # Utility Functions
 # =============================================================================
 
+# =============================================================================
+# Utility Functions
+# =============================================================================
+
 def _create_empty_chart(title: str, error_msg: Optional[str] = None) -> Dict:
-    """Create an empty chart with optional error message."""
+    """
+    DEPRECATED: Create an empty chart with optional error message.
+    
+    This function is being phased out in favor of proper ChartBuildError exceptions.
+    New chart functions should raise ChartBuildError instead of returning empty charts.
+    """
+    logger.warning(f"Using deprecated _create_empty_chart for {title}")
     fig = go.Figure()
     
     message = error_msg or "No data available for this selection"
@@ -538,12 +568,12 @@ def _create_empty_chart(title: str, error_msg: Optional[str] = None) -> Dict:
         yaxis_title='',
         annotations=[
             dict(
-                text=message,
+                text=f"⚠️ {message}",
                 xref="paper",
                 yref="paper",
                 x=0.5, y=0.5,
                 showarrow=False,
-                font=dict(color="gray", size=14)
+                font=dict(color="#d63384", size=14)
             )
         ],
         font=dict(color='black'),

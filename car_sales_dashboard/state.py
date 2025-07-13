@@ -13,11 +13,9 @@ from car_sales_dashboard.components.charts import (
 )
 from car_sales_dashboard.models import load_data, ScenarioEngine
 from pydantic import PrivateAttr
-from car_sales_dashboard.utils.logging_config import get_logger, get_performance_logger
-
-# Initialize logging for this module
-logger = get_logger(__name__)
-perf_logger = get_performance_logger(__name__)
+from car_sales_dashboard.utils.logging_config import logger, perf_logger
+from car_sales_dashboard.exceptions import ChartBuildError
+from car_sales_dashboard.utils.ui_utils import create_chart_error_component
 
 # Load data
 df = load_data()
@@ -277,6 +275,52 @@ class DashboardState(rx.State):
         self.show_table = value
         # No need to regenerate forecast or filter data, just update the UI state
 
+    def _handle_chart_error(self, chart_type: str, error: ChartBuildError) -> dict:
+        """
+        Handle chart build errors by creating an error chart display.
+        
+        Args:
+            chart_type: Type of chart that failed
+            error: The ChartBuildError that occurred
+            
+        Returns:
+            Dict representation of error chart
+        """
+        logger.error(f"Chart build failed - {chart_type}: {error.original_error}")
+        if error.data_info:
+            logger.error(f"Data context: {error.data_info}")
+        
+        # Create a simple error display chart
+        fig = go.Figure()
+        fig.add_annotation(
+            text=f"⚠️ Failed to render {chart_type} chart<br>See application logs for details",
+            xref="paper", yref="paper",
+            x=0.5, y=0.5,
+            showarrow=False,
+            font=dict(color="#d63384", size=16),
+            align="center"
+        )
+        fig.update_layout(
+            title=f"{chart_type} Chart - Error",
+            xaxis=dict(visible=False),
+            yaxis=dict(visible=False),
+            height=400,
+            paper_bgcolor="rgba(248, 249, 250, 0.8)",
+            plot_bgcolor="rgba(248, 249, 250, 0.8)",
+            font=dict(color="black"),
+            annotations=[
+                dict(
+                    text="Please check your data or contact support if this persists",
+                    xref="paper", yref="paper",
+                    x=0.5, y=0.3,
+                    showarrow=False,
+                    font=dict(color="#6c757d", size=12)
+                )
+            ]
+        )
+        
+        return fig.to_dict()
+
     # Chart creation methods - these must be decorated with @rx.var with type annotations    
     @rx.var
     def get_sales_trend_chart(self) -> dict:
@@ -288,25 +332,36 @@ class DashboardState(rx.State):
             logger.debug(f"Forecast DF columns: {self._forecast_df.columns.tolist()}")
             logger.debug(f"First 3 rows: {self._forecast_df.head(3).to_dict('records')}")
             
-            # Generate a sample chart if the real one fails
             try:
                 return create_sales_trend_chart(self._forecast_df)
+            except ChartBuildError as e:
+                return self._handle_chart_error("Sales Trend", e)
             except Exception as e:
-                logger.error(f"Error creating sales trend chart: {str(e)}")
-                # Create a fallback chart
-                import plotly.graph_objects as go
-                fig = go.Figure()
-                fig.add_trace(go.Scatter(x=[1, 2, 3], y=[4, 5, 6], mode='lines', name='Sample Data'))
-                fig.update_layout(
-                    title='Sample Chart (Error in main chart)',
-                    xaxis_title='Date',
-                    yaxis_title='Sales',
-                    font=dict(color='black'),
-                )
-                return fig.to_dict()
+                # Wrap unexpected errors in ChartBuildError
+                chart_error = ChartBuildError("Sales Trend", e, f"DataFrame shape: {self._forecast_df.shape}")
+                return self._handle_chart_error("Sales Trend", chart_error)
         else:
             logger.warning("No forecast data available for chart")
-            return {}
+            # Return an informational chart for no data case
+            fig = go.Figure()
+            fig.add_annotation(
+                text="📊 No forecast data available<br>Please generate a forecast first",
+                xref="paper", yref="paper",
+                x=0.5, y=0.5,
+                showarrow=False,
+                font=dict(color="#856404", size=16),
+                align="center"
+            )
+            fig.update_layout(
+                title="Sales Trend Chart",
+                xaxis=dict(visible=False),
+                yaxis=dict(visible=False),
+                height=400,
+                paper_bgcolor="rgba(255, 243, 205, 0.3)",
+                plot_bgcolor="rgba(255, 243, 205, 0.3)",
+                font=dict(color="black")
+            )
+            return fig.to_dict()
 
     @rx.var
     def get_vehicle_type_chart(self) -> dict:
@@ -337,10 +392,36 @@ class DashboardState(rx.State):
         """Get exogenous variable chart as a dictionary."""
         logger.debug(f"get_exogenous_figure with gas_price={self.gas_price_modifier}")
         if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
-            return create_exogenous_variables_chart(self._forecast_df)
+            try:
+                return create_exogenous_variables_chart(self._forecast_df)
+            except ChartBuildError as e:
+                return self._handle_chart_error("Exogenous Variables", e)
+            except Exception as e:
+                # Wrap unexpected errors in ChartBuildError
+                chart_error = ChartBuildError("Exogenous Variables", e, f"DataFrame shape: {self._forecast_df.shape}")
+                return self._handle_chart_error("Exogenous Variables", chart_error)
         else:
             logger.warning("No forecast data available for exogenous chart")
-            return {}
+            # Return an informational chart for no data case
+            fig = go.Figure()
+            fig.add_annotation(
+                text="📊 No forecast data available<br>Please generate a forecast first",
+                xref="paper", yref="paper",
+                x=0.5, y=0.5,
+                showarrow=False,
+                font=dict(color="#856404", size=16),
+                align="center"
+            )
+            fig.update_layout(
+                title="Exogenous Variables Chart",
+                xaxis=dict(visible=False),
+                yaxis=dict(visible=False),
+                height=400,
+                paper_bgcolor="rgba(255, 243, 205, 0.3)",
+                plot_bgcolor="rgba(255, 243, 205, 0.3)",
+                font=dict(color="black")
+            )
+            return fig.to_dict()
 
 
     # @rx.var
