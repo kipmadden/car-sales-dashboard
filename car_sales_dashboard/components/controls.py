@@ -1,4 +1,13 @@
 import reflex as rx
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from car_sales_dashboard.state import DashboardState
+
+
+def format_gas_price(state: "DashboardState") -> str:
+    """Format gas price modifier for display"""
+    return f"{state.gas_price_modifier:.2f}"
 
 
 def sidebar_filters(unique_regions, unique_states, unique_vehicle_types, 
@@ -128,7 +137,7 @@ def exogenous_controls(state_class):
             ),
             # Use dynamic text that updates with the state value
             rx.text(
-                rx.dynamic(lambda state: f"{state.gas_price_modifier:.2f}"), 
+                rx.dynamic(format_gas_price), 
                 color="black", 
                 width="50px"
             ),
