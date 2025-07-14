@@ -13,11 +13,21 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-# Test configuration
-pytest_plugins = [
-    "pytest_html",  # HTML reporting
-    "pytest_cov",   # Coverage reporting
-]
+# Test configuration - conditional plugin loading
+pytest_plugins = []
+
+# Try to load optional plugins
+try:
+    import pytest_html
+    pytest_plugins.append("pytest_html")  # HTML reporting
+except ImportError:
+    pass
+
+try:
+    import pytest_cov
+    pytest_plugins.append("pytest_cov")   # Coverage reporting
+except ImportError:
+    pass
 
 # Pytest markers
 def pytest_configure(config):
