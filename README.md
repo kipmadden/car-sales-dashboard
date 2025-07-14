@@ -1,87 +1,113 @@
-# Car Sales Dashboard with Exogenous Variable Simulation
+# 🚗 Car Sales Dashboard
 
-An interactive Reflex-based dashboard that allows for exploring the impact of exogenous factors like gas prices and unemployment rates on automotive sales. The dashboard includes geo filters, vehicle category breakdowns, and adjustable economic variables.
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![Code Quality](https://img.shields.io/badge/code%20quality-87.1%2F100-brightgreen.svg)](docs/testing/fix6_code_quality.md)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](docs/testing/fix6_test_report.md)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-## Features
+An interactive machine learning dashboard for car sales forecasting with real-time exogenous variable manipulation. Built with **Reflex** (Python full-stack framework) and **SARIMAX** time series models.
 
-- **Interactive Exogenous Variable Sliders**: Adjust gas prices, unemployment rates, CPI, and search volume to see their impact on sales forecasts
-- **Geographic Filtering**: Filter by region, state, and urban areas
-- **Vehicle Category Filtering**: Filter by vehicle type, make, model, and year
-- **Multiple Visualization Types**: Sales trends, geographic distributions, and vehicle type breakdowns
-- **Modular Architecture**: Easily swap ML models and extend functionality
-- **Tabs-Based Interface**: Organized sections for different analysis views
+## ✨ Features
 
-## Project Structure
+- 🎛️ **Interactive Controls**: Real-time adjustment of gas prices, CPI, search volume
+- 📊 **ML Forecasting**: SARIMAX time series models with exogenous variables
+- 🗺️ **Geographic Analysis**: Regional and state-level sales breakdowns
+- 🚗 **Vehicle Insights**: Category, make, model filtering and analysis
+- ⚡ **Performance Optimized**: Caching, batch processing, and responsive design
+- 🧪 **Comprehensive Testing**: 87.1/100 code quality score with full test coverage
+- 🐳 **Production Ready**: Docker containerization and CI/CD pipeline
 
-```
-car_sales_dashboard/
-├── rxconfig.py                # Reflex app configuration
-├── car_sales_dashboard.py                     # Main app module initializing the Reflex App
-├── state.py                   # Contains AppState class with state variables and handlers
-├── components/                # UI component modules
-│   ├── __init__.py            # Package exports
-│   ├── controls.py            # UI components for inputs (sliders, dropdowns, etc.)
-│   ├── charts.py              # Functions to create Plotly figures
-│   └── tables.py              # Functions to create table components
-├── models/                    # ML and data modeling modules
-│   ├── __init__.py            # Package exports
-│   ├── scenario_engine.py     # Forecasting models (linear regression, random forest)
-│   └── data.py                # Data loading and generation utilities
-└── pages/                     # Page layout modules
-    ├── __init__.py            # Package exports
-    └── index.py               # Main dashboard page layout
-```
+## 🚀 Quick Start
 
-## Installation
-
-1. Install the required packages using the provided requirements file:
-
+### Option 1: Docker (Recommended)
 ```bash
+# Clone the repository
+git clone https://github.com/kipmadden/car-sales-dashboard.git
+cd car-sales-dashboard
+
+# Run with Docker
+docker-compose up --build
+```
+
+### Option 2: Local Development
+```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-2. Clone this repository:
-
-```bash
-git clone <repository-url>
-cd car_sales_dashboard
-```
-
-3. Run the application:
-
-```bash
+# Run the application
 reflex run
 ```
 
-4. Open your browser and go to http://localhost:3000
+Access the dashboard at `http://localhost:3000`
 
-## Extending the Dashboard
+## 📖 Documentation
 
-### Adding New Models
+- 📋 **[Full Documentation](docs/)** - Comprehensive guides and reports
+- 🏗️ **[Implementation Details](docs/implementation/)** - Technical architecture
+- 🧪 **[Testing Reports](docs/testing/)** - Quality assurance and test results
+- 🚀 **[CI/CD Documentation](docs/ci-cd/)** - Deployment and automation
 
-To add a new forecasting model:
+## 🛠️ Technology Stack
 
-1. Create a new class that inherits from `BaseModel` in `models/scenario_engine.py`
-2. Implement the `train` and `predict` methods
-3. Add your model to the model selection in `components/controls.py`
-4. Update the model initialization in `state.py`
+- **Frontend**: Reflex (React-based UI with Python)
+- **Backend**: Python, FastAPI
+- **ML Models**: SARIMAX (statsmodels), scikit-learn
+- **Data**: Pandas, NumPy
+- **Visualization**: Plotly
+- **Deployment**: Docker, Redis
+- **Testing**: Pytest, comprehensive quality framework
 
-### Adding New Visualizations
+## 🏗️ Project Architecture
 
-To add a new chart:
+```
+car_sales_dashboard/
+├── car_sales_dashboard/           # Main application package
+│   ├── components/               # UI components (charts, controls, tables)
+│   ├── models/                   # ML models and data processing
+│   ├── pages/                    # Page layouts and routing
+│   ├── utils/                    # Utilities (validation, performance, testing)
+│   └── state.py                  # Application state management
+├── docs/                         # 📖 Documentation
+├── tests/                        # 🧪 Test suite
+├── requirements/                 # 📦 Dependencies
+└── docker-compose.yml           # 🐳 Container orchestration
+```
 
-1. Create a new chart function in `components/charts.py`
-2. Add a corresponding method in `state.py` to prepare the data
-3. Add the chart to the appropriate tab in `pages/index.py`
+## 🔧 Development
 
-## Data Source
+### Adding New Features
 
-The dashboard currently uses synthetic data generated in `models/data.py`. To use your own data:
+1. **New ML Models**: Extend `models/scenario_engine.py`
+2. **New Visualizations**: Add charts in `components/charts.py`
+3. **New Data Sources**: Modify `models/data.py`
+4. **UI Components**: Create reusable components in `components/`
 
-1. Create a CSV file with your data
-2. Update the `load_data` function in `models/data.py` to load your data
-3. Ensure your data has the same column structure or adjust the code accordingly
+### Code Quality
 
-## License
+- **Quality Score**: 87.1/100 (Grade B)
+- **Test Coverage**: Comprehensive test suite with 100% pass rate
+- **Performance**: Optimized caching and batch processing
+- **Documentation**: Full API and implementation documentation
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Run tests (`pytest`)
+4. Commit changes (`git commit -m 'Add amazing feature'`)
+5. Push to branch (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
+
+## 📞 Support
+
+- 📖 **Documentation**: [docs/](docs/)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/kipmadden/car-sales-dashboard/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/kipmadden/car-sales-dashboard/discussions)
+
+---
+
+*Built with ❤️ using Python and Reflex*
