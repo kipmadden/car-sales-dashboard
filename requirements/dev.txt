@@ -72,6 +72,7 @@ pytest-asyncio==0.23.8
 pytest-cov==4.1.0
 pytest-html==4.1.1
 pytest-xdist==3.6.0
+pytest-timeout==2.3.1
 python-dateutil==2.9.0.post0
 python-engineio==4.12.2
 python-multipart==0.0.20

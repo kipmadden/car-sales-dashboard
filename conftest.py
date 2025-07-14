@@ -29,6 +29,18 @@ try:
 except ImportError:
     pass
 
+try:
+    import pytest_timeout
+    pytest_plugins.append("pytest_timeout")  # Timeout support
+except ImportError:
+    pass
+
+try:
+    import pytest_xdist
+    pytest_plugins.append("pytest_xdist")  # Parallel execution
+except ImportError:
+    pass
+
 # Pytest markers
 def pytest_configure(config):
     """Configure pytest with custom markers and settings"""
@@ -206,18 +218,24 @@ def reset_logging():
     logging.root.setLevel(original_level)
 
 
-# Test reporting hooks
-def pytest_html_report_title(report):
-    """Customize HTML report title"""
-    report.title = "Car Sales Dashboard - Test Report"
+# Test reporting hooks (only if pytest-html is available)
+try:
+    import pytest_html
+    
+    def pytest_html_report_title(report):
+        """Customize HTML report title"""
+        report.title = "Car Sales Dashboard - Test Report"
 
+    def pytest_html_results_summary(prefix, summary, postfix):
+        """Customize HTML report summary"""
+        prefix.extend([
+            "<h2>Car Sales Dashboard Test Results</h2>",
+            f"<p>Test execution completed at: {pytest.current_timestamp}</p>"
+        ])
 
-def pytest_html_results_summary(prefix, summary, postfix):
-    """Customize HTML report summary"""
-    prefix.extend([
-        "<h2>Car Sales Dashboard Test Results</h2>",
-        f"<p>Test execution completed at: {pytest.current_timestamp}</p>"
-    ])
+except ImportError:
+    # pytest-html not available, skip HTML report customization
+    pass
 
 
 def pytest_sessionstart(session):
@@ -235,28 +253,42 @@ def pytest_sessionfinish(session, exitstatus):
         print(f"❌ Test suite finished with exit status: {exitstatus}")
 
 
-# Timeout configuration
-def pytest_timeout_set_timer(item, timeout):
-    """Set custom timeout for specific test types"""
+# Timeout configuration (only if pytest-timeout is available)
+try:
+    import pytest_timeout
     
-    # Longer timeout for performance tests
-    if "performance" in [mark.name for mark in item.iter_markers()]:
-        return 300  # 5 minutes
-    
-    # Longer timeout for integration tests
-    if "integration" in [mark.name for mark in item.iter_markers()]:
-        return 120  # 2 minutes
-    
-    # Default timeout for unit tests
-    return 30  # 30 seconds
+    def pytest_timeout_set_timer(item, timeout):
+        """Set custom timeout for specific test types"""
+        
+        # Longer timeout for performance tests
+        if "performance" in [mark.name for mark in item.iter_markers()]:
+            return 300  # 5 minutes
+        
+        # Longer timeout for integration tests
+        if "integration" in [mark.name for mark in item.iter_markers()]:
+            return 120  # 2 minutes
+        
+        # Default timeout for unit tests
+        return 30  # 30 seconds
+
+except ImportError:
+    # pytest-timeout not available, skip timeout configuration
+    pass
 
 
-# Parallel execution configuration
-def pytest_configure_node(node):
-    """Configure worker nodes for parallel testing"""
-    if hasattr(node, 'workerinput'):
-        # Worker node configuration
-        node.workerinput['test_worker_id'] = node.workerinput.get('workerinput', {}).get('workerid', 'master')
+# Parallel execution configuration (only if pytest-xdist is available)
+try:
+    import pytest_xdist
+    
+    def pytest_configure_node(node):
+        """Configure worker nodes for parallel testing"""
+        if hasattr(node, 'workerinput'):
+            # Worker node configuration
+            node.workerinput['test_worker_id'] = node.workerinput.get('workerinput', {}).get('workerid', 'master')
+
+except ImportError:
+    # pytest-xdist not available, skip parallel execution configuration
+    pass
 
 
 # Custom test outcome handling
