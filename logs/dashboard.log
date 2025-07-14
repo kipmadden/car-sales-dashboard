@@ -176,3 +176,8 @@ ValueError: Test error
 2025-07-13 18:48:49 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.151s
 2025-07-13 18:56:55 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
 2025-07-13 18:56:56 - numexpr.utils - INFO - _init_num_threads:162 - NumExpr defaulting to 12 threads.
+2025-07-13 19:14:37 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 19:14:37 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 19:15:49 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 19:15:49 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 19:15:50 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"

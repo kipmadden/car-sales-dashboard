@@ -47,15 +47,27 @@ USER appuser
 # Create necessary directories
 RUN mkdir -p logs assets /tmp/redis
 
+# Install certifi to fix SSL issues
+RUN pip install --no-cache-dir certifi
+
+# Set SSL certificate path for production
+ENV SSL_CERT_FILE=/usr/local/lib/python3.12/site-packages/certifi/cacert.pem
+
 # Initialize Reflex during build (downloads frontend dependencies)
 RUN reflex init
 
 # Set environment for Reflex
 ENV REFLEX_ENV=prod
 
+# Performance and security environment variables
+ENV PYTHONOPTIMIZE=2 \
+    REFLEX_CORS_ALLOWED_ORIGINS='["*"]' \
+    REFLEX_FRONTEND_HOST=0.0.0.0 \
+    REFLEX_BACKEND_HOST=0.0.0.0
+
 # Health check endpoint
 HEALTHCHECK --interval=30s --timeout=30s --start-period=180s --retries=5 \
-    CMD curl -f http://localhost:3000/healthz || exit 1
+    CMD curl -f http://localhost:3000/health || curl -f http://localhost:3000/ || exit 1
 
 # Expose ports (frontend on 3000, backend on 8000)
 EXPOSE 3000 8000
