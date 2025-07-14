@@ -181,3 +181,343 @@ ValueError: Test error
 2025-07-13 19:15:49 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
 2025-07-13 19:15:49 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
 2025-07-13 19:15:50 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:29:05 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:05 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:05 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:05 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:29:05 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:29:09 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:29:09 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:29:09 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:29:09 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.304s
+2025-07-14 00:29:09 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:16 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:16 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:16 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:16 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:29:16 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:29:20 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:29:20 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:29:20 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:29:20 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.408s
+2025-07-14 00:29:21 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:29 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:29 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:29 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:29 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:29:30 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:29:33 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:29:33 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:29:33 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:29:33 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.339s
+2025-07-14 00:29:34 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:40 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:40 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:40 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:40 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:29:40 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:29:43 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:29:43 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:29:43 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:29:44 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.257s
+2025-07-14 00:29:44 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:51 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:51 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:51 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:29:51 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:29:51 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:29:54 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:29:54 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:29:54 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:29:54 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.499s
+2025-07-14 00:29:54 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:01 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:01 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:01 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:02 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:30:02 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:30:04 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:30:05 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:30:05 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:30:05 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.348s
+2025-07-14 00:30:05 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:12 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:12 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:12 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:12 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:30:12 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:30:15 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:30:15 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:30:15 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:30:15 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.218s
+2025-07-14 00:30:15 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:21 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:21 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:21 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:22 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:30:22 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:30:24 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:30:25 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:30:25 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:30:25 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.242s
+2025-07-14 00:30:25 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:30 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:30 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:30 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:31 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:30:31 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:30:34 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:30:34 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:30:34 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:30:34 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.308s
+2025-07-14 00:30:35 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:41 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:41 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:41 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:41 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:30:42 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:30:44 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:30:44 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:30:44 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:30:44 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.255s
+2025-07-14 00:30:45 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:52 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:52 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:52 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:30:52 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:30:52 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:30:55 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:30:55 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:30:55 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:30:55 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.281s
+2025-07-14 00:30:55 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:31:04 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:31:04 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:31:04 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:31:04 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:31:04 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:31:07 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:31:08 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:31:08 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:31:08 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.611s
+2025-07-14 00:31:09 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:09 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:09 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:09 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:09 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:32:09 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:32:12 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:32:12 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:32:12 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:32:12 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.337s
+2025-07-14 00:32:13 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:18 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:18 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:18 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:18 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:32:19 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:32:21 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:32:21 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:32:21 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:32:21 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.239s
+2025-07-14 00:32:21 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:28 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:28 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:28 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:28 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:32:29 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:32:31 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:32:31 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:32:31 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:32:31 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.235s
+2025-07-14 00:32:31 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:38 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:38 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:38 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:38 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:32:39 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:32:41 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:32:42 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:32:42 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:32:42 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.300s
+2025-07-14 00:32:42 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:49 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:49 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:49 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:32:49 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:32:50 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:32:53 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:32:53 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:32:53 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:32:53 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.513s
+2025-07-14 00:32:54 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:02 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:02 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:02 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:02 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:33:02 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:33:05 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:33:05 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:33:05 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:33:05 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.248s
+2025-07-14 00:33:05 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:12 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:12 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:12 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:12 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:33:13 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:33:15 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:33:16 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:33:16 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:33:16 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.351s
+2025-07-14 00:33:16 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:22 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:22 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:22 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:22 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:33:23 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:33:25 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:33:25 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:33:25 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:33:25 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.225s
+2025-07-14 00:33:25 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:34 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:35 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:35 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:35 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:33:35 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:33:38 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:33:38 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:33:38 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:33:38 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.292s
+2025-07-14 00:33:39 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:44 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:44 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:44 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:44 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:33:45 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:33:47 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:33:47 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:33:47 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:33:47 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.328s
+2025-07-14 00:33:48 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:54 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:54 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:54 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:33:54 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:33:54 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:33:57 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:33:58 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:33:58 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:33:58 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.329s
+2025-07-14 00:33:58 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:04 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:04 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:04 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:04 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:34:04 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:34:08 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:34:08 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:34:08 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:34:08 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.311s
+2025-07-14 00:34:09 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:14 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:14 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:14 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:15 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:34:15 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:34:17 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:34:18 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:34:18 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:34:18 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.316s
+2025-07-14 00:34:18 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:25 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:25 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:25 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:25 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:34:25 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:34:28 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:34:29 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:34:29 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:34:29 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.276s
+2025-07-14 00:34:29 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:37 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:37 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:37 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:37 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:34:37 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:34:40 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:34:40 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:34:40 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:34:40 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.248s
+2025-07-14 00:34:40 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:52 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:52 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:52 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:34:52 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:34:52 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:34:55 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:34:55 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:34:55 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:34:55 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.265s
+2025-07-14 00:34:56 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 19:35:11 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 19:35:11 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 19:35:11 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-13 19:35:12 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://registry.npmjs.org "HTTP/1.1 200 OK"
+2025-07-13 19:35:12 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://registry.npmjs.org "HTTP/1.1 200 OK"
+2025-07-13 19:35:12 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://registry.npmjs.org "HTTP/1.1 200 OK"
+2025-07-13 19:35:13 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://registry.npmmirror.com "HTTP/1.1 200 OK"
+2025-07-13 19:35:13 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://registry.npmmirror.com "HTTP/1.1 200 OK"
+2025-07-13 19:35:13 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://registry.npmmirror.com "HTTP/1.1 200 OK"
+2025-07-13 19:35:16 - httpx - INFO - _send_single_request:1025 - HTTP Request: POST https://app.posthog.com/capture/ "HTTP/1.1 200 OK"
+2025-07-14 00:36:18 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:18 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:18 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:18 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:36:19 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:36:23 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:36:23 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:36:23 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:36:23 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.507s
+2025-07-14 00:36:24 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:35 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:35 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:35 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:35 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:36:36 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:36:39 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:36:39 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:36:39 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:36:39 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.247s
+2025-07-14 00:36:40 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:47 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:47 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:47 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:47 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:36:47 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:36:50 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:36:51 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:36:51 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:36:51 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.358s
+2025-07-14 00:36:51 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:57 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:57 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:57 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:36:57 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:36:58 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:37:00 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:37:01 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:37:01 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:37:01 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.413s
+2025-07-14 00:37:01 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:37:08 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:37:08 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:37:08 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-14 00:37:08 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 301 Moved Permanently"
+2025-07-14 00:37:08 - httpx - INFO - _send_single_request:1025 - HTTP Request: GET https://pypi.org/pypi/reflex/json "HTTP/1.1 200 OK"
+2025-07-14 00:37:11 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /app/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-07-14 00:37:11 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-14 00:37:11 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-14 00:37:11 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.254s
+2025-07-14 00:37:11 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO

@@ -22,7 +22,7 @@ def create_tabs():
                 # Use DashboardState chart function for reactive sales trend
                 rx.box(
                     rx.heading("Sales Trend and Forecast", color="black", size="4"),
-                    rx.plotly(data=DashboardState.get_sales_trend_chart),
+                    rx.plotly(data=DashboardState.sales_trend_chart),
                     width="100%",
                     height="500px",
                     padding="1.5em",
