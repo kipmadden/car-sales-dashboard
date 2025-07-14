@@ -168,3 +168,11 @@ ValueError: Test error
 2025-07-13 18:45:58 - numexpr.utils - INFO - _init_num_threads:162 - NumExpr defaulting to 12 threads.
 2025-07-13 18:46:37 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
 2025-07-13 18:46:38 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:48:47 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:48:48 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:48:48 - dashboard - INFO - load_data:334 - Loading existing synthetic data from C:\repos\IP\car-sales-dashboard\car_sales_dashboard\data\synthetic_car_sales_seed_42.csv
+2025-07-13 18:48:49 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 86.5% memory reduction
+2025-07-13 18:48:49 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-07-13 18:48:49 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.151s
+2025-07-13 18:56:55 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-07-13 18:56:56 - numexpr.utils - INFO - _init_num_threads:162 - NumExpr defaulting to 12 threads.
