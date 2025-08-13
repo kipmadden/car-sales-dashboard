@@ -420,40 +420,11 @@ class DashboardState(rx.State):
             error=error,
             data_info=f"Filtered data shape: {getattr(self, '_filtered_df', pd.DataFrame()).shape}"
         )
-        fig = go.Figure()
-        fig.add_annotation(
-            text=f"⚠️ Failed to render {chart_type} chart<br>See application logs for details",
-            xref="paper", yref="paper",
-            x=0.5, y=0.5,
-            showarrow=False,
-            font=dict(color="#d63384", size=16),
-            align="center"
-        )
-        fig.update_layout(
-            title=f"{chart_type} Chart - Error",
-            xaxis=dict(visible=False),
-            yaxis=dict(visible=False),
-            height=400,
-            paper_bgcolor="rgba(248, 249, 250, 0.8)",
-            plot_bgcolor="rgba(248, 249, 250, 0.8)",
-            font=dict(color="black"),
-            annotations=[
-                dict(
-                    text="Please check your data or contact support if this persists",
-                    xref="paper", yref="paper",
-                    x=0.5, y=0.3,
-                    showarrow=False,
-                    font=dict(color="#6c757d", size=12)
-                )
-            ]
-        )
-        
-        return fig.to_dict()
 
     # Chart creation methods - these must be decorated with @rx.var with type annotations    
     @rx.var
-    @error_handler("chart_build", fallback_value={})
-    def get_sales_trend_chart(self) -> dict:
+    @error_handler("chart_build", fallback_value=go.Figure())
+    def get_sales_trend_chart(self) -> go.Figure:
         """Get sales trend chart with enhanced error handling and caching"""
         # Check if _forecast_df is initialized before using it
         if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
@@ -470,13 +441,14 @@ class DashboardState(rx.State):
             )
         else:
             logger.warning("No forecast data available for chart")
-            return ErrorHandler._create_error_chart(
+            error_chart_dict = ErrorHandler._create_error_chart(
                 "Sales Trend", 
                 "chart_build"
             )
+            return go.Figure(error_chart_dict)
 
     @performance_monitor("chart_creation")
-    def _create_cached_chart(self, chart_func, data, cache_key: str, chart_name: str) -> dict:
+    def _create_cached_chart(self, chart_func, data, cache_key: str, chart_name: str) -> go.Figure:
         """
         Create charts with caching and output sanitization for improved performance and security.
         
@@ -492,7 +464,8 @@ class DashboardState(rx.State):
         # Validate input data
         if data is None or (isinstance(data, pd.DataFrame) and data.empty):
             logger.warning(f"Invalid data provided for {chart_name} chart")
-            return ErrorHandler._create_error_chart(chart_name, "invalid_data")
+            error_chart_dict = ErrorHandler._create_error_chart(chart_name, "invalid_data")
+            return go.Figure(error_chart_dict)
         
         # Try to get from cache first
         from car_sales_dashboard.utils.performance import get_cache_instance
@@ -502,7 +475,11 @@ class DashboardState(rx.State):
         if cached_result is not None:
             logger.debug(f"Using cached {chart_name} chart")
             # Sanitize cached output before returning
-            return sanitize_output(cached_result)
+            sanitized_cached = sanitize_output(cached_result)
+            # Convert dictionary to Figure object for Reflex compatibility
+            if isinstance(sanitized_cached, dict):
+                return go.Figure(sanitized_cached)
+            return sanitized_cached
         
         # Generate new chart
         try:
@@ -520,15 +497,20 @@ class DashboardState(rx.State):
             cache.set(cache_key, sanitized_result, ttl=300)
             logger.debug(f"Cached {chart_name} chart with key: {cache_key[:20]}...")
             
+            # Convert dictionary to Figure object for Reflex compatibility
+            if isinstance(sanitized_result, dict):
+                return go.Figure(sanitized_result)
             return sanitized_result
             
         except Exception as e:
             logger.error(f"Failed to create {chart_name} chart: {e}")
-            return ErrorHandler._create_error_chart(chart_name, "chart_build")
+            error_chart_dict = ErrorHandler._create_error_chart(chart_name, "chart_build")
+            # Convert error chart dictionary to Figure object for Reflex compatibility
+            return go.Figure(error_chart_dict)
 
     @rx.var
-    @error_handler("chart_build", fallback_value={})
-    def get_vehicle_type_chart(self) -> dict:
+    @error_handler("chart_build", fallback_value=go.Figure())
+    def get_vehicle_type_chart(self) -> go.Figure:
         """Get vehicle type chart with enhanced error handling and caching"""
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
             # Create cache key based on filtered data
@@ -542,11 +524,12 @@ class DashboardState(rx.State):
                 chart_name="Vehicle Type"
             )
         else:
-            return ErrorHandler._create_error_chart("Vehicle Type", "chart_build")
+            error_chart_dict = ErrorHandler._create_error_chart("Vehicle Type", "chart_build")
+            return go.Figure(error_chart_dict)
     
     @rx.var
-    @error_handler("chart_build", fallback_value={})
-    def get_region_chart(self) -> dict:
+    @error_handler("chart_build", fallback_value=go.Figure())
+    def get_region_chart(self) -> go.Figure:
         """Get region chart with enhanced error handling and caching"""
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
             # Create cache key based on filtered data
@@ -559,33 +542,38 @@ class DashboardState(rx.State):
                 cache_key=cache_key,
                 chart_name="Region"
             )
-            return create_region_chart(self._filtered_df)
         else:
-            return ErrorHandler._create_error_chart("Region", "chart_build")
+            error_chart_dict = ErrorHandler._create_error_chart("Region", "chart_build")
+            return go.Figure(error_chart_dict)
 
     @rx.var
-    @error_handler("chart_build", fallback_value={})
-    def get_exogenous_impact_chart(self) -> dict:
+    @error_handler("chart_build", fallback_value=go.Figure())
+    def get_exogenous_impact_chart(self) -> go.Figure:
         """Get exogenous impact chart with enhanced error handling"""
         if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
-            return create_exogenous_variables_chart(self._forecast_df)
+            chart_dict = create_exogenous_variables_chart(self._forecast_df)
+            return go.Figure(chart_dict)
         else:
-            return ErrorHandler._create_error_chart("Exogenous Impact", "chart_build")
+            error_chart_dict = ErrorHandler._create_error_chart("Exogenous Impact", "chart_build")
+            return go.Figure(error_chart_dict)
     
     @rx.var
-    @error_handler("chart_build", fallback_value={})
-    def get_exogenous_figure(self) -> dict:
+    @error_handler("chart_build", fallback_value=go.Figure())
+    def get_exogenous_figure(self) -> go.Figure:
         """Get exogenous variable chart with enhanced error handling"""
         logger.debug(f"get_exogenous_figure with gas_price={self.gas_price_modifier}")
         if hasattr(self, "_forecast_df") and isinstance(self._forecast_df, pd.DataFrame) and not self._forecast_df.empty:
             try:
-                return create_exogenous_variables_chart(self._forecast_df)
+                chart_dict = create_exogenous_variables_chart(self._forecast_df)
+                return go.Figure(chart_dict)
             except ChartBuildError as e:
-                return self._handle_chart_error("Exogenous Variables", e)
+                error_chart_dict = self._handle_chart_error("Exogenous Variables", e)
+                return go.Figure(error_chart_dict)
             except Exception as e:
                 # Wrap unexpected errors in ChartBuildError
                 chart_error = ChartBuildError("Exogenous Variables", e, f"DataFrame shape: {self._forecast_df.shape}")
-                return self._handle_chart_error("Exogenous Variables", chart_error)
+                error_chart_dict = self._handle_chart_error("Exogenous Variables", chart_error)
+                return go.Figure(error_chart_dict)
         else:
             logger.warning("No forecast data available for exogenous chart")
             # Return an informational chart for no data case
@@ -607,7 +595,7 @@ class DashboardState(rx.State):
                 plot_bgcolor="rgba(255, 243, 205, 0.3)",
                 font=dict(color="black")
             )
-            return fig.to_dict()
+            return fig
 
 
     # @rx.var
@@ -622,28 +610,31 @@ class DashboardState(rx.State):
     #     )
     
     @rx.var
-    def get_top_models_chart(self) -> dict:
+    def get_top_models_chart(self) -> go.Figure:
         """Get top models chart"""
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
-            return create_top_models_chart(self._filtered_df)
+            chart_dict = create_top_models_chart(self._filtered_df)
+            return go.Figure(chart_dict)
         else:
-            return {}
+            return go.Figure()
     
     @rx.var
-    def get_state_map_chart(self) -> dict:
+    def get_state_map_chart(self) -> go.Figure:
         """Get state map chart"""
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
-            return create_state_map_chart(self._filtered_df)
+            chart_dict = create_state_map_chart(self._filtered_df)
+            return go.Figure(chart_dict)
         else:
-            return {}
+            return go.Figure()
     
     @rx.var
-    def get_sales_by_month_chart(self) -> dict:
+    def get_sales_by_month_chart(self) -> go.Figure:
         """Get sales by month heatmap"""
         if hasattr(self, "_filtered_df") and isinstance(self._filtered_df, pd.DataFrame) and not self._filtered_df.empty:
-            return create_heatmap_chart(self._filtered_df, x_col='month', y_col='vehicle_type')
+            chart_dict = create_heatmap_chart(self._filtered_df, x_col='month', y_col='vehicle_type')
+            return go.Figure(chart_dict)
         else:
-            return {}
+            return go.Figure()
     
     @error_handler("file_upload", fallback_value=False)
     def validate_and_upload_data(self, file_path: str, file_size: int = 0) -> bool:

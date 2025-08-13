@@ -207,9 +207,10 @@ def chart_container(title, chart_data, height="400px"):
         chart_data: Var containing a plot dictionary
         height (str): Chart height
     
-Returns:
-    rx.Component: Chart container component
-    """    # We use rx.cond to handle the case when chart_data might be empty
+    Returns:
+        rx.Component: Chart container component
+    """
+    # We use rx.cond to handle the case when chart_data might be empty
     return rx.box(
         rx.heading(title, color="black", size="4"),
         # The key change: use rx.cond to handle empty data case

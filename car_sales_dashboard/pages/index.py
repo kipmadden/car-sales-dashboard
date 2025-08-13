@@ -35,7 +35,8 @@ def index():
                 create_tabs(),
                 rx.text(
                     "Built with Reflex | Data is synthetic",
-                    margin_top="2em",                    font_size="sm",
+                    margin_top="2em",
+                    font_size="sm",
                     color="gray",
                 ),
             ),

@@ -597,7 +597,7 @@ def _create_empty_chart(title: str, error_msg: Optional[str] = None) -> Dict:
         paper_bgcolor='white'
     )
     
-    return fig.to_dict()
+    return fig
 
 
 def generate_sample_data(n_points: int = 24, seed: Optional[int] = None) -> pd.DataFrame:
