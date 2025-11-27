@@ -792,3 +792,194 @@ ValueError: Test error
 2025-07-14 00:56:20 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
 2025-07-14 00:56:20 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
 2025-07-14 00:56:20 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:10:27 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:10:27 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:10:41 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:10:41 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:10:41 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:10:45 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:10:46 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:10:46 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:10:46 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.201s
+2025-11-27 04:10:47 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:10:49 - dashboard - WARNING - get_sales_trend_chart:443 - No forecast data available for chart
+2025-11-27 04:10:49 - dashboard - WARNING - get_exogenous_figure:578 - No forecast data available for exogenous chart
+2025-11-27 04:11:20 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:11:21 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:11:21 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:11:22 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:11:22 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:11:22 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.198s
+2025-11-27 04:11:22 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 403 Forbidden"
+2025-11-27 04:11:37 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:11:37 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:11:37 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:11:42 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:11:42 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:11:42 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:11:42 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.204s
+2025-11-27 04:11:43 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:11:45 - dashboard - WARNING - get_sales_trend_chart:443 - No forecast data available for chart
+2025-11-27 04:11:46 - dashboard - WARNING - get_exogenous_figure:578 - No forecast data available for exogenous chart
+2025-11-27 04:12:51 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:12:52 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:12:52 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:12:53 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:12:53 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:12:53 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.202s
+2025-11-27 04:12:53 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 403 Forbidden"
+2025-11-27 04:12:57 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:16:07 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:16:07 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:16:07 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:16:11 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:16:11 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:16:11 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:16:11 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.195s
+2025-11-27 04:16:13 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:16:15 - dashboard - WARNING - get_sales_trend_chart:443 - No forecast data available for chart
+2025-11-27 04:16:16 - dashboard - WARNING - get_exogenous_figure:578 - No forecast data available for exogenous chart
+2025-11-27 04:17:22 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:17:22 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:17:22 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:17:27 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:17:27 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:17:27 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:17:27 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.200s
+2025-11-27 04:17:28 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:17:31 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:17:31 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:17:31 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:17:31 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:17:31 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.200s
+2025-11-27 04:17:33 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:17:34 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:17:35 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:17:35 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:17:35 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.199s
+2025-11-27 04:17:35 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:17:37 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:17:37 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:17:37 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:17:37 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.206s
+2025-11-27 04:17:38 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:17:39 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:17:39 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:17:39 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:17:39 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.217s
+2025-11-27 04:17:40 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:17:41 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:17:41 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:17:41 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:17:41 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.196s
+2025-11-27 04:17:42 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:17:44 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:17:44 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:17:44 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:17:44 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.198s
+2025-11-27 04:17:44 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:17:46 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:17:46 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:17:46 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:17:46 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.194s
+2025-11-27 04:17:47 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:17:48 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:17:48 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:17:48 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:17:48 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.194s
+2025-11-27 04:17:49 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:17:50 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:17:50 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:17:50 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:17:50 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.190s
+2025-11-27 04:17:52 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:17:53 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:17:53 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:17:53 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.194s
+2025-11-27 04:18:14 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:18:14 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:18:14 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:18:18 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:19 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:19 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:19 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.201s
+2025-11-27 04:18:20 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:18:22 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:22 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:23 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:23 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:23 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.209s
+2025-11-27 04:18:25 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:26 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:26 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:26 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:26 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.198s
+2025-11-27 04:18:27 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:28 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:29 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:29 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:29 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.209s
+2025-11-27 04:18:29 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:31 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:31 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:31 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:31 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.198s
+2025-11-27 04:18:32 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:33 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:33 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:33 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:33 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.201s
+2025-11-27 04:18:34 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:35 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:35 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:35 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:35 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.199s
+2025-11-27 04:18:36 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:37 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:38 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:38 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:38 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.197s
+2025-11-27 04:18:38 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:40 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:40 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:40 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:40 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.201s
+2025-11-27 04:18:40 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:42 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:42 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:42 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:42 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.213s
+2025-11-27 04:18:43 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:44 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:44 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:44 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:44 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.198s
+2025-11-27 04:18:45 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:46 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:47 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:47 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:47 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.193s
+2025-11-27 04:18:47 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:49 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:49 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:49 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:49 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.200s
+2025-11-27 04:18:49 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:51 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:51 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:51 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:51 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.207s
+2025-11-27 04:18:52 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:18:53 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:18:54 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:18:54 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:18:54 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.199s
+2025-11-27 04:18:54 - watchfiles.main - INFO - _log_changes:308 - 1 change detected
+2025-11-27 04:19:26 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:19:27 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
+2025-11-27 04:19:27 - dashboard - INFO - load_data:334 - Loading existing synthetic data from /home/user/car-sales-dashboard/car_sales_dashboard/data/synthetic_car_sales_seed_42.csv
+2025-11-27 04:19:28 - car_sales_dashboard.utils.performance - INFO - optimize_dtypes:319 - DataFrame optimization: 87.9% memory reduction
+2025-11-27 04:19:28 - dashboard - INFO - load_optimized_data:46 - Loaded and optimized dataset: (64512, 16) shape, 2.9MB
+2025-11-27 04:19:28 - dashboard.performance - INFO - log_performance_metric:223 - Performance metric: data_loading (success) - 0.222s
+2025-11-27 04:19:28 - httpx - INFO - _send_single_request:1025 - HTTP Request: HEAD http://1.1.1.1 "HTTP/1.1 403 Forbidden"
+2025-11-27 04:19:31 - dashboard.logging - INFO - setup_logging:107 - Logging configured - Debug mode: False, Level: INFO
