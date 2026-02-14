@@ -15,8 +15,6 @@ from car_sales_dashboard.models import load_data, ScenarioEngine
 from pydantic import PrivateAttr
 from car_sales_dashboard.utils.logging_config import logger, perf_logger
 from car_sales_dashboard.exceptions import ChartBuildError, DataValidationError, ModelTrainingError
-# Temporarily disabled due to SSL import issue
-# from car_sales_dashboard.utils.ui_utils import create_chart_error_component
 from car_sales_dashboard.utils.error_handler import ErrorHandler, error_handler, validate_input, Validators
 from car_sales_dashboard.utils.performance import (
     cached, 
